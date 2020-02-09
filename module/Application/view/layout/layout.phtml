@@ -1,0 +1,75 @@
+<?= $this->doctype() ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?= $this->headTitle('Hus Laminas MVC')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?= $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Styles -->
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+        ->prependStylesheet($this->basePath("css/style.{$this->layout()->dateVersion}.css"))
+        ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
+        ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
+        ->prependStylesheet($this->basePath("css/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.css"))
+        ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
+    ?>
+
+    <!-- Scripts -->
+    <?= $this->inlineScript()
+        ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
+    ?>
+</head>
+<body>
+<?=$this->render('js_variables.phtml')?>
+<!-- The Modal -->
+<div id="commonDialog" class="modal fade" role="dialog" tabindex="-1"></div>
+<div id="childDialog" class="modal fade" role="dialog" tabindex="-1"></div>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="<?= $this->url('home') ?>">
+                <img src="<?= $this->basePath('img/laminas-logo.svg') ?>" height="28" alt="Hus Laminas MVC"/>&nbsp;Hus Laminas MVC
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= $this->url('home') ?>">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <?= $this->content ?>
+    <hr>
+    <footer>
+        <p>&copy; <?= date('Y') ?> by Hus Laminas. All rights reserved.</p>
+    </footer>
+</div>
+
+<div id="loading" class="notification_box">
+  <p><span id="infoText">Processing...</span></p>
+  <i class="fas fa-spinner fa-pulse text-dark mt-1 float-right"></i>
+</div>
+  <?= $this->inlineScript()
+    ->prependFile($this->basePath("js/common.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
+  ?>
+</body>
+</html>

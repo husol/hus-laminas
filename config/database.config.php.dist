@@ -1,0 +1,21 @@
+<?php
+return [
+  'main' => [
+    'driver'  => 'Pdo_Mysql',
+    'hostname'=> '{DATABASE_HOST}',
+    'port'    => '3306',
+    'database'=> '{DATABASE_NAME}',
+    'charset'=> 'utf8',
+    'username' => '{DB_USERNAME}',
+    'password' => '{DB_PASSWORD}'
+  ],
+  'slave' => [
+    'driver'  => 'Pdo_Mysql',
+    'hostname'=> '{DATABASE_HOST}',
+    'port'    => '3306',
+    'database'=> '{DATABASE_NAME}',
+    'charset'=> 'utf8',
+    'username' => '{DB_USERNAME}',
+    'password' => '{DB_PASSWORD}'
+  ]
+];

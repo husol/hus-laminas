@@ -1,0 +1,168 @@
+.hidden {
+    display: none !important;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.clear {
+    clear: both;
+}
+
+.w-7 {
+    width: 7% !important;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.w-15 {
+    width: 15% !important;
+}
+
+.w-20 {
+    width: 20% !important;
+}
+
+.w-30 {
+    width: 30% !important;
+}
+
+.w-33 {
+    width: 33% !important;
+}
+
+.w-35 {
+    width: 35% !important;
+}
+
+.w-40{
+    width: 40% !important;
+}
+
+.w-45{
+    width: 45% !important;
+}
+
+.col-lg-0d5, .col-md-0d5, .col-lg-1d5, .col-md-1d5, .col-lg-10d5, .col-md-10d5 {
+    position:relative;
+    width:100%;
+    padding-right:15px;
+    padding-left:15px
+}
+.col-lg-0d5 {
+    -ms-flex:0 0 12.5%;
+    flex:0 0 12.5%;
+    max-width:4.166667%
+}
+.col-md-0d5 {
+    -ms-flex:0 0 12.5%;
+    flex:0 0 12.5%;
+    max-width:4.166667%
+}
+.col-lg-1d5 {
+    -ms-flex:0 0 12.5%;
+    flex:0 0 12.5%;
+    max-width:12.5%
+}
+.col-md-1d5 {
+    -ms-flex:0 0 12.5%;
+    flex:0 0 12.5%;
+    max-width:12.5%
+}
+.col-lg-10d5 {
+    -ms-flex:0 0 12.5%;
+    flex:0 0 87.5%;
+    max-width:87.5%
+}
+.col-md-10d5 {
+    -ms-flex:0 0 12.5%;
+    flex:0 0 87.5%;
+    max-width:87.5%
+}
+
+.hover {
+    background-color: #FFE5CC !important;
+}
+
+.text-blue {
+    color: #007bff !important;
+}
+
+.text-green {
+    color: #33b35a !important;
+}
+
+.text-red {
+    color: #c82333 !important;
+}
+
+.text-white{
+    color: whitesmoke !important;
+}
+
+.text-purple-light {
+    color: #b388ff !important;
+}
+
+.text-blue-light {
+    color: #81d4fa !important;
+}
+
+.bg-red{
+    background-color: #c82333 !important;
+}
+
+.bg-green{
+    background-color: #4BB543 !important;
+}
+
+.bg-blue {
+    background-color: #4285f4 !important;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #FFE5CC !important;
+}
+
+tr.rowParent {
+    background-color: #a9d6ff !important;
+}
+
+tr.active {
+    background-color: #bbdefb !important;
+}
+
+.notification_box {
+    position: fixed;
+    min-width: 25%;
+    min-height: 30px;
+    left: 2px;
+    bottom: 10px;
+    padding: 18px 15px 10px 15px;
+    color: #c36e00;
+    background-color: #fffe87;
+    z-index: 10002;
+    display: none;
+}
+.notification_box > p {
+    float: left;
+}
+.notification_box > img {
+    float: right;
+    margin: 3px 0px 5px 0;
+}
+
+.loadingText {
+    color: #c36e00;
+    display: block;
+    text-align: center;
+    font-size: larger;
+}
+.loadingText:after {
+    color: #c36e00;
+    content: ' .';
+    animation: dots 1s steps(5, end) infinite;
+}
