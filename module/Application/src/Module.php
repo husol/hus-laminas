@@ -65,7 +65,10 @@ class Module
     $translator = HusTranslator::getInstance($moduleName);
     $viewModel->translator = $translator;
 
-    if ($routeParams['controller'] != 'Application\Controller\IndexController') {
+    //You should update publicControllers array in your situation
+    $publicControllers = ['Application\Controller\IndexController', 'Application\Controller\UserController'];
+
+    if (!in_array($routeParams['controller'], $publicControllers)) {
       $request = new \Laminas\Http\PhpEnvironment\Request();
       $httpXRequestWith = $request->getServer('HTTP_X_REQUESTED_WITH');
 

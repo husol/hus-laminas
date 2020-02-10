@@ -94,11 +94,10 @@ class HusDao extends Dao
       //Check pagination
       $isPaging = false;
       if (isset($params['pagination'])) {
-        $page = intval($params['pagination']['page']) <= 1 ? 1 : intval(['pagination']['page']);
+        $page = intval($params['pagination']['page']) <= 1 ? 1 : intval($params['pagination']['page']);
         $pageSize = $params['pagination']['pageSize'];
         $params['limit'] = $pageSize;
         $params['offset'] = ($page - 1) * $pageSize;
-        unset($params['pagination']);
         $isPaging = true;
       }
 
@@ -130,7 +129,7 @@ class HusDao extends Dao
                 $sql->where("{$condition[$operator][0]} BETWEEN {$condition[$operator][1]} AND {$condition[$operator][2]}");
                 break;
               default:
-                $this->__logs("HUS_ModelMysql_{$this->table}.find", "Type of condition is not supported.");
+                $this->__logs("Hus_ModelMysql_{$this->table}.find", "Type of condition is not supported.");
                 return false;
             }
           }
@@ -173,18 +172,20 @@ class HusDao extends Dao
         return false;
       }
 
-      if ($id > 0 || intval($params['isFetchRow'])) {
+
+      if ($id > 0 || isset($params['isFetchRow']) && intval($params['isFetchRow'])) {
         $result = $rs['data']->current();
       } elseif (isset($params['pagination'])) {
-        $result['count'] = $rs['count']->total_count;
-        $result['data'] = $rs['data'];
+        $result = new \stdClass();
+        $result->count = $rs['count']->total_count;
+        $result->data = $rs['data'];
       } else {
         $result = $rs['data'];
       }
 
       return $result;
     } catch (\Exception $e) {
-      $this->__logs("HUS_ModelMysql_{$this->table}.find", $e->getMessage());
+      $this->__logs("Hus_ModelMysql_{$this->table}.find", $e->getMessage());
       return false;
     }
   }
@@ -221,7 +222,7 @@ class HusDao extends Dao
 
       return $this->query($sql)->fetch();
     } catch (\Exception $e) {
-      $this->__logs("HUS_ModelMysql_{$this->table}.save", $e->getMessage());
+      $this->__logs("Hus_ModelMysql_{$this->table}.save", $e->getMessage());
       return false;
     }
   }
@@ -245,7 +246,7 @@ class HusDao extends Dao
 
       return true;
     } catch (\Exception $e) {
-      $this->__logs("HUS_ModelMysql_{$this->table}.remove", $e->getMessage());
+      $this->__logs("Hus_ModelMysql_{$this->table}.remove", $e->getMessage());
       return false;
     }
   }

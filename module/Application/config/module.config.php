@@ -18,7 +18,7 @@ return [
       'home' => [
         'type' => Segment::class,
         'options' => [
-          'route' => '/',
+          'route' => '/[/:action]',
           'defaults' => [
             'controller' => Controller\IndexController::class,
             'action' => 'index',
@@ -35,12 +35,23 @@ return [
           ],
         ],
       ],
+      'user' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/admin/users[/:action]',
+          'defaults' => [
+            'controller' => Controller\UserController::class,
+            'action' => 'index',
+          ],
+        ],
+      ],
     ],
   ],
   'controllers' => [
     'factories' => [
       Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
       Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
+      Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
     ],
   ],
   'view_manager' => [

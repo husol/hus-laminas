@@ -4,6 +4,8 @@ namespace Application\Model;
 
 class User extends HusDao
 {
+  const PAGE_SIZE = 20;
+
   /**
    * @var $instance : The unique instance of cache storage
    */
