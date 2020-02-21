@@ -10,10 +10,10 @@ namespace Core\Hus;
 class HusTranslator
 {
   /**
-   * @var $_instance the unique instance of cache storage
+   * @var $instance the unique instance of cache storage
    */
-  private static $__instance = null;
-  private static $__module = null;
+  private static $instance = null;
+  private static $module = null;
   protected $translator;
 
   public function __construct()
@@ -23,14 +23,14 @@ class HusTranslator
       'translation_file_patterns' => [
         [
           'type'     => 'phparray',
-          'base_dir' => ROOT_DIR . DS . 'module' . DS . self::$__module . DS . 'language',
+          'base_dir' => ROOT_DIR . DS . 'module' . DS . 'Application' . DS . 'language',
           'pattern'  => '%s.php',
         ],
       ]
     ]);
 
-    if (strcmp(self::$__module, 'Application') !== 0) {
-      $filename = ROOT_DIR . DS . 'module' . DS . 'Application' . DS . 'language';
+    if (strcmp(self::$module, 'Application') !== 0) {
+      $filename = ROOT_DIR . DS . 'module' . DS . self::$module . DS . 'language';
       $this->translator->addTranslationFilePattern('phparray', $filename, '%s.php');
     }
 
@@ -45,12 +45,12 @@ class HusTranslator
 
   public static function getInstance($module = 'Application')
   {
-    if (null === self::$__instance || ($module !== self::$__module)) {
+    if (null === self::$instance || ($module !== self::$module)) {
       $thisClass = __CLASS__;
-      self::$__module = $module;
-      self::$__instance = new $thisClass();
+      self::$module = $module;
+      self::$instance = new $thisClass();
     }
-    return self::$__instance;
+    return self::$instance;
   }
 
   public function getLocale()
