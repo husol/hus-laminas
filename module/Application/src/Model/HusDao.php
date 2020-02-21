@@ -128,6 +128,9 @@ class HusDao extends Dao
               case 'between':
                 $sql->where("{$condition[$operator][0]} BETWEEN {$condition[$operator][1]} AND {$condition[$operator][2]}");
                 break;
+              case 'complex':
+                $sql->where($condition[$operator]);
+                break;
               default:
                 $this->__logs("Hus_ModelMysql_{$this->table}.find", "Type of condition is not supported.");
                 return false;
