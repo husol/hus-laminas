@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <?= $this->headTitle('Hus Laminas MVC')->setSeparator(' - ')->setAutoEscape(false) ?>
+    <?php $appName = $this->layout()->isLive ? 'Hus Laminas MVC' : 'BETA Hus Laminas MVC';?>
+    <?= $this->headTitle("{$appName} {$this->layout()->appVersion}")->setSeparator(' - ')->setAutoEscape(false) ?>
 
     <?= $this->headMeta()
         ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -14,22 +15,22 @@
         ->prependStylesheet($this->basePath("css/style.{$this->layout()->dateVersion}.css"))
         ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
         ->prependStylesheet($this->basePath("css/toastr.min.{$this->layout()->dateVersion}.css"))
+        ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
         ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
         ->prependStylesheet($this->basePath("css/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.css"))
-        ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
     ?>
 
     <!-- Scripts -->
-    <?= $this->inlineScript()
+    <?= $this->headScript()
         ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/jquery-ui-contextmenu.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/toastr.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
+        ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
     ?>
 </head>

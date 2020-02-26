@@ -83,7 +83,7 @@ class Module
       }
 
       //Check User's role
-      $roles = [$sessionContainer->loggedUser->info->role];
+      $roles = [$sessionContainer->loggedUser->role];
 
       $auth = Auth::getInstance();
       if (!$auth->isAllowed($roles, $routeParams['controller'], $routeParams['action'])) {
@@ -98,11 +98,8 @@ class Module
     }
 
     if (isset($sessionContainer->loggedUser)) {
-      //Set loggedUserInfo to layout
-      $viewModel->loggedUserInfo = $sessionContainer->loggedUser->info;
-      $viewModel->loggedUserHotel = $sessionContainer->loggedUser->hotel;
-      $currDateObj = new \DateTime("now", new \DateTimeZone($viewModel->loggedUserHotel->timezone));
-      $viewModel->systemDateTime = $currDateObj->format('Y-m-d H:i:s');
+      //Set loggedUser to layout
+      $viewModel->loggedUser = $sessionContainer->loggedUser;
     }
   }
 

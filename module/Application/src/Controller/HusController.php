@@ -26,14 +26,14 @@ class HusController extends AbstractActionController
     return sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
   }
 
-  public function getLoggedUserInfo($param = '')
+  public function getLoggedUser($param = '')
   {
-    $userInfo = $this->session->loggedUser->info;
+    $loggedUser = $this->session->loggedUser;
     if (empty($param)) {
-      return $userInfo;
+      return $loggedUser;
     }
 
-    return $userInfo->$param;
+    return $loggedUser->$param;
   }
 
   private function escapeValuesSQL($values)
