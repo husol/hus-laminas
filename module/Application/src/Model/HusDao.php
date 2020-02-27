@@ -4,6 +4,7 @@ namespace Application\Model;
 
 use Core\Dao\Dao;
 use Laminas\Db\Sql\Expression;
+use Laminas\Json\Json;
 
 class HusDao extends Dao
 {
@@ -181,12 +182,12 @@ class HusDao extends Dao
       } elseif (isset($params['pagination'])) {
         $result = new \stdClass();
         $result->count = $rs['count']->total_count;
-        $result->data = $rs['data'];
+        $result->data = $rs['data']->toArray();
       } else {
-        $result = $rs['data'];
+        $result = $rs['data']->toArray();
       }
 
-      return $result;
+      return Json::decode(Json::encode($result));
     } catch (\Exception $e) {
       $this->__logs("Hus_ModelMysql_{$this->table}.find", $e->getMessage());
       return false;

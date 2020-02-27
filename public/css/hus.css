@@ -123,6 +123,10 @@
     background-color: #4285f4 !important;
 }
 
+.table td, .table th {
+    height: 50px;
+}
+
 .table-hover > tbody > tr:hover {
     background-color: #FFE5CC !important;
 }

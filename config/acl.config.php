@@ -13,8 +13,9 @@ return [
 
   'rules' => [
 /*
-      'Report\Controller\OtherReportController' => [
-        'allow' => [],
+    'SUPER_STAFF' => [
+      'Application\Controller\CategoryController' => [
+        'allow' => ['index'],
         'deny' => null
       ],
     ],
@@ -25,8 +26,8 @@ return [
 
   'roles' => [
 /*
-    'ITM' => null,
-    'OWNER' => ['ITM'],
+    'STAFF' => null,
+    'SUPER_STAFF' => ['STAFF'],
 */
     'ADMIN' => null,
   ],
