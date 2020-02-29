@@ -75,7 +75,7 @@ class HusDao extends Dao
   }
   /* START STANDARD FUNCTIONS: find, save, remove */
 
-  public function find($params, $id = 0)
+  public function find($params = [], $id = 0)
   {
     try {
       $sql = $this->sql->select();

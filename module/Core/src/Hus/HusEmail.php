@@ -20,14 +20,14 @@ class HusEmail
     {
         $this->transport = new Smtp();
         $options = new SmtpOptions([
-            'name' => 'VLeisure',
+            'name' => 'Husol',
             'host' =>'smtp.gmail.com',
-            'port' => 465,
+            'port' => 587,
             'connection_class'  => 'plain',
             'connection_config' => [
                 'username' => 'projectshusol@gmail.com',
                 'password' => '!@#123^%$',
-                'ssl'      => 'ssl',
+                'ssl'      => 'tls',
             ],
         ]);
         $this->transport->setOptions($options);

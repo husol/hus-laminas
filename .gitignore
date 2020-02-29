@@ -5,6 +5,7 @@ phpunit.xml
 .phpintel/
 *.iml
 .env
+composer.lock
 config/development.config.php
 config/database.config.php
 module/Application/config/config.php
