@@ -2,7 +2,9 @@ vendor/
 phpunit.xml
 .vagrant/
 .idea/
+.vscode/
 .phpintel/
+nbproject/
 *.iml
 .env
 composer.lock
@@ -10,6 +12,10 @@ config/development.config.php
 config/database.config.php
 module/Application/config/config.php
 logs/*
-data/cache/*
+data/*
+!data/countries.json
+!data/cache/.gitkeep
 public/images/*
 public/files/*
+uploads/images/*/*
+uploads/files/*/*
