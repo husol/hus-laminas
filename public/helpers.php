@@ -393,7 +393,7 @@ function convertToDateDisplay($dateStr, $detail = false, $timezone = [])
   }
 
   $date = new \DateTime($dateStr, new \DateTimeZone($timezone['from']));
-  $date->setTimezone(new DateTimeZone($timezone['to']));
+  $date->setTimezone(new \DateTimeZone($timezone['to']));
 
   if ($detail) {
     return $date->format('d-M-Y H:i');
@@ -465,6 +465,7 @@ function stringCatContent($content, $limit = '100')
 
 function callAPI($host, $uri, $params)
 {
+  $isVerified = isset($params['isVerified']) ? $params['isVerified'] : true;
   $method = isset($params['method']) ? strtoupper($params['method']) : 'POST';
   $headers = isset($params['headers']) ? $params['headers'] : [];
   $token = isset($params['token']) ? $params['token'] : '';
@@ -499,7 +500,7 @@ function callAPI($host, $uri, $params)
     return $retry < 3;
   }));
 
-  $client = new \GuzzleHttp\Client(['base_uri' => $host . '/']);
+  $client = new \GuzzleHttp\Client(['base_uri' => $host . '/', 'verify' => $isVerified]);
 
   try {
     //Build options
