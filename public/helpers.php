@@ -24,17 +24,6 @@ if (!function_exists('mlog')) {
   }
 }
 
-function responseJson($data, $code = 200, $headers = [])
-{
-  if ($code == 200) {
-    $result = ['status' => 'success', 'result' => $data];
-  } else {
-    $result = ['status' => 'error', 'result' => $data];
-  }
-
-  return response()->json($result, $code, $headers);
-}
-
 ///////////////////////////This file is used to format, convert, sort//////////////////////////////////
 
 function escapeValuesSQL($values)
