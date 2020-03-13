@@ -454,7 +454,7 @@ function stringCatContent($content, $limit = '100')
 
 function callAPI($host, $uri, $params)
 {
-  $isVerified = isset($params['isVerified']) ? $params['isVerified'] : true;
+  $isVerified = isset($params['isVerified']) ? $params['isVerified'] : false;
   $method = isset($params['method']) ? strtoupper($params['method']) : 'POST';
   $headers = isset($params['headers']) ? $params['headers'] : [];
   $token = isset($params['token']) ? $params['token'] : '';
