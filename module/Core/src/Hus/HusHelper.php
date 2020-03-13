@@ -9,6 +9,13 @@ namespace Core\Hus;
 
 class HusHelper
 {
+  public static function getTitleList()
+  {
+    $titleList = ['Dr.', 'Mdm.', 'Mr.', 'Mrs.', 'Ms.', 'Sir.'];
+
+    return $titleList;
+  }
+
   public static function getCountries($keyword = '')
   {
     $countriesJson = file_get_contents(APP_DIR. DS .'data'.DS.'countries.json');
@@ -47,10 +54,39 @@ class HusHelper
     return false;
   }
 
-  public static function getTitleList()
+  public static function decToHex($int)
   {
-    $titleList = ['Dr.', 'Mdm.', 'Mr.', 'Mrs.', 'Ms.', 'Sir.'];
+    if ($int == 0) {
+      return '';
+    }
 
-    return $titleList;
+    $strEncode = dechex(7000000 + $int);
+    return strtoupper($strEncode);
+  }
+
+  public static function hexToDec($str)
+  {
+    if (empty($str)) {
+      return 0;
+    }
+
+    $intDecode = hexdec($str) - 7000000;
+    return $intDecode;
+  }
+
+  public static function getClientInfoFromRequest($request)
+  {
+    if (!empty($request->getServer('HTTP_CLIENT_IP'))) {
+      $ip = $request->getServer('HTTP_CLIENT_IP');
+    } else if (!empty($request->getServer('HTTP_X_FORWARDED_FOR'))) {
+      $ip = $request->getServer('HTTP_X_FORWARDED_FOR');
+    } else {
+      $ip = $request->getServer('REMOTE_ADDR');
+    }
+
+    return [
+      'ip' => $ip,
+      'userAgent' => $request->getServer('HTTP_USER_AGENT')
+    ];
   }
 }
