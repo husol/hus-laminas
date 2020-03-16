@@ -458,19 +458,12 @@ function callAPI($host, $uri, $params)
   $headers = isset($params['headers']) ? $params['headers'] : [];
   $token = isset($params['token']) ? $params['token'] : '';
 
-  if (!isset($headers['Content-Type'])) {
-    $headers['Content-Type'] = 'application/json';
-  }
+  $data = (isset($params['data']) && !empty($params['data'])) ? $params['data'] : [];
 
-  $data = [];
-  if (isset($params['data']) && !empty($params['data'])) {
-    $data = $params['data'];
-    if ($method == "GET") {
-      $uri .= "?" . http_build_query($params['data']);
-      if ($headers['Content-Type'] == "application/x-www-form-urlencoded") {
-        $data = [];
-      }
-    }
+  if ($method == 'GET') {
+    unset($headers['Content-Type']);
+  } elseif (!isset($headers['Content-Type'])) {
+    $headers['Content-Type'] = 'application/json';
   }
 
   if (!empty($token)) {
@@ -497,13 +490,14 @@ function callAPI($host, $uri, $params)
       'handler' => $handlerStack
     ];
 
-    switch ($headers['Content-Type']) {
-      case 'application/x-www-form-urlencoded':
-        $options['form_params'] = $data;
-        break;
-      case 'application/json':
+    if (isset($headers['Content-Type'])) {
+      if ($headers['Content-Type'] == 'application/json') {
         $options['json'] = $data;
-        break;
+      } elseif ($headers['Content-Type'] == 'application/x-www-form-urlencoded' && $method == 'POST') {
+        $options['form_params'] = $data;
+      }
+    } else {
+      $options['query'] = $data;
     }
 
     $response = $client->request($method, $uri, $options);
