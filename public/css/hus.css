@@ -121,16 +121,20 @@
     color: #81d4fa !important;
 }
 
-.bg-red{
-    background-color: #c82333 !important;
-}
-
 .bg-green{
     background-color: #4BB543 !important;
 }
 
 .bg-blue {
     background-color: #4285f4 !important;
+}
+
+.bg-orange{
+    background-color: #f39c12 !important;
+}
+
+.bg-red{
+    background-color: #c82333 !important;
 }
 
 .btnCollapse:after {
