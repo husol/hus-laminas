@@ -88,10 +88,10 @@ class AuthController extends AbstractActionController
     $myUser= $this->dao->save(['last_login' => date('Y-m-d H:i:s')], $myUser->id);
     unset($myUser->password);
 
-    //Store loggedUser session with Hotel Info
+    //Store loggedUser session
     $this->session->loggedUser = $myUser;
 
-    HusAjax::outData();
+    HusAjax::outData($myUser);
   }
 
   public function myAccountFormAction()
@@ -120,6 +120,7 @@ class AuthController extends AbstractActionController
     $confirmPassword = $this->params()->fromPost('confirmPassword', '');
     $mobile = $this->params()->fromPost('mobile', '');
     $address = $this->params()->fromPost('address', '');
+    $avatar = $this->params()->fromFiles('avatar');
 
     $data = [];
     //Validate

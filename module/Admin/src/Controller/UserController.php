@@ -14,7 +14,9 @@ use Admin\Model\User;
 use Core\Hus\HusAjax;
 use Core\Paginator\Adapter\Offset;
 use Laminas\Paginator\Paginator;
+use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
 
@@ -81,42 +83,95 @@ class UserController extends HusController
   public function updateAction()
   {
     $idRecord = $this->params()->fromPost('idRecord', 0);
-    $name = $this->params()->fromPost('name', '');
-    $image = $this->params()->fromPost('image', '');
+    $fullName = $this->params()->fromPost('fullName', '');
+    $email = $this->params()->fromPost('email', '');
+    $password = $this->params()->fromPost('password', '');
+    $confirmPassword = $this->params()->fromPost('confirmPassword', '');
+    $role = $this->params()->fromPost('role', '');
+    $mobile = $this->params()->fromPost('mobile', '');
+    $address = $this->params()->fromPost('address', '');
     $status = $this->params()->fromPost('status', '');
 
-    $data = [
-      'type' => 'add',
-      'userCode' => VlsHelper::decToHex($this->getLoggedUserInfo('id')),
-      'idRvc' => $this->getLoggedUserInfo('rvcId')
-    ];
+    $data = [];
     //Validate
     $validatorNotEmpty = new ValidatorChain();
     $validatorNotEmpty->attach(new NotEmpty());
 
-    if (!$validatorNotEmpty->isValid($name)) {
-      HusAjax::setMessage('Please input Full Name.');
+    if (!$validatorNotEmpty->isValid($fullName)) {
+      HusAjax::setMessage('Vui lòng nhập Họ và tên.');
       HusAjax::outData(false);
     }
-    $data['name'] = $name;
+    $data['full_name'] = $fullName;
 
-    //Save image
-    if (!empty($image)) {
+    $validatorEmail = new ValidatorChain();
+    $validatorEmail->attach(new EmailAddress());
+    if (!$validatorEmail->isValid($email)) {
+      HusAjax::setMessage('Sai Email.');
+      HusAjax::outData(false);
+    }
 
+    $params = [
+      'conditions' => ['email' => $email],
+      'isFetchRow' => 1
+    ];
+    if (intval($idRecord) > 0) {
+      $params['conditions']['flexible'] = [['expression' => ['id <> ?', $idRecord]]];
+    }
+
+    $myUser = $this->dao->find($params);
+    if (!empty($myUser)) {
+      HusAjax::setMessage('Email đã được sử dụng trong hệ thống.');
+      HusAjax::outData(false);
+    }
+    $data['email'] = $email;
+
+    if ($idRecord == 0 && !$validatorNotEmpty->isValid($password)) {
+      HusAjax::setMessage('Độ dài mật khẩu phải từ 8 đến 30 ký tự.');
+      HusAjax::outData(false);
+    }
+
+    $validatorPassword = new ValidatorChain();
+    $validatorPassword->attach(new StringLength(['min' => 8, 'max' => 30]));
+    if (!empty($password) && !$validatorPassword->isValid($password)) {
+      HusAjax::setMessage('Độ dài mật khẩu phải từ 8 đến 30 ký tự.');
+      HusAjax::outData(false);
+    }
+
+    if ($password != $confirmPassword) {
+      HusAjax::setMessage('Nhập lại mật khẩu không trùng khớp.');
+      HusAjax::outData(false);
+    }
+
+    if (!empty($password)) {
+      $data['password'] = hash('sha256', $password);
+    }
+
+    if (!$validatorNotEmpty->isValid($role)) {
+      HusAjax::setMessage('Sai Vai trò.');
+      HusAjax::outData(false);
+    }
+    $data['role'] = $role;
+
+    if (!empty($mobile)) {
+      $data['mobile'] = $mobile;
+    }
+    if (!empty($address)) {
+      $data['address'] = $address;
     }
 
     if (!$validatorNotEmpty->isValid($status)) {
-      HusAjax::setMessage('Invalid Status.');
+      HusAjax::setMessage('Sai Trạng thái.');
       HusAjax::outData(false);
     }
     $data['status'] = $status;
 
-    if ($idRecord > 0) {
-      $data['type'] = 'edit';
-      $data['id'] = intval($idRecord);
+    if (intval($idRecord)) {
+      $data['updated_by'] = $this->getLoggedUser('id');
+    } else {
+      $data['created_by'] = $this->getLoggedUser('id');
     }
 
-    $result = $this->repo->saveArea($data);
+    $result = $this->dao->save($data, intval($idRecord));
 
     HusAjax::outData($result);
   }

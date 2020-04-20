@@ -12,28 +12,26 @@ return [
       'Admin\Controller\CategoryController',
     ],
     'Application' => [
-      //'Application\Controller\IndexController',
+      'Application\Controller\IndexController',
     ],
   ],
 
   'rules' => [
-/*
-    'SUPER_STAFF' => [
-      'Application\Controller\CategoryController' => [
+    'CLIENT' => [
+      'Application\Controller\IndexController' => [
         'allow' => ['index'],
         'deny' => null
       ],
     ],
-*/
+
     //For Admin
     'ADMIN' => null
   ],
 
   'roles' => [
-/*
-    'STAFF' => null,
+    'CLIENT' => null,
+    'STAFF' => ['CLIENT'],
     'SUPER_STAFF' => ['STAFF'],
-*/
     'ADMIN' => null,
   ],
 ];

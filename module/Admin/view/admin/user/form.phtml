@@ -38,8 +38,8 @@
             <input type="email" class="form-control" id="email" name="email" value="<?=isset($this->myUser) ? $this->myUser->email : ''?>" required>
           </div>
           <div class="form-group col-md-4">
-            <label for="password" class="required">Mậu khẩu</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <label for="password"<?=isset($this->myUser) ? '' : ' class="required"'?>>Mật khẩu</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="<?=isset($this->myUser) ? 'Bỏ trống để giữ mật khẩu cũ' : 'Mật khẩu'?>"<?=isset($this->myUser) ? '' : ' required'?>>
           </div>
           <div class="form-group col-md-4">
             <label for="confirmPassword">Nhập lại mật khẩu</label>
@@ -54,13 +54,6 @@
           <div class="form-group col-md-8">
             <label for="address">Địa chỉ</label>
             <input type="text" class="form-control" id="address" name="address" value="<?=isset($this->myUser) ? $this->myUser->address : ''?>">
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-12">
-            <label for="image">Avatar</label>
-            <img src="<?=isset($this->myUser) && !empty($this->myUser->avatar) ? $this->myUser->avatar : '/img/no_image.png'?>" id="imgCover" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
-            <input type="file" style="display: none" id="image" name="avatar" data-link="<?=isset($this->myUser) && !empty($this->myUser->avatar) ? $this->myUser->avatar : ''?>">
           </div>
         </div>
 

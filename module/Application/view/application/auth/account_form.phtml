@@ -51,6 +51,13 @@
               <input type="text" id="address" name="address" value="<?= isset($this->myAccount->address) ? $this->myAccount->address : '' ?>" class="form-control">
             </div>
         </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="image">Avatar</label>
+            <img src="<?=isset($this->myAccount) && !empty($this->myAccount->avatar) ? $this->myAccount->avatar : '/img/no_image.png'?>" id="imgCover" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
+            <input type="file" style="display: none" id="image" name="avatar" data-link="<?=isset($this->myAccount) && !empty($this->myAccount->avatar) ? $this->myAccount->avatar : ''?>">
+          </div>
+        </div>
         <input type="hidden" name="idRecord" value="<?= $this->myAccount->id ?>">
       </form>
     </div>

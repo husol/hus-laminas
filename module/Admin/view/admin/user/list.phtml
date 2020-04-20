@@ -25,9 +25,11 @@
       <td class="text-center"><?=$user->status?></td>
       <td class="text-center"><?=convertToDateDisplay($user->last_login, true)?></td>
       <td class="text-center">
+      <?php if ($this->layout()->loggedUser->id != $user->id):?>
         <a href="javascript:editUser(<?=$user->id?>);" title="<?=$this->layout()->translator->getLang('tooltip_edit')?>"><i class="fas fa-pencil-alt text-blue"></i></a>
         &nbsp;
         <a href="javascript:deleteUser(<?=$user->id?>);" title="<?=$this->layout()->translator->getLang('tooltip_delete')?>"><i class="far fa-trash-alt text-red"></i></a>
+      <?php endif;?>
       </td>
     </tr>
   <?php endforeach;?>

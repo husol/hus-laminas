@@ -31,7 +31,7 @@ function registerCallback(result) {
 function loginCallback(result) {
   $('#btnLogin').prop("disabled", false);
   if (result !== false) {
-    if (result.hotelId > 0) {
+    if (result.role == 'CLIENT') {
       window.location.href = "/";
     } else {
       window.location.href = "/admin";

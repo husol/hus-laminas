@@ -43,6 +43,33 @@ function formMyAccountCallback(result) {
   if (result !== false) {
     $('#commonDialog').modal({backdrop: 'static'});
 
+    $("#imgCover").on("click", function () {
+      $("#image").trigger("click");
+    });
+
+    $("#image").change(function(e){
+      //Validate file type / size
+      var validImageTypes = ["image/png", "image/jpeg", "image/gif"];
+      var files = e.originalEvent.target.files;
+      for (var i = 0, len = this.files.length; i < len; i++){
+        var n = files[i].name,
+          t = files[i].type,
+          s = files[i].size;
+        if (!validImageTypes.includes(t)) {
+          $(this).val("");
+          showErrorBubble('image', "Supported image formats are PNG, JPEG, JPG, GIF.");
+          return false;
+        }
+        if (s > 1048576) {// Max file size is 1 MB
+          $(this).val("");
+          showErrorBubble('image', "Maximum size for image is 1 MB.");
+          return false;
+        }
+      }
+
+      previewImage(this, "imgCover");
+    });
+
     $('#btnSave').on('click', function () {
       if (!validateForm('formMyAccount')) {
         return false;
