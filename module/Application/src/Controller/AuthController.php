@@ -12,6 +12,7 @@ namespace Application\Controller;
 use Admin\Model\User;
 use Core\Hus\HusAjax;
 use Core\Hus\HusEmail;
+use Core\Hus\HusHelper;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
@@ -179,108 +180,143 @@ class AuthController extends AbstractActionController
     HusAjax::outData();
   }
 
-  public function forgotpasswordformAction()
+  public function forgotPasswordFormAction()
   {
     //Render html
     $view = new ViewModel();
-    $view->setTemplate('application/auth/forgotpassword');
+    $view->setTemplate('application/auth/forgot_password');
     $html = $this->renderer->render($view);
 
     HusAjax::setHtml('commonDialog', $html);
     HusAjax::outData();
   }
 
-  public function forgotpasswordAction()
+  public function forgotPasswordAction()
   {
-    $formData = $this->params()->fromPost('data');
+    $email = $this->params()->fromPost('email');
 
     //Validate
     $validatorEmail = new ValidatorChain();
     $validatorEmail->attach(new EmailAddress());
 
-    if (!$validatorEmail->isValid($formData['email'])) {
+    if (!$validatorEmail->isValid($email)) {
       HusAjax::setMessage('Invalid email address.');
       HusAjax::outData(false);
     }
 
+    //Check if email is existed in system
+    $params = [
+      'conditions' => [
+        'email' => $email
+      ],
+      'isFetchRow' => 1
+    ];
+    $myUser = $this->dao->find($params);
+    if (empty($myUser)) {
+      HusAjax::setMessage("Email không tồn tại trong hệ thống.");
+      HusAjax::outData(false);
+    }
+
     //Get token string for resetting password
-    $result = $this->repo->forgotpasswordAPI($formData['email']);
-    $tokenStr = $result->secretKey;
+    $tokenStr = HusHelper::generateRandomString();
+
+    $uri = $this->getRequest()->getUri();
+    $baseUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
 
     //Send email with reset-password url
-    $resetUrl = "{$this->getBaseUrl()}/auth/resetpassword?email={$formData['email']}&token=$tokenStr";
+    $resetUrl = "{$baseUrl}/auth/resetPassword?email={$email}&token=$tokenStr";
 
     $content = "Welcome to Hus Laminas.\n";
     $content .= "You have request to reset your password account. Please click the link below to reset it:\n";
     $content .= $resetUrl;
 
-    $vlsEmail = new HusEmail();
-    $vlsEmail->setFrom(['No-Reply' => 'noreply@husol.org']);
-    $vlsEmail->setTo([
-      $formData['email']
-    ]);
-    $vlsEmail->setSubject('Reset Your Password on Hus Laminas');
+    $husEmail = new HusEmail();
+    $husEmail->setFrom(['No-Reply' => 'noreply@husol.org']);
+    $husEmail->setTo([$email]);
+    $husEmail->setSubject('Reset Your Password on Hus Laminas');
 
-    $result = $vlsEmail->send($content);
+    $result = $husEmail->send($content);
 
     if ($result['status']) {
-      HusAjax::outData(true);
+      //Save tokenStr to DB
+      $myUser = $this->dao->save(['token' => $tokenStr], $myUser->id);
+      HusAjax::outData($myUser);
     }
 
     HusAjax::setMessage($result['message']);
     HusAjax::outData(false);
   }
 
-  public function resetpasswordAction()
+  public function resetPasswordAction()
   {
     $email = $this->params()->fromQuery('email');
     $tokenStr = $this->params()->fromQuery('token');
 
-    $this->layout()->setTemplate('layout/layout_auth');
-    $view = new ViewModel();
-    $view->setVariables(['email' => $email, 'token' => $tokenStr]);
+    $this->layout("layout/layout_auth");
 
-    return $view;
+    return new ViewModel(['email' => $email, 'token' => $tokenStr]);
   }
 
-  public function changepasswordAction()
+  public function changePasswordAction()
   {
-    $formData = $this->params()->fromPost('data');
+    $email = $this->params()->fromPost('email', '');
+    $newPassword = $this->params()->fromPost('newPassword', '');
+    $confirmPassword = $this->params()->fromPost('confirmPassword', '');
+    $token = $this->params()->fromPost('token', '');
 
     //Validate
     $validatorEmail = new ValidatorChain();
     $validatorEmail->attach(new EmailAddress());
 
-    if (!$validatorEmail->isValid($formData['email'])) {
-      HusAjax::setMessage('Invalid email address.');
+    if (!$validatorEmail->isValid($email)) {
+      HusAjax::setMessage('Sai địa chỉ Email.');
       HusAjax::outData(false);
     }
 
     $validatorPassword = new ValidatorChain();
     $validatorPassword->attach(new StringLength(['min' => 8, 'max' => 30]));
 
-    if (!$validatorPassword->isValid($formData['newPassword'])) {
-      HusAjax::setMessage('Password length must be between 8 and 30 characters');
+    if (!$validatorPassword->isValid($newPassword)) {
+      HusAjax::setMessage('Mật khẩu phải có độ dài từ 8 đến 30 ký tự.');
       HusAjax::outData(false);
     }
 
-    if (!$validatorPassword->isValid($formData['confirmPassword'])) {
-      HusAjax::setMessage('Confirm Password length must be between 8 and 30 characters');
+    if ($newPassword != $confirmPassword) {
+      HusAjax::setMessage('Nhập lại mật khẩu không trùng khớp với Mật khẩu mới.');
       HusAjax::outData(false);
     }
 
-    if ($formData['newPassword'] != $formData['confirmPassword']) {
-      HusAjax::setMessage('Confirm Password must be the same as New Password');
+    //Check email and token
+    $params = [
+      'conditions' => [
+        'email' => $email
+      ],
+      'isFetchRow' => 1
+    ];
+    $myUser = $this->dao->find($params);
+    if (empty($myUser)) {
+      HusAjax::setMessage('Email không tồn tại trong hệ thống.');
+      HusAjax::outData(false);
+    }
+
+    if ($myUser->status == 'INACTIVE') {
+      HusAjax::setMessage('Tài khoản chưa được kích hoạt.');
+      HusAjax::outData(false);
+    }
+
+    if ($myUser->token != $token) {
+      HusAjax::setMessage('Hết hạn Token.');
       HusAjax::outData(false);
     }
 
     //Change password
-    $result = $this->repo->resetpasswordAPI($formData['email'], $formData['newPassword'], $formData['token']);
-    if ($result === false) {
-      HusAjax::outData(false);
-    }
+    $data = [
+      'password' => hash('sha256', $newPassword),
+      'token' => ''
+    ];
+    $myUser = $this->dao->save($data, $myUser->id);
 
-    HusAjax::outData(true);
+    HusAjax::outData($myUser);
   }
 
   public function logoutAction()

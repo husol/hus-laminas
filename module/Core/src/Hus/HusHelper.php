@@ -89,4 +89,19 @@ class HusHelper
       'userAgent' => $request->getServer('HTTP_USER_AGENT')
     ];
   }
+
+  public static function generateRandomString($length = 16, $include_special_char = false) {
+    $includeChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    /* Uncomment below to include symbols */
+    if ($include_special_char) {
+      $includeChars .= "[{(!@#$%^/&*_+;?\:)}]";
+    }
+    $charLength = strlen($includeChars);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+      $randomString .= $includeChars[rand(0, $charLength - 1)];
+    }
+
+    return $randomString;
+  }
 }

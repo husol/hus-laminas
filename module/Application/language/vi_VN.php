@@ -18,6 +18,7 @@ return [
   'tooltip_detail'                                => 'Chi tiết',
 
   /**Buttons*/
+  'btn_submit'                                    => 'Gửi',
   'btn_save'                                      => 'Lưu',
   'btn_cancel'                                    => 'Hủy',
   'btn_remove'                                    => 'Gỡ',

@@ -18,6 +18,7 @@ return [
   'tooltip_detail'                                => 'Detail',
 
   /**Buttons*/
+  'btn_submit'                                    => 'Submit',
   'btn_save'                                      => 'Save',
   'btn_cancel'                                    => 'Cancel',
   'btn_remove'                                    => 'Remove',

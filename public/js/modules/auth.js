@@ -20,6 +20,14 @@ $(document).ready(function () {
     callAjax('auth', 'login', {data: fetchForm($('#loginForm'))}, loginCallback);
     return false;
   });
+
+  $('#btnChangePassword').on('click', function () {
+    if (!validateForm('changePasswordForm')) {
+      return false;
+    }
+    callAjax('auth', 'changePassword', {formData: fetchForm($('#changePasswordForm'))}, changePasswordCallback);
+    return false;
+  });
 });
 
 function registerCallback(result) {
@@ -39,45 +47,39 @@ function loginCallback(result) {
   }
 }
 
-function changepasswordCallback(result) {
+function changePasswordCallback(result) {
   $('#btnChangePassword').prop("disabled", false);
   if (result !== false) {
-    showSuccessBubble('Your password is changed successfully.');
-    window.location.href = "/auth";
+    showSuccessBubble('Mật khẩu của bạn đã được thay đổi thành công.');
+    setTimeout(function () {
+      window.location.href = "/auth";
+    }, 3000);
   }
 }
 
-function forgotpassword() {
-  callAjax('auth', 'forgotpasswordform', {}, forgotpasswordformCallback);
+function forgotPassword() {
+  callAjax('auth', 'forgotPasswordForm', {}, forgotPasswordFormCallback);
 }
 
-function forgotpasswordformCallback(result) {
+function forgotPasswordFormCallback(result) {
   $('#commonDialog').modal({backdrop: 'static'});
-
-  $('#email').keypress(function (e) {
-    var key = e.which;
-    if(key == 13) {// The enter key code
-      $('#btnSubmit').trigger('click');
-      return false;
-    }
-  });
 
   $('#btnSubmit').on('click', function () {
     //Validate
-    if ($.trim($('#email').val()) == '') {
-      showErrorBubble('#email', 'Email is required and not empty');
+    if (!validateForm('formForgotPassword')) {
       return false;
     }
     $('#btnSubmit').prop("disabled", true);
-    callAjax('auth', 'forgotpassword', {data: fetchForm($('#formForgotPassword'))}, resetpasswordCallback);
+    callAjax('auth', 'forgotPassword', {formData: fetchForm($('#formForgotPassword'))}, forgotPasswordCallback);
+    return false;
   });
 }
 
-function resetpasswordCallback(result) {
+function forgotPasswordCallback(result) {
   $('#btnSubmit').prop("disabled", false);
   if (result !== false) {
     $('#commonDialog').modal('hide');
-    showSuccessBubble("Please check your email to reset your password.");
+    showSuccessBubble("Hãy kiểm tra email của bạn để thay đổi mật khẩu.");
   }
   return false;
 }
