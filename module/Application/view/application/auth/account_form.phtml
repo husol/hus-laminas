@@ -1,0 +1,62 @@
+<div class="modal-dialog modal-lg" role="document">
+  <!--Content-->
+  <div class="modal-content">
+
+    <!--Header-->
+    <div class="modal-header bg-blue text-white">
+      <h4>Tài khoản của bạn</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body mb-0">
+
+      <form id="formMyAccount" class="eventEnterKey" data-enterkey="btnSave" novalidate>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="fullName" class="required">Họ và tên</label>
+            <input type="text" id="fullName" name="fullName" value="<?= $this->myAccount->full_name ?>" class="form-control" required>
+            <div class="invalid-feedback">Sai họ và tên</div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email" class="required">Email</label>
+            <input type="text" id="email" name="email" value="<?=$this->myAccount->email?>" class="form-control" disabled required>
+            <div class="invalid-feedback">Sai email</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="currentPassword" class="required active isActive">Mật khẩu hiện tại</label>
+            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required autofocus>
+            <div class="invalid-feedback">Sai mật khẩu hiện tại</div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="password" class="active isActive">Mật khẩu mới</label>
+            <input type="password" id="password" name="password" class="form-control"
+                   placeholder="Bỏ trống để giữ mật khẩu hiện tại">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="confirmPassword">Xác nhận mật khẩu</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="mobile">Điện thoại</label>
+            <input type="text" id="mobile" name="mobile" value="<?= isset($this->myAccount->mobile) ? $this->myAccount->mobile : '' ?>" class="form-control">
+          </div>
+            <div class="form-group col-md-8">
+              <label for="address">Địa chỉ</label>
+              <input type="text" id="address" name="address" value="<?= isset($this->myAccount->address) ? $this->myAccount->address : '' ?>" class="form-control">
+            </div>
+        </div>
+        <input type="hidden" name="idRecord" value="<?= $this->myAccount->id ?>">
+      </form>
+    </div>
+    <div class="modal-footer justify-content-center">
+      <button id="btnSave" class="btn btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span> <?=$this->layout()->translator->getLang('btn_save')?></button>
+    </div>
+  </div>
+  <!--/.Content-->
+</div>

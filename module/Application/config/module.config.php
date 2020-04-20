@@ -1,12 +1,9 @@
 <?php
-
 /**
- * @see       https://github.com/laminas/laminas-mvc-skeleton for the canonical source repository
- * @copyright https://github.com/laminas/laminas-mvc-skeleton/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-mvc-skeleton/blob/master/LICENSE.md New BSD License
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-
-declare(strict_types=1);
 
 namespace Application;
 
@@ -15,33 +12,43 @@ use Laminas\Router\Http\Segment;
 return [
   'router' => [
     'routes' => [
+      'login' => [
+        'type'    => Segment::class,
+        'options' => [
+          'route'    => '/sign-in',
+          'defaults' => [
+            'controller' => Controller\AuthController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
+      'forbidden' => [
+        'type'    => Segment::class,
+        'options' => [
+          'route'    => '/error/403',
+          'defaults' => [
+            'controller' => Controller\AuthController::class,
+            'action'     => 'error403',
+          ],
+        ],
+      ],
+      'auth' => [
+        'type'    => Segment::class,
+        'options' => [
+          'route'    => '/auth[/:action]',
+          'defaults' => [
+            'controller' => Controller\AuthController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
       'home' => [
         'type' => Segment::class,
         'options' => [
-          'route' => '/[/:action]',
+          'route'    => '/[/:action]',
           'defaults' => [
             'controller' => Controller\IndexController::class,
-            'action' => 'index',
-          ],
-        ],
-      ],
-      'admin' => [
-        'type' => Segment::class,
-        'options' => [
-          'route' => '/admin[/:action]',
-          'defaults' => [
-            'controller' => Controller\HomeController::class,
-            'action' => 'index',
-          ],
-        ],
-      ],
-      'user' => [
-        'type' => Segment::class,
-        'options' => [
-          'route' => '/admin/users[/:action]',
-          'defaults' => [
-            'controller' => Controller\UserController::class,
-            'action' => 'index',
+            'action'     => 'index',
           ],
         ],
       ],
@@ -49,9 +56,8 @@ return [
   ],
   'controllers' => [
     'factories' => [
+      Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
       Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
-      Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
-      Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
     ],
   ],
   'view_manager' => [
@@ -60,12 +66,12 @@ return [
     'exception_template' => 'error/index',
     'template_map' => [
       'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-      'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+      'index/index' => __DIR__ . '/../view/index/index.phtml',
       'error/404' => __DIR__ . '/../view/error/404.phtml',
       'error/index' => __DIR__ . '/../view/error/index.phtml',
     ],
     'template_path_stack' => [
-      __DIR__ . '/../view',
+      'application' => __DIR__ . '/../view',
     ],
     'strategies' => [
       'ViewJsonStrategy',
@@ -76,10 +82,10 @@ return [
   ],
   'view_helpers' => [
     'factories' => [
-      View\HelperView::class => View\Factory\HelperViewFactory::class,
+      \Application\View\HelperView::class => \Application\View\Factory\HelperViewFactory::class,
     ],
     'aliases' => [
-      'config' => View\HelperView::class
+      'config' => \Application\View\HelperView::class
     ]
   ],
 ];

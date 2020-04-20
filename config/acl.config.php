@@ -6,8 +6,13 @@
 
 return [
   'resources' => [
+    'Admin' => [
+      'Admin\Controller\HomeController',
+      'Admin\Controller\UserController',
+      'Admin\Controller\CategoryController',
+    ],
     'Application' => [
-      'Application\Controller\HomeController',
+      //'Application\Controller\IndexController',
     ],
   ],
 

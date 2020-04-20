@@ -32,21 +32,21 @@ class HusLogger
 
   static public function error($logs, $name, $title)
   {
-    $configPms = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
     $logDir = ROOT_DIR .DIRECTORY_SEPARATOR. 'logs' .DIRECTORY_SEPARATOR. date('Ym');
     if (!file_exists($logDir)) {
       mkdir($logDir, 0777, true);
     }
     $logFile = sprintf('%s_%s.txt', date('d'), $name);
     $logFilePath = $logDir .DIRECTORY_SEPARATOR. $logFile;
-    $title = "[{$configPms['LOG_LEVEL']}] $title:";
+    $title = "[{$configHus['LOG_LEVEL']}] $title:";
     return self::mlog($logs, false, $title, $logFilePath);
   }
 
   static public function debug($logs, $name, $title)
   {
-    $configPms = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Pms/config/config.php');
-    if ($configPms['LOG_LEVEL'] != 'DEBUG') {
+    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    if ($configHus['LOG_LEVEL'] != 'DEBUG') {
       return 0;
     }
 
@@ -56,14 +56,14 @@ class HusLogger
     }
     $logFile = sprintf('%s_%s.txt', date('d'), $name);
     $logFilePath = $logDir .DIRECTORY_SEPARATOR. $logFile;
-    $title = "[{$configPms['LOG_LEVEL']}] $title:";
+    $title = "[{$configHus['LOG_LEVEL']}] $title:";
     return self::mlog($logs, false, $title, $logFilePath);
   }
 
   static public function info($logs, $name, $title)
   {
-    $configPms = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Pms/config/config.php');
-    if ($configPms['LOG_LEVEL'] != 'INFO') {
+    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    if ($configHus['LOG_LEVEL'] != 'INFO') {
       return 0;
     }
 
@@ -73,7 +73,7 @@ class HusLogger
     }
     $logFile = sprintf('%s_%s.txt', date('d'), $name);
     $logFilePath = $logDir .DIRECTORY_SEPARATOR. $logFile;
-    $title = "[{$configPms['LOG_LEVEL']}] $title:";
+    $title = "[{$configHus['LOG_LEVEL']}] $title:";
     return self::mlog($logs, false, $title, $logFilePath);
   }
 }

@@ -231,3 +231,7 @@ tr.active {
                 .5em 0 0 #c36e00;
     }
 }
+
+.grecaptcha-badge{
+    display:none;
+}

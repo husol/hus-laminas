@@ -1,0 +1,49 @@
+<div class="body">
+  <div class="content" style="margin: 5%; margin-top: 2%;">
+    <div class="page-inner">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="header">
+            <div>Hus<span>Laminas</span></div>
+            <br>
+          </div>
+          <div style="position:absolute; top:50%; left:30%">
+            <h2 class="text-muted pb-2 fw-bold">Manage your website right now!</h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header card-secondary">
+              <div class="card-head-row">
+                <div class="card-title">Thông Tin Đăng Nhập</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <form id="loginForm" class="eventEnterKey" data-enterkey="btnLogin">
+                <div class="form-group">
+                  <label for="email" class="required">Email</label>
+                  <input type="email" class="form-control" placeholder="Email" name="email" required>
+                  <div class="invalid-feedback">Sai Email</div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="required">Mật khẩu</label>
+                  <input type="password" class="form-control" placeholder="Mật khẩu" minlength="8" name="password" required>
+                  <div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự</div>
+                </div>
+              </form>
+            </div>
+            <div class="card-action text-center">
+              <i class="fas fa-address-book"></i>
+              <button id="btnLogin" class="btn btn-primary">Đăng nhập</button>
+              <div class="mt-2"><a href="javascript:forgotPassword();">Quên mật khẩu?</a></div>
+            </div>
+            <div class="card-action text-center">
+              Chưa đăng ký tài khoản? <a href="/?register=1">Đăng ký ngay</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

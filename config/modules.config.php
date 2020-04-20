@@ -23,5 +23,6 @@ return [
     'Laminas\Validator',
     'CurrentRoute',
     'Core',
+    'Admin',
     'Application',
 ];

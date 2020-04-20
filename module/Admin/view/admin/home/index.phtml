@@ -1,0 +1,55 @@
+<div class="panel-header bg-primary-gradient">
+  <div class="page-inner py-5">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+      <div>
+        <h2 class="text-white pb-2 fw-bold">Welcome to Hus Laminas Dashboard</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-inner mt--5">
+  <div class="row mt--2">
+    <div class="col-md-6">
+      <div class="card full-height">
+        <div class="card-body">
+          <div class="card-title">Thống kê hệ thống</div>
+          <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+            <div class="px-2 pb-2 pb-md-0 text-center">
+              <h6 class="fw-bold mb-3">Người dùng</h6>
+              <h3 class="fw-bold"><?=$this->countUser?></h3>
+            </div>
+            <div class="px-2 pb-2 pb-md-0 text-center">
+              <h6 class="fw-bold mb-3">Loại sản phẩm</h6>
+              <h3 class="fw-bold"><?=$this->countCategory?></h3>
+            </div>
+            <div class="px-2 pb-2 pb-md-0 text-center">
+              <h6 class="fw-bold mb-3">Sản phẩm</h6>
+              <h3 class="fw-bold"><?=$this->countProduct?></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card full-height">
+        <div class="card-body">
+          <div class="card-title">Thống kê giao dịch</div>
+          <div class="row col-md-12 py-3">
+            <div class="col-md-4 text-center">
+              <h6 class="fw-bold text-uppercase text-danger op-8">Giao dịch mới</h6>
+              <h3 class="fw-bold"><?=$this->sumOther?></h3>
+            </div>
+            <div class="col-md-4 text-center">
+              <h6 class="fw-bold text-uppercase text-blue op-8">Đang giao hàng</h6>
+              <h3 class="fw-bold"><?=$this->sumBeverage?></h3>
+            </div>
+            <div class="col-md-4 text-center">
+              <h6 class="fw-bold text-uppercase text-success op-8">Giao dịch thành công</h6>
+              <h3 class="fw-bold"><?=$this->sumFood?></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

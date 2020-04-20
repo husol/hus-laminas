@@ -1,0 +1,113 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<?= $this->doctype() ?>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <?php $appName = $this->layout()->isLive ? 'Hus Laminas' : 'BETA Hus Laminas'; ?>
+  <?= $this->headTitle("{$appName} {$this->layout()->appVersion}")->setSeparator(' - ')->setAutoEscape(false) ?>
+
+  <?= $this->headMeta()
+    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+  ?>
+
+  <!-- Styles -->
+  <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+    ->prependStylesheet($this->basePath("css/admin.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/toastr.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/select2-4.0.7.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/bootstrap-select.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/atlantis.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
+  ?>
+
+  <!-- Scripts -->
+  <?= $this->headScript()
+    ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/atlantis.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/sweetalert.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/bootstrap-notify.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/select2-4.0.7.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery.scrollbar.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery.ui.touch-punch.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery-ui-contextmenu.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/toastr.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/bootstrap-select.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/webfont.min.{$this->layout()->dateVersion}.js"))
+  ?>
+  <script>
+    WebFont.load({
+      google: {"families":["Lato:300,400,700,900"]},
+      custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['<?=$this->basePath("css/fonts.min.{$this->layout()->dateVersion}.css")?>']},
+      active: function() {
+        sessionStorage.fonts = true;
+      }
+    });
+  </script>
+</head>
+<body>
+<?=$this->render('js_variables.phtml')?>
+<!-- The Modal -->
+<div id="commonDialog" class="modal fade" role="dialog" tabindex="-1"></div>
+<div id="childDialog" class="modal fade" role="dialog" tabindex="-1"></div>
+
+<div class="wrapper">
+  <div class="main-header">
+    <!-- Logo Header -->
+    <div class="logo-header" data-background-color="blue">
+      <a href="/" class="text-white font-weight-bold text-decoration-none"><img width="15%" height="15%" src="/img/husol-logo.svg"> Husol Laminas</a>
+      <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="icon-menu"></i></span>
+      </button>
+      <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+      <div class="nav-toggle">
+        <button class="btn btn-toggle toggle-sidebar"><i class="icon-menu"></i></button>
+      </div>
+    </div>
+    <!-- End Logo Header -->
+
+    <!-- Navbar Header -->
+    <?=$this->render('navbar_admin.phtml')?>
+    <!-- End Navbar -->
+  </div>
+
+  <!-- Sidebar -->
+  <?=$this->render('sidebar_admin.phtml')?>
+  <!-- End Sidebar -->
+
+  <div class="main-panel">
+    <div class="content">
+      <?= $this->content ?>
+    </div>
+  </div>
+</div>
+
+<!--Footer-->
+<footer class="bg-secondary text-white text-center fixed-bottom row mt-5 pt-2 pb-2">
+  <div class="col-md-4">RVC Date: 15-Jul-2020</div>
+  <div class="col-md-4">POS &copy; <?=date('Y')?> All rights reserved | <a href="https://vleisure.com" style="color: #4bffd2">VLeisure Company</a></div>
+  <div class="col-md-4">System Date: <?=date('d-M-Y')?></div>
+</footer>
+<!--/.Footer-->
+<div id="loading" class="notification_box">
+  <p><span id="infoText">Processing...</span></p>
+  <i class="fas fa-spinner fa-pulse text-dark mt-1 float-right"></i>
+</div>
+<?= $this->inlineScript()
+  ->prependFile($this->basePath("js/admin.{$this->layout()->dateVersion}.js"))
+  ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
+?>
+</body>
+</html>

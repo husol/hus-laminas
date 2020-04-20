@@ -34,7 +34,7 @@ function loginCallback(result) {
     if (result.hotelId > 0) {
       window.location.href = "/";
     } else {
-      window.location.href = "/setup/hotel";
+      window.location.href = "/admin";
     }
   }
 }

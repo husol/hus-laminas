@@ -1,0 +1,62 @@
+body {
+    padding-bottom: 40px;
+}
+
+.btn-success {
+    background-color: #57a900;
+    background-image: -moz-linear-gradient(top, #70d900, #57a900);
+    background-image: -ms-linear-gradient(top, #70d900, #57a900);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
+    background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+    background-image: -o-linear-gradient(top, #70d900, #57a900);
+    background-image: linear-gradient(top, #70d900, #57a900);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+    background-color: #57a900;
+}
+
+fieldset {
+    border: 1px solid #ddd !important;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    border-radius:4px;
+}
+
+legend {
+    font-size: 14px;
+    font-weight: bold;
+    width: 190px;
+    padding: 5px;
+}
+
+.close {
+    color: whitesmoke;
+    font-size: 1.7rem;
+}
+
+.close:hover {
+    color: red;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 39px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding-top: 4px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 33px;
+}
+
+.bootstrap-select.form-control {
+    border: solid 1px #ebedf2;
+}

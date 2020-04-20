@@ -66,7 +66,7 @@ class Module
     $viewModel->translator = $translator;
 
     //You should update publicControllers array in your situation
-    $publicControllers = ['Application\Controller\IndexController', 'Application\Controller\UserController'];
+    $publicControllers = ['Application\Controller\IndexController', 'Application\Controller\AuthController'];
 
     if (!in_array($routeParams['controller'], $publicControllers)) {
       $request = new \Laminas\Http\PhpEnvironment\Request();
@@ -77,7 +77,7 @@ class Module
         if (!empty($httpXRequestWith) && $httpXRequestWith == 'XMLHttpRequest') {
           HusAjax::outData('expired_session');
         } else {
-          header('Location: /');
+          header('Location: /sign-in');
           exit;
         }
       }

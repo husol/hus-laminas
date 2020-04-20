@@ -1,0 +1,75 @@
+<div class="modal-dialog modal-lg" role="document">
+  <!--Content-->
+  <div class="modal-content">
+
+    <!--Header-->
+    <div class="modal-header bg-blue text-white">
+      <h3><?=(isset($this->myUser)) ? "Update" : "New"?> User</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body mb-0">
+      <form id="formUser" class="eventEnterKey" data-enterkey="btnSave" novalidate>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="fullName" class="required">Họ và tên</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" value="<?=isset($this->myUser) ? $this->myUser->full_name : ''?>" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="role">Vai trò</label>
+            <select class="form-control" id="role" name="role">
+              <option value="CLIENT"<?=isset($this->myUser) && $this->myUser->role == 'CLIENT' ? ' selected' : ''?>>CLIENT</option>
+              <option value="ADMIN"<?=isset($this->myUser) && $this->myUser->status == 'ADMIN' ? ' selected' : ''?>>ADMIN</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="status">Trạng thái</label>
+            <select class="form-control" id="status" name="status">
+              <option value="INACTIVE"<?=isset($this->myUser) && $this->myUser->status == 'INACTIVE' ? ' selected' : ''?>>INACTIVE</option>
+              <option value="ACTIVE"<?=isset($this->myUser) && $this->myUser->status == 'ACTIVE' ? ' selected' : ''?>>ACTIVE</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="email" class="required">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="<?=isset($this->myUser) ? $this->myUser->email : ''?>" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="password" class="required">Mậu khẩu</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="confirmPassword">Nhập lại mật khẩu</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="mobile">Số điện thoại</label>
+            <input type="text" class="form-control" id="mobile" name="mobile" value="<?=isset($this->myUser) ? $this->myUser->mobile : ''?>">
+          </div>
+          <div class="form-group col-md-8">
+            <label for="address">Địa chỉ</label>
+            <input type="text" class="form-control" id="address" name="address" value="<?=isset($this->myUser) ? $this->myUser->address : ''?>">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="image">Avatar</label>
+            <img src="<?=isset($this->myUser) && !empty($this->myUser->avatar) ? $this->myUser->avatar : '/img/no_image.png'?>" id="imgCover" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
+            <input type="file" style="display: none" id="image" name="avatar" data-link="<?=isset($this->myUser) && !empty($this->myUser->avatar) ? $this->myUser->avatar : ''?>">
+          </div>
+        </div>
+
+        <input type="hidden" id="idRecord" name="idRecord" value="<?=isset($this->myUser)? $this->myUser->id : 0?>">
+      </form>
+    </div>
+    <div class="modal-footer justify-content-center">
+      <button id="btnSave" class="btn btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span> <?=$this->layout()->translator->getLang('btn_save')?></button>
+    </div>
+  </div>
+  <!--/.Content-->
+</div>
