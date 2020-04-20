@@ -14,5 +14,17 @@
 return [
   //Log Level in ERROR, DEBUG, INFO
   'LOG_LEVEL' => 'ERROR',
-  'IS_LIVE' => true
+  'IS_LIVE' => true,
+  //SMTP Setting for sending email
+    'SMTP_OPTIONS' => [
+      'name' => '{System Name}',//Husol
+      'host' =>'{SMTP_HOST}',//smtp.gmail.com
+      'port' => {SMTP_PORT},//587
+      'connection_class'  => 'plain',
+      'connection_config' => [
+        'username' => '{SMTP_USERNAME}',//Gmail account
+        'password' => '{SMTP_PASSWORD}',//Gmail password
+        'ssl'      => 'tls',
+      ]
+    ]
 ];

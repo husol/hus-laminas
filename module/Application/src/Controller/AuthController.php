@@ -230,7 +230,7 @@ class AuthController extends AbstractActionController
     $content .= "You have request to reset your password account. Please click the link below to reset it:\n";
     $content .= $resetUrl;
 
-    $husEmail = new HusEmail();
+    $husEmail = new HusEmail($this->husConfig['SMTP_OPTIONS']);
     $husEmail->setFrom(['No-Reply' => 'noreply@husol.org']);
     $husEmail->setTo([$email]);
     $husEmail->setSubject('Reset Your Password on Hus Laminas');
