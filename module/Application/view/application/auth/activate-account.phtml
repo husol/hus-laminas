@@ -1,0 +1,40 @@
+<div class="body">
+  <div class="content" style="margin: 5%; margin-top: 2%;">
+    <div class="page-inner">
+      <div class="row">
+        <div class="col-md-8">
+          <?php if ($this->result['status']):?>
+            <h3>
+              Tài khoản của bạn vừa được kích hoạt thành công. Tự động chuyển đến trang <a href="/auth">Đăng nhập</a> sau <span id="countdown">7</span> seconds.
+            </h3>
+          <?php else:?>
+          <?php endif;?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  // Total seconds to wait
+  var seconds = 7;
+
+  function countdown() {
+    seconds = seconds - 1;
+    if (seconds < 0) {
+      // Change your redirection link here
+      window.location = root_url + "/auth";
+    } else {
+      // Update remaining seconds
+      document.getElementById("countdown").innerHTML = seconds;
+      // Count down using javascript
+      window.setTimeout("countdown()", 1000);
+    }
+  }
+
+  // Run countdown function
+  countdown();
+
+</script>
+

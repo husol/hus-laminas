@@ -22,6 +22,7 @@
 
     <!-- Scripts -->
     <?= $this->headScript()
+        ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/jquery-ui-contextmenu.min.{$this->layout()->dateVersion}.js"))
         ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
@@ -53,7 +54,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?= $this->url('home') ?>">Home <span class="sr-only">(current)</span></a>
+                    <a id="register" class="nav-link" href="javascript:void(0);">Register</a>
                 </li>
             </ul>
         </div>
@@ -74,7 +75,6 @@
 </div>
   <?= $this->inlineScript()
     ->prependFile($this->basePath("js/common.{$this->layout()->dateVersion}.js"))
-    ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
   ?>
 </body>
 </html>

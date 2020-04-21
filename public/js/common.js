@@ -1,5 +1,26 @@
 $(document).ready(function () {
+  $('#register').on('click', function () {
+    grecaptcha.ready(function () {
+      grecaptcha.execute(captchaSiteKey, {action: 'register'}).then(function (token) {
+        //Verify the token on the server
+        $('#reCaptchaToken').val(token);
+      });
+    });
+    $('#registerDialog').modal({backdrop: 'static'});
+  });
 
+  $('#btnRegister').on('click', function () {
+    //Validate
+    if (!validateForm('formRegister')) {
+      return false;
+    }
+    $('#btnRegister').prop("disabled", true);
+    callAjax('auth', 'register', {
+      formData: fetchForm($('#formRegister')),
+      gRecaptchaResponse: $('[name=g-recaptcha-response]').val()
+    }, registerCallback);
+    return false;
+  });
 });
 
 function validateForm(formId) {
@@ -32,4 +53,13 @@ function validateForm(formId) {
   });
 
   return !isErr;
+}
+
+function registerCallback(result) {
+  if (result !== false) {
+    showSuccessBubble("Tài khoản của bạn vừa được đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản.", 7)
+    setTimeout(function () {
+      window.location.href = "/auth";
+    }, 7000);
+  }
 }

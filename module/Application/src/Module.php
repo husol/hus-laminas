@@ -59,6 +59,7 @@ class Module
     $viewModel->dateVersion = $versionHus['DATE_VERSION'];
     $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
     $viewModel->isLive = $configHus['IS_LIVE'];
+    $viewModel->captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
 
     $moduleName = substr($routeParams['controller'], 0, strpos($routeParams['controller'], '\\'));
 

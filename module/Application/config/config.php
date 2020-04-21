@@ -15,6 +15,11 @@ return [
   //Log Level in ERROR, DEBUG, INFO
   'LOG_LEVEL' => 'DEBUG',
   'IS_LIVE' => false,
+  //Google Captcha Setting
+  'CAPTCHA'=> [
+    'siteKey' => '6Lcl7KkUAAAAAO-swSREVmlYsQcSqPL3t9S999M4',
+    'secretKey' => '6Lcl7KkUAAAAACqf1lI-QSKNZUu3CgIJhrO2B-Z8'
+  ],
   //SMTP Setting for sending email
   'SMTP_OPTIONS' => [
     'name' => 'Husol',

@@ -19,6 +19,7 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
+use Laminas\Json\Json;
 
 class AuthController extends AbstractActionController
 {
@@ -93,6 +94,162 @@ class AuthController extends AbstractActionController
     $this->session->loggedUser = $myUser;
 
     HusAjax::outData($myUser);
+  }
+
+  public function registerAction()
+  {
+    $fullName = $this->params()->fromPost('fullName', '');
+    $email = $this->params()->fromPost('email', '');
+    $password = $this->params()->fromPost('password', '');
+    $confirmPassword = $this->params()->fromPost('confirmPassword', '');
+    $mobile = $this->params()->fromPost('mobile', '');
+    $address = $this->params()->fromPost('address', '');
+    $gRecaptchaResponse = $this->params()->fromPost('gRecaptchaResponse', '');
+
+    $data = [
+      'role' => 'CLIENT',
+      'created_by' => 0
+    ];
+    //Validate
+    $validatorEmpty = new ValidatorChain();
+    $validatorEmpty->attach(new NotEmpty());
+
+    if (!$validatorEmpty->isValid($fullName)) {
+      HusAjax::setMessage('Vui lòng nhập Họ và tên.');
+      HusAjax::outData(false);
+    }
+    $data['full_name'] = $fullName;
+
+    $validatorEmail = new ValidatorChain();
+    $validatorEmail->attach(new EmailAddress());
+    if (!$validatorEmail->isValid($email)) {
+      HusAjax::setMessage('Sai định dạng Email.');
+      HusAjax::outData(false);
+    }
+
+    $params = [
+      'conditions' => ['email' => $email],
+      'isFetchRow' => 1
+    ];
+
+    $myUser = $this->dao->find($params);
+    if (!empty($myUser)) {
+      HusAjax::setMessage('Email đã được sử dụng trong hệ thống.');
+      HusAjax::outData(false);
+    }
+    $data['email'] = $email;
+
+    $validatorPassword = new ValidatorChain();
+    $validatorPassword->attach(new StringLength(['min' => 8, 'max' => 30]));
+    if (!$validatorPassword->isValid($password)) {
+      HusAjax::setMessage('Độ dài Mật khẩu phải từ 8 đến 30 ký tự.');
+      HusAjax::outData(false);
+    }
+
+    if ($password != $confirmPassword) {
+      HusAjax::setMessage('Xác nhận mật khẩu không trùng khớp với Mật khẩu.');
+      HusAjax::outData(false);
+    }
+    if (!empty($password)) {
+      $data['password'] = hash('sha256', $password);;
+    }
+
+    //Verify gReCaptcha
+    $clientInfo = HusHelper::getClientInfoFromRequest($this->getRequest());
+    $response = Json::decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$this->husConfig['CAPTCHA']['secretKey']}&response={$gRecaptchaResponse}&remoteip={$clientInfo['ip']}"));
+
+    if (!($response->success && $response->action == 'register' && $response->score >= 0.7)) {
+      HusAjax::setMessage('Vui lòng xác thực Captcha thành công.');
+      HusAjax::outData(false);
+    }
+
+    if (!empty($mobile)) {
+      $data['mobile'] = $mobile;
+    }
+
+    if (!empty($address)) {
+      $data['address'] = $address;
+    }
+
+    //Get token string for activate account
+    $tokenStr = HusHelper::generateRandomString();
+
+    $uri = $this->getRequest()->getUri();
+    $baseUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
+
+    //Send email with activate-account url
+    $activateUrl = "{$baseUrl}/auth/activateAccount?email={$email}&token=$tokenStr";
+
+    $content = "Welcome to Hus Laminas.\n";
+    $content .= "You have registered your account. Please click the link below to activate it:\n";
+    $content .= $activateUrl;
+
+    $husEmail = new HusEmail($this->husConfig['SMTP_OPTIONS']);
+    $husEmail->setFrom(['No-Reply' => 'noreply@husol.org']);
+    $husEmail->setTo([$email]);
+    $husEmail->setSubject('Activate your account on Hus Laminas');
+
+    $result = $husEmail->send($content);
+
+    if ($result['status']) {
+      //Create new user
+      $myUser = $this->dao->save($data);
+      HusAjax::outData($myUser);
+    }
+
+    HusAjax::setMessage($result['message']);
+    HusAjax::outData(false);
+  }
+
+  public function activateAccountAction()
+  {
+    $email = $this->params()->fromQuery('email');
+    $token = $this->params()->fromQuery('token');
+
+    $this->layout("layout/layout_auth");
+    $result = ['status' => false, 'message' => ''];
+
+    //Validate
+    $validatorEmail = new ValidatorChain();
+    $validatorEmail->attach(new EmailAddress());
+
+    if (!$validatorEmail->isValid($email)) {
+      $result['message'] = 'Sai địa chỉ Email.';
+      return new ViewModel(['result' => $result]);
+    }
+
+    //Check email and token
+    $params = [
+      'conditions' => [
+        'email' => $email
+      ],
+      'isFetchRow' => 1
+    ];
+    $myUser = $this->dao->find($params);
+    if (empty($myUser)) {
+      $result['message'] = 'Email không tồn tại trong hệ thống.';
+      return new ViewModel(['result' => $result]);
+    }
+
+    if ($myUser->token != $token) {
+      $result['message'] = 'Hết hạn Token.';
+      return new ViewModel(['result' => $result]);
+    }
+
+    //Change status
+    $data = [
+      'status' => 'ACTIVE',
+      'token' => ''
+    ];
+    $myUser = $this->dao->save($data, $myUser->id);
+
+    if (empty($myUser)) {
+      $result['message'] = 'Error query of account activation.';
+      return new ViewModel(['result' => $result]);
+    }
+
+    $result['status'] = true;
+    return new ViewModel(['result' => $result]);
   }
 
   public function myAccountFormAction()

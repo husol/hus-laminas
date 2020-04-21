@@ -21,6 +21,9 @@ class IndexController extends HusController
 
   public function indexAction()
   {
-    return new ViewModel();
+    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
+
+    return new ViewModel(['captchaSiteKey' => $captchaSiteKey]);
   }
 }

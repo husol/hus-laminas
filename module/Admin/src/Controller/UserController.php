@@ -106,7 +106,7 @@ class UserController extends HusController
     $validatorEmail = new ValidatorChain();
     $validatorEmail->attach(new EmailAddress());
     if (!$validatorEmail->isValid($email)) {
-      HusAjax::setMessage('Sai Email.');
+      HusAjax::setMessage('Sai định dạng Email.');
       HusAjax::outData(false);
     }
 
@@ -126,7 +126,7 @@ class UserController extends HusController
     $data['email'] = $email;
 
     if ($idRecord == 0 && !$validatorNotEmpty->isValid($password)) {
-      HusAjax::setMessage('Độ dài mật khẩu phải từ 8 đến 30 ký tự.');
+      HusAjax::setMessage('Độ dài Mật khẩu phải từ 8 đến 30 ký tự.');
       HusAjax::outData(false);
     }
 

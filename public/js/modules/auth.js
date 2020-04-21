@@ -1,18 +1,4 @@
 $(document).ready(function () {
-  // $('#btnRegister').on('click', function () {
-  //   if (!validateForm('registerForm')) {
-  //     return false;
-  //   }
-  //   grecaptcha.ready(function() {
-  //     grecaptcha.execute("6Lf3MaMUAAAAAKVbY-AEehdz-j_q-SxvqK94RKdB", {action: "register"}).then(function (token) {
-  //       //Verify the token on the server.
-  //       $('#reCaptchaToken').val(token);
-  //       callAjax('auth', 'register', {formData: fetchForm($('#registerForm'))}, registerCallback);
-  //     });
-  //   });
-  //   return false;
-  // });
-
   $('#btnLogin').on('click', function () {
     if (!validateForm('loginForm')) {
       return false;
@@ -29,12 +15,6 @@ $(document).ready(function () {
     return false;
   });
 });
-
-function registerCallback(result) {
-  if (result !== false) {
-    window.location.href = "/register-success";
-  }
-}
 
 function loginCallback(result) {
   $('#btnLogin').prop("disabled", false);

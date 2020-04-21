@@ -24,6 +24,7 @@
 
   <!-- Scripts -->
   <?= $this->headScript()
+    ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/atlantis.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
@@ -206,7 +207,6 @@
 <?= $this->inlineScript()
   ->prependFile($this->basePath("/js/modules/auth.{$this->layout()->dateVersion}.js"))
   ->prependFile($this->basePath("js/common.{$this->layout()->dateVersion}.js"))
-  ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
 ?>
 </body>
 </html>

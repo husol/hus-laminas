@@ -29,6 +29,7 @@
 
   <!-- Scripts -->
   <?= $this->headScript()
+    ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/atlantis.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/sweetalert.min.{$this->layout()->dateVersion}.js"))
@@ -107,7 +108,6 @@
 </div>
 <?= $this->inlineScript()
   ->prependFile($this->basePath("js/admin.{$this->layout()->dateVersion}.js"))
-  ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
 ?>
 </body>
 </html>
