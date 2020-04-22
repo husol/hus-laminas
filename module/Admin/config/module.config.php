@@ -38,7 +38,7 @@ return [
       'adminCategory' => [
         'type' => Segment::class,
         'options' => [
-          'route' => '/admin/category[/:action]',
+          'route' => '/admin/categories[/:action]',
           'defaults' => [
             'controller' => Controller\CategoryController::class,
             'action' => 'index',
