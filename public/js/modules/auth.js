@@ -32,7 +32,7 @@ function changePasswordCallback(result) {
   if (result !== false) {
     showSuccessBubble('Mật khẩu của bạn đã được thay đổi thành công.');
     setTimeout(function () {
-      window.location.href = "/auth";
+      window.location.href = "/sign-in";
     }, 3000);
   }
 }

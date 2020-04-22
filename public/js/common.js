@@ -59,7 +59,7 @@ function registerCallback(result) {
   if (result !== false) {
     showSuccessBubble("Tài khoản của bạn vừa được đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản.", 7)
     setTimeout(function () {
-      window.location.href = "/auth";
+      window.location.href = "/sign-in";
     }, 7000);
   }
 }

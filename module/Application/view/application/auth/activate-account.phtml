@@ -5,7 +5,7 @@
         <div class="col-md-8">
           <?php if ($this->result['status']):?>
             <h3>
-              <span class="loadingText text-green">Tài khoản của bạn vừa được kích hoạt thành công. Tự động chuyển đến trang <a href="/auth">Đăng nhập</a> sau <span id="countdown">7</span> seconds</span>
+              <span class="loadingText text-green">Tài khoản của bạn vừa được kích hoạt thành công. Tự động chuyển đến trang <a href="/sign-in">Đăng nhập</a> sau <span id="countdown">7</span> seconds</span>
             </h3>
           <?php else:?>
           <h3 class="text-red">Error: <span class="text-red"><?=$this->result['message']?></span></h3>
@@ -25,7 +25,7 @@
     seconds = seconds - 1;
     if (seconds < 0) {
       // Change your redirection link here
-      window.location = root_url + "auth";
+      window.location = root_url + "sign-in";
     } else {
       // Update remaining seconds
       document.getElementById("countdown").innerHTML = seconds;

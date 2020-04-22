@@ -1,80 +1,92 @@
 <?= $this->doctype() ?>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <?php $appName = $this->layout()->isLive ? 'Hus Laminas MVC' : 'BETA Hus Laminas MVC';?>
-    <?= $this->headTitle("{$appName} {$this->layout()->appVersion}")->setSeparator(' - ')->setAutoEscape(false) ?>
+  <meta charset="utf-8">
+  <?php $appName = $this->layout()->isLive ? 'Hus Laminas MVC' : 'BETA Hus Laminas MVC'; ?>
+  <?= $this->headTitle("{$appName} {$this->layout()->appVersion}")->setSeparator(' - ')->setAutoEscape(false) ?>
 
-    <?= $this->headMeta()
-        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-    ?>
+  <?= $this->headMeta()
+    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+  ?>
 
-    <!-- Styles -->
-    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'])
-        ->prependStylesheet($this->basePath("css/style.{$this->layout()->dateVersion}.css"))
-        ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
-        ->prependStylesheet($this->basePath("css/toastr.min.{$this->layout()->dateVersion}.css"))
-        ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
-        ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
-        ->prependStylesheet($this->basePath("css/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.css"))
-    ?>
+  <!-- Styles -->
+  <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'])
+    ->prependStylesheet($this->basePath("css/style.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/toastr.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.css"))
+  ?>
 
-    <!-- Scripts -->
-    <?= $this->headScript()
-        ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/jquery-ui-contextmenu.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/toastr.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
-        ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
-    ?>
+  <!-- Scripts -->
+  <?= $this->headScript()
+    ->prependFile($this->basePath("js/hus.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/autoNumeric.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery-ui-contextmenu.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery.mask-1.7.7.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/toastr.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
+  ?>
 </head>
 <body>
-<?=$this->render('js_variables.phtml')?>
+<?= $this->render('js_variables.phtml') ?>
 <!-- The Modal -->
 <div id="commonDialog" class="modal fade" role="dialog" tabindex="-1"></div>
 <div id="childDialog" class="modal fade" role="dialog" tabindex="-1"></div>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="<?= $this->url('home') ?>">
-                <img src="<?= $this->basePath('img/husol-logo.svg') ?>" height="28" alt="Hus Laminas MVC"/>&nbsp;Hus Laminas MVC
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a id="register" class="nav-link" href="javascript:void(0);">Register</a>
-                </li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="<?= $this->url('home') ?>">
+        <img src="<?= $this->basePath('img/husol-logo.svg') ?>" height="28" alt="Hus Laminas MVC"/>&nbsp;Hus Laminas MVC
+      </a>
     </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a id="register" class="nav-link" href="javascript:void(0);">Register</a>
+        </li>
+        <li class="nav-item">
+        <?php if (isset($this->layout()->loggedUser)):?>
+          <a class="nav-link" href="/sign-out">Logout</a>
+        <?php else:?>
+          <a class="nav-link" href="/sign-in">Login</a>
+        <?php endif;?>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 <div class="container">
-    <?= $this->content ?>
+  <?= $this->content ?>
 </div>
 
 <!--Footer-->
 <footer class="bg-secondary text-white text-center fixed-bottom mt-5 pt-2">
-  <p>Husol Store &copy; <?=date('Y')?> All rights reserved | <a href="https://husol.org" style="color: #4bffd2">Husol Organization</a></p>
+  <p>Husol Store &copy; <?= date('Y') ?> All rights reserved | <a href="https://husol.org" style="color: #4bffd2">Husol
+      Organization</a></p>
 </footer>
 <!--/.Footer-->
 <div id="loading" class="notification_box">
   <p><span id="infoText">Processing...</span></p>
   <i class="fas fa-spinner fa-pulse text-dark mt-1 float-right"></i>
 </div>
-  <?= $this->inlineScript()
-    ->prependFile($this->basePath("js/common.{$this->layout()->dateVersion}.js"))
-  ?>
+<?= $this->inlineScript()
+  ->prependFile($this->basePath("js/common.{$this->layout()->dateVersion}.js"))
+?>
 </body>
 </html>

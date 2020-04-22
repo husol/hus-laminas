@@ -12,16 +12,6 @@ use Laminas\Router\Http\Segment;
 return [
   'router' => [
     'routes' => [
-      'login' => [
-        'type'    => Segment::class,
-        'options' => [
-          'route'    => '/sign-in',
-          'defaults' => [
-            'controller' => Controller\AuthController::class,
-            'action'     => 'index',
-          ],
-        ],
-      ],
       'forbidden' => [
         'type'    => Segment::class,
         'options' => [
@@ -32,10 +22,30 @@ return [
           ],
         ],
       ],
+      'login' => [
+        'type'    => Segment::class,
+        'options' => [
+          'route'    => '/sign-in',
+          'defaults' => [
+            'controller' => Controller\AuthController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
+      'logout' => [
+        'type'    => Segment::class,
+        'options' => [
+          'route'    => '/sign-out',
+          'defaults' => [
+            'controller' => Controller\AuthController::class,
+            'action'     => 'logout',
+          ],
+        ],
+      ],
       'auth' => [
         'type'    => Segment::class,
         'options' => [
-          'route'    => '/auth[/:action]',
+          'route'    => '/auth/:action',
           'defaults' => [
             'controller' => Controller\AuthController::class,
             'action'     => 'index',
