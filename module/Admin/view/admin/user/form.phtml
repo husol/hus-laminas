@@ -13,18 +13,18 @@
     <div class="modal-body mb-0">
       <form id="formUser" class="eventEnterKey" data-enterkey="btnSave" novalidate>
         <div class="row">
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4">
             <label for="fullName" class="required">Họ và tên</label>
             <input type="text" class="form-control" id="fullName" name="fullName" value="<?=isset($this->myUser) ? $this->myUser->full_name : ''?>" required>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4">
             <label for="role">Vai trò</label>
             <select class="form-control" id="role" name="role">
               <option value="CLIENT"<?=isset($this->myUser) && $this->myUser->role == 'CLIENT' ? ' selected' : ''?>>CLIENT</option>
               <option value="ADMIN"<?=isset($this->myUser) && $this->myUser->status == 'ADMIN' ? ' selected' : ''?>>ADMIN</option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4">
             <label for="status">Trạng thái</label>
             <select class="form-control" id="status" name="status">
               <option value="INACTIVE"<?=isset($this->myUser) && $this->myUser->status == 'INACTIVE' ? ' selected' : ''?>>INACTIVE</option>
@@ -33,25 +33,25 @@
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4 label-float">
             <label for="email" class="required">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="<?=isset($this->myUser) ? $this->myUser->email : ''?>" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" value="<?=isset($this->myUser) ? $this->myUser->email : ''?>" required>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4">
             <label for="password"<?=isset($this->myUser) ? '' : ' class="required"'?>>Mật khẩu</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="<?=isset($this->myUser) ? 'Bỏ trống để giữ mật khẩu cũ' : 'Mật khẩu'?>"<?=isset($this->myUser) ? '' : ' required'?>>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4">
             <label for="confirmPassword">Nhập lại mật khẩu</label>
             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-md-4">
+          <div class="form-group label-float col-md-4">
             <label for="mobile">Số điện thoại</label>
             <input type="text" class="form-control" id="mobile" name="mobile" value="<?=isset($this->myUser) ? $this->myUser->mobile : ''?>">
           </div>
-          <div class="form-group col-md-8">
+          <div class="form-group label-float col-md-8">
             <label for="address">Địa chỉ</label>
             <input type="text" class="form-control" id="address" name="address" value="<?=isset($this->myUser) ? $this->myUser->address : ''?>">
           </div>

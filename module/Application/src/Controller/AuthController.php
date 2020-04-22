@@ -193,6 +193,7 @@ class AuthController extends AbstractActionController
 
     if ($result['status']) {
       //Create new user
+      $data['token'] = $tokenStr;
       $myUser = $this->dao->save($data);
       HusAjax::outData($myUser);
     }
