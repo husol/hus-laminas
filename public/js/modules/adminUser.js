@@ -87,6 +87,6 @@ function deleteUserCallback(result) {
       page = $('.page-item.active > a').html();
     }
     getUsers(page);
-    showSuccessBubble('Delete User ' + result.name + ' successfully.');
+    showSuccessBubble('Delete User ' + result.fullName + ' successfully.');
   }
 }

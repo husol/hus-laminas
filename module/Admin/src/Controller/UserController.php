@@ -180,15 +180,22 @@ class UserController extends HusController
   {
     $idRecord = $this->params()->fromPost('idRecord', 0);
 
-    //Remove my area
+    //Check if user is existed
+    $myUser = $this->dao->find([], intval($idRecord));
+
+    if (empty($myUser)) {
+      HusAjax::setMessage("The user is not existed in system");
+      HusAjax::outData(false);
+    }
+
+    //Remove user
     $conditions = [
-      'userCode' => VlsHelper::decToHex($this->getLoggedUserInfo('id')),
-      'idRvc' => $this->getLoggedUserInfo('rvcId'),
       'id' => $idRecord
     ];
-    $myArea = $this->repo->removeArea($conditions);
+    $this->dao->remove($conditions);
+
     HusAjax::outData([
-      'name' => $myArea->name
+      'fullName' => $myUser->full_name
     ]);
   }
 }

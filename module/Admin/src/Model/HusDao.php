@@ -80,6 +80,7 @@ class HusDao extends Dao
     try {
       $sql = $this->sql->select();
       $sql->from($this->table);
+      $sql->where->expression("status <> ?", 'DELETED');
 
       if ($id) {
         $params['conditions']['id'] = $id;
