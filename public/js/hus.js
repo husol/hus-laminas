@@ -445,6 +445,13 @@ $(document).ready(function () {
     changeYear: true,
     firstDay: 1
   });
+  $('.selectpicker').selectpicker({
+    actionsBox: true,
+    liveSearch: true,
+    multipleSeparator: '; ',
+    size: 17,
+    noneSelectedText: 'Select an item ...'
+  });
   $.fn.modal.Constructor.prototype._enforceFocus = function() {};
   //End HusDate
 

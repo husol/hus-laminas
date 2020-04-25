@@ -42,6 +42,12 @@ class UserController extends HusController
       'pagination' => ['page' => $page, 'pageSize' => User::PAGE_SIZE]
     ];
 
+    if (in_array($sort['field'], ['full_name', 'updated_at'])) {
+      $conditions['order'] = ["{$sort['field']} {$sort['type']}"];
+    }
+
+    //For filter
+
     $result = $this->dao->find($params);
 
     $users = $result->data;
@@ -194,8 +200,6 @@ class UserController extends HusController
     ];
     $this->dao->remove($conditions);
 
-    HusAjax::outData([
-      'fullName' => $myUser->full_name
-    ]);
+    HusAjax::outData($myUser);
   }
 }
