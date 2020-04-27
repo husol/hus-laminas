@@ -58,9 +58,12 @@ legend {
 }
 
 .form-control {
-    height: calc(1.5em + 0.75rem + 3px) !important;
     font-size: 1rem;
     border: 1px solid lightgrey;
+}
+
+select.form-control {
+    padding: .7rem 1rem;
 }
 
 .bootstrap-select.form-control {

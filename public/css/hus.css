@@ -246,15 +246,14 @@ tr.active {
 .label-float label{
     pointer-events: none;
     position: absolute;
-    top: calc(50% - 25px);
-    line-height: 10px;
+    line-height: 1px;
     left: 15px;
     transition: all .1s linear;
     -webkit-transition: all .1s linear;
     -moz-transition: all .1s linear;
     background-color: white;
     box-sizing: border-box;
-    padding: 0 3px;
+    padding: 0 5px;
     margin-bottom: 0;
     z-index: 1;
 }
