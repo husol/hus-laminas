@@ -405,6 +405,30 @@ function checkDate(str, max) {
   return str;
 }
 
+function triggerShownModalEvents(element) {
+  element.find('[autofocus]').focus();
+  element.find('.husDate').datepicker({
+    yearRange: 'c-100:c+10',
+    dateFormat: 'dd-M-yy',
+    changeMonth: true,
+    changeYear: true,
+    firstDay: 1
+  });
+  element.find('.birthday').datepicker({
+    dateFormat: 'dd-M-yy',
+    yearRange: 'c-100:c+10',
+    changeMonth: true,
+    changeYear: true,
+    maxDate: '-6M'
+  });
+  element.find('.husTime').mask("99:99");
+  element.find('.numeric').autoNumeric("init", {mDec: 2});
+  element.find('.numericNegative').autoNumeric("init", {vMin: -999999999999, mDec: 2});
+  element.find('.txtUppercase').keyup(function() {
+    $(this).val($(this).val().toUpperCase());
+  });
+}
+
 $(document).ready(function () {
   //HusDate
   $(document).on('keyup', '.husDate, .autoDate', function(e) {
@@ -525,6 +549,10 @@ $(document).ready(function () {
     select: function(event, ui) {
       eval(ui.cmd +'(ui.extraData)');
     }
+  });
+  //Trigger Shown Modal Events
+  $(document).on('shown.bs.modal', '.modal', function (e) {
+    triggerShownModalEvents($(this));
   });
   //For ENTER key trigger on form
   $(document).on('keypress', 'form.eventEnterKey',function(e) {
