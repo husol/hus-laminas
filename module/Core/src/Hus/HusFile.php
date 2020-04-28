@@ -23,7 +23,7 @@ class HusFile
         mkdir(ROOT_DIR.DS.'uploads'.DS.$destination, 0755, true);
       }
       $fileName = (($id > 0) ? "{$id}_" : '') . trim(preg_replace('/\s+/', '_', codau2khongdau($this->file['name'])));
-      $pathDest = DS.$destination.$fileName;
+      $pathDest = DS.$destination.DS.$fileName;
       move_uploaded_file($this->file['tmp_name'], ROOT_DIR.DS.'uploads'.$pathDest);
 
       return ['status' => true, 'path' => $pathDest, 'pathUrl' => str_replace('\\', '/', $pathDest)];
