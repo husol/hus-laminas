@@ -8,7 +8,7 @@ ClassicEditor
   .catch( error => {
     console.error( error );
   });
-//Then you can use `contentEditor.getData();` to get the content in `#content` textarea.
+//Then you can update content value in the textarea via: $('#content').html(contentEditor.getData()); before we submit form via callAjax.
  */
 
 $(document).ready(function () {
