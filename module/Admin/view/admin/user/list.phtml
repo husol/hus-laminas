@@ -37,7 +37,6 @@
 </tbody>
 </table>
 
-<!--Paginator-->
 <?php
 if (isset($this->paginator) && $this->paginator->getTotalItemCount() > $this->paginator->getItemCountPerPage()):
   $from = ($this->paginator->getCurrentPageNumber() - 1)*$this->paginator->getItemCountPerPage() + 1;
@@ -45,13 +44,12 @@ if (isset($this->paginator) && $this->paginator->getTotalItemCount() > $this->pa
   if ($to > $this->paginator->getTotalItemCount()) {
     $to = $this->paginator->getTotalItemCount();
   }
-  ?>
+?>
+  <!--Paginator-->
   <div class="paginator">
     <div class="float-left text-blue">
       <?=$from?> - <?=$to?> of <?=$this->paginator->getTotalItemCount()?>
     </div>
     <?= $this->paginationControl($this->paginator, 'Sliding', 'partial/paginator', ['route' => '/', 'ajaxFunc' => 'getUsers']) ?>
   </div>
-
 <?php endif; ?>
-</div>

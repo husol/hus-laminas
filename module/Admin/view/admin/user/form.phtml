@@ -1,7 +1,6 @@
 <div class="modal-dialog modal-lg" role="document">
   <!--Content-->
   <div class="modal-content">
-
     <!--Header-->
     <div class="modal-header bg-blue text-white">
       <h3><?=(isset($this->myUser)) ? "Update" : "New"?> User</h3>
@@ -9,6 +8,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+
     <!--Body-->
     <div class="modal-body mb-0">
       <form id="formUser" class="eventEnterKey" data-enterkey="btnSave" novalidate>
@@ -60,6 +60,7 @@
         <input type="hidden" id="idRecord" name="idRecord" value="<?=isset($this->myUser)? $this->myUser->id : 0?>">
       </form>
     </div>
+
     <div class="modal-footer justify-content-center">
       <button id="btnSave" class="btn btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span> <?=$this->layout()->translator->getLang('btn_save')?></button>
     </div>
