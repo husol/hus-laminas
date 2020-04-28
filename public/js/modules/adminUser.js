@@ -57,7 +57,10 @@ function formUserCallback(result) {
       if (!validateForm('formUser')) {
         return false;
       }
-      callAjax('admin/users', 'update', {formData: fetchForm($('#formUser'))}, updateUserCallback);
+
+      callAjax('admin/users', 'update', {
+        formData: fetchForm($('#formUser'))
+      }, updateUserCallback);
     });
   }
   return false;

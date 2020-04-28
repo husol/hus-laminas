@@ -1,3 +1,16 @@
+/* CKEditor Usage
+let contentEditor;
+ClassicEditor
+  .create( document.querySelector('#content') )
+  .then( editor => {
+    contentEditor = editor;
+  })
+  .catch( error => {
+    console.error( error );
+  });
+//Then you can use `contentEditor.getData();` to get the content in `#content` textarea.
+ */
+
 $(document).ready(function () {
 
 });
