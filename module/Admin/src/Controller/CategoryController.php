@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use Admin\Model\Category;
+use Application\Model\Category;
 use Core\Hus\HusAjax;
 use Core\Paginator\Adapter\Offset;
 use Laminas\Paginator\Paginator;

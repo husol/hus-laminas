@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
-use Admin\Model\User;
+use Application\Model\User;
 use Core\Hus\HusAjax;
 use Core\Hus\HusEmail;
 use Core\Hus\HusHelper;
