@@ -19,12 +19,12 @@ class HusDao extends Dao
   protected function __logs($strName, $logs)
   {
     $fn = sprintf('%s.%s.txt', $strName, date('Y.m.d'));
-    $writer = new \Laminas\Log\Writer\Stream(ROOT_DIR . '/logs/' . $fn);
+    $writer = new \Laminas\Log\Writer\Stream(ROOT_DIR . DS .'logs'. DS . $fn);
     $formatter = new \Laminas\Log\Formatter\Simple('%message%');
     $writer->setFormatter($formatter);
     $logger = new \Laminas\Log\Logger();
     $logger->addWriter($writer);
-    $logger->info(json_encode($logs));
+    $logger->info(Json::encode($logs));
   }
 
   public function update($table, $data = [], $where = [])
