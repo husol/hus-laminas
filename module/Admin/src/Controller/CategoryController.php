@@ -23,7 +23,7 @@ class CategoryController extends HusController
   public function __construct($container)
   {
     parent::__construct($container);
-    $this->dao = Category::initDao($this->container);
+    $this->dao = Category::initDao();
   }
 
   public function indexAction()

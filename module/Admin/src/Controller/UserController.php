@@ -25,7 +25,7 @@ class UserController extends HusController
   public function __construct($container)
   {
     parent::__construct($container);
-    $this->dao = User::initDao($this->container);
+    $this->dao = User::initDao();
   }
 
   public function indexAction()
