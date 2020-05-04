@@ -12,6 +12,7 @@ namespace Admin\Controller;
 
 use Application\Model\Category;
 use Core\Hus\HusAjax;
+use Core\Hus\HusHelper;
 use Core\Paginator\Adapter\Offset;
 use Laminas\Paginator\Paginator;
 use Laminas\Validator\NotEmpty;
@@ -31,7 +32,7 @@ class CategoryController extends HusController
     return new ViewModel();
   }
 
-  public function getCategorysAction()
+  public function getCategoriesAction()
   {
     $page = $this->params()->fromPost('page', 0);
     $sort = $this->params()->fromPost('sort');
@@ -86,9 +87,8 @@ class CategoryController extends HusController
     $status = $this->params()->fromPost('status', '');
 
     $data = [
-      'type' => 'add',
-      'userCode' => VlsHelper::decToHex($this->getLoggedUserInfo('id')),
-      'idRvc' => $this->getLoggedUserInfo('rvcId')
+      'userCode' => HusHelper::decToHex($this->getLoggedUser('id')),
+      'idRvc' => $this->getLoggedUser('rvcId')
     ];
     //Validate
     $validatorNotEmpty = new ValidatorChain();
@@ -127,8 +127,8 @@ class CategoryController extends HusController
 
     //Remove my area
     $conditions = [
-      'userCode' => VlsHelper::decToHex($this->getLoggedUserInfo('id')),
-      'idRvc' => $this->getLoggedUserInfo('rvcId'),
+      'userCode' => VlsHelper::decToHex($this->getLoggedUser('id')),
+      'idRvc' => $this->getLoggedUser('rvcId'),
       'id' => $idRecord
     ];
     $myArea = $this->repo->removeArea($conditions);
