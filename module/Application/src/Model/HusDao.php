@@ -233,22 +233,21 @@ class HusDao extends Dao
 
   /**
    * @param $where
-   * @param int $updated_by
-   * @param bool $hard
+   * @param int $flag : -1: Hard deletion, 0: Soft deletion without updated_by, > 0: Update updatedBy
    * @return bool
    */
-  public function remove($where, $updated_by = 0, $hard = false)
+  public function remove($where, $flag = 0)
   {
     try {
       if (is_object($where)) {
         $where = (array)$where;
       }
-      if ($hard) {
+      if ($flag == -1) {
         $this->delete($this->table, $where);
       } else {
         $data = ['status' => 'DELETED'];
-        if ($updated_by > 0) {
-          $data['updated_by'] = $updated_by;
+        if ($flag > 0) {
+          $data['updatedBy'] = $flag;
         }
         $this->update($this->table, $data, $where);
       }
