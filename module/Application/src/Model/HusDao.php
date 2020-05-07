@@ -77,9 +77,14 @@ class HusDao extends Dao
 
   public function find($params = [], $id = 0)
   {
+    $husConfig = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+
     try {
       $sql = $this->sql->select();
       $sql->from($this->table);
+      if ($husConfig['IS_SOFT_DELETION']) {
+        $sql->where->expression("status <> ?", 'DELETED');
+      }
 
       if ($id) {
         $params['conditions']['id'] = $id;

@@ -37,21 +37,36 @@ class UserController extends HusController
   {
     $page = $this->params()->fromPost('page', 0);
     $sort = $this->params()->fromPost('sort');
+    $ffullName = $this->params()->fromPost('ffullName', '');
+    $fstatus = $this->params()->fromPost('fstatus', '');
 
     $params = [
       'pagination' => ['page' => $page, 'pageSize' => User::PAGE_SIZE]
     ];
 
-    if (in_array($sort['field'], ['full_name', 'updated_at'])) {
+    if (in_array($sort['field'], ['fullName', 'updatedAt'])) {
       $conditions['order'] = ["{$sort['field']} {$sort['type']}"];
     }
 
     //For filter
+    if (!empty($ffullName)) {
+      $params['conditions']['flexible'] = [
+        ['like' => ['full_name', "%{$ffullName}%"]]
+      ];
+    }
+
+    if ($fstatus != '') {
+      $params['conditions']['status'] = $fstatus;
+    }
 
     $result = $this->dao->find($params);
 
-    $users = $result->data;
-    $count = $result->count;
+    $count = 0;
+    $users = [];
+    if (!empty($result)) {
+      $count = $result->count;
+      $users = $result->data;
+    }
 
     //Pagination
     $offset = new Offset($users, $count);

@@ -15,6 +15,7 @@ return [
   //Log Level in ERROR, DEBUG, INFO
   'LOG_LEVEL' => 'ERROR',
   'IS_LIVE' => true,
+  'IS_SOFT_DELETION' => true,
   //Google Captcha Setting
   'CAPTCHA'=> [
     'siteKey' => '{Google Captcha Site Key}',
