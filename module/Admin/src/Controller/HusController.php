@@ -2,9 +2,7 @@
 
 namespace Admin\Controller;
 
-use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
 
 class HusController extends AbstractActionController
 {
@@ -55,9 +53,9 @@ class HusController extends AbstractActionController
     return implode(',', $result);
   }
 
-  protected function buildInsertUpdateSQL($tablename, $dataObject = [], $fields = [], $exclude = false)
+  protected function buildInsertUpdateSQL($tableName, $dataObject = [], $fields = [], $exclude = false)
   {
-    if (empty($tablename)) {
+    if (empty($tableName)) {
       return ['result' => false, 'message' => 'Table name must be inputted.'];
     }
     if (empty($fields)) {
@@ -100,7 +98,7 @@ class HusController extends AbstractActionController
 
     $keys = implode('`,`', $keys);
 
-    $sql = "INSERT INTO $tablename (`$keys`) VALUES $values ON DUPLICATE KEY UPDATE ";
+    $sql = "INSERT INTO $tableName (`$keys`) VALUES $values ON DUPLICATE KEY UPDATE ";
 
     $updateFields = [];
     foreach ($fields as $col) {
@@ -109,55 +107,6 @@ class HusController extends AbstractActionController
 
     $sql .= implode(', ', $updateFields);
 
-    return array('result' => true, 'sql' => $sql);
-  }
-
-  public function insertUpdateAction()
-  {
-    $resp = ['status' => 'FAIL', 'message' => '', 'result' => ''];
-
-    $request = $this->getRequest();
-
-    if (!$request->isPost()) {
-      $resp['message'] = 'Invalid request method.';
-      return new JsonModel($resp);
-    }
-
-    $data = Json::decode($request->getContent());
-
-    if (!isset($data->table)) {
-      $resp['message'] = 'Missing "table" parameter.';
-      return new JsonModel($resp);
-    }
-
-    $table = $data->table;
-    unset($data->table);
-
-    $fields = [];
-    if (isset($data->fields)) {
-      $fields = $data->fields;
-      unset($data->fields);
-    }
-
-    $exclude = false;
-    if (isset($data->exclude)) {
-      $exclude = $data->exclude;
-      unset($data->exclude);
-    }
-
-    //Access DAO
-    $query = $this->buildInsertUpdateSQL($table, $data->data, $fields, $exclude);
-
-    if ($query['result']) {
-      $rs = $this->dao->query($query['sql']);
-    } else {
-      $resp['message'] = $query['message'];
-      return new JsonModel($resp);
-    }
-
-    $resp['result'] = $rs;
-    $resp['status'] = 'SUCCESS';
-
-    return new JsonModel($resp);
+    return ['result' => true, 'sql' => $sql];
   }
 }
