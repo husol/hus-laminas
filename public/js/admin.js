@@ -18,8 +18,8 @@ $(document).ready(function () {
 function validateForm(formId) {
   var form = document.getElementById(formId);
   if (form.checkValidity() === false) {
-    $("#"+formId).addClass('was-validated');
-    $("#"+formId).find('select:not([disabled]):required').each(function () {
+    $("#" + formId).addClass('was-validated');
+    $("#" + formId).find('select:not([disabled]):required').each(function () {
       if ($(this).val()) {
         $(this).parent().siblings('.invalid-feedback').hide();
         $(this).siblings('.select-dropdown').css('border-color', '#ced4da');
@@ -32,9 +32,9 @@ function validateForm(formId) {
   }
 
   var isErr = false;
-  $("#"+formId).find('input.datepicker:not([disabled]):required').each(function () {
+  $("#" + formId).find('input.datepicker:not([disabled]):required').each(function () {
     if ($(this).val().length == 0) {
-      $("#"+formId).addClass('was-validated');
+      $("#" + formId).addClass('was-validated');
       $(this).siblings('.invalid-feedback').show();
       $(this).css('border-color', '#dc3545');
       isErr = true;
@@ -60,11 +60,11 @@ function formMyAccountCallback(result) {
       $("#image").trigger("click");
     });
 
-    $("#image").change(function(e){
+    $("#image").change(function (e) {
       //Validate file type / size
       var validImageTypes = ["image/png", "image/jpeg", "image/gif"];
       var files = e.originalEvent.target.files;
-      for (var i = 0, len = this.files.length; i < len; i++){
+      for (var i = 0, len = this.files.length; i < len; i++) {
         var n = files[i].name,
           t = files[i].type,
           s = files[i].size;
