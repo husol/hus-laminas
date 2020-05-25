@@ -226,7 +226,7 @@ function showErrorBubble(control, error_msg, seconds) {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut",
-    "timeOut": delay*1000
+    "timeOut": delay * 1000
   });
 
   if (ctrl !== false) {
@@ -254,7 +254,7 @@ function showSuccessBubble(success_msg, seconds) {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut",
-    "timeOut": delay*1000
+    "timeOut": delay * 1000
   });
   return false;
 };
@@ -302,8 +302,7 @@ function triggerFixedHeader() {
     var offset = $(this).scrollTop() + 10;
     if (offset >= tableOffset && $tblFixedHeader.is(":hidden")) {
       $tblFixedHeader.show();
-    }
-    else if (offset < tableOffset) {
+    } else if (offset < tableOffset) {
       $tblFixedHeader.hide();
     }
   });
@@ -324,7 +323,7 @@ function previewImage(input, imgId) {
 function formatNumber(number, decimal) {
   numberStr = number;
   if (typeof decimal != 'undefined') {
-    numberStr = parseFloat(Math.round(number*100)/100).toFixed(decimal);
+    numberStr = parseFloat(Math.round(number * 100) / 100).toFixed(decimal);
   }
 
   numberStr += '';
@@ -338,7 +337,7 @@ function formatNumber(number, decimal) {
   return x1 + x2;
 }
 
-var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function convertToMySqlDate(date) {
   // "d/m/Y" or "d-m-Y" or "d/M/Y" or "d-M-Y" --> "Y-m-d"
@@ -374,8 +373,8 @@ function convertToMySqlDate(date) {
 
 function convertSecondsToHms(secondsNum) {
   var secondsNum = Number(secondsNum);
-  var d = Math.floor(secondsNum / (3600*24));
-  var h = Math.floor(secondsNum % (3600*24) / 3600);
+  var d = Math.floor(secondsNum / (3600 * 24));
+  var h = Math.floor(secondsNum % (3600 * 24) / 3600);
   var m = Math.floor(secondsNum % 3600 / 60);
   var s = Math.floor(secondsNum % 60);
 
@@ -390,7 +389,7 @@ function getDateTime(date) {
   date = convertToMySqlDate(date);
   var arrDate = date.split('-');
   var year = parseInt(arrDate[0]);
-  var month = parseInt(arrDate[1])-1;
+  var month = parseInt(arrDate[1]) - 1;
   var day = parseInt(arrDate[2]);
 
   return new Date(year, month, day);
@@ -407,13 +406,6 @@ function checkDate(str, max) {
 
 function triggerShownModalEvents(element) {
   element.find('[autofocus]').focus();
-  element.find('.husDate').datepicker({
-    yearRange: 'c-100:c+10',
-    dateFormat: 'dd-M-yy',
-    changeMonth: true,
-    changeYear: true,
-    firstDay: 1
-  });
   element.find('.birthday').datepicker({
     dateFormat: 'dd-M-yy',
     yearRange: 'c-100:c+10',
@@ -421,17 +413,24 @@ function triggerShownModalEvents(element) {
     changeYear: true,
     maxDate: '-6M'
   });
+  element.find('.husDate').datepicker({
+    yearRange: 'c-100:c+10',
+    dateFormat: 'dd-M-yy',
+    changeMonth: true,
+    changeYear: true,
+    firstDay: 1
+  });
   element.find('.husTime').mask("99:99");
   element.find('.numeric').autoNumeric("init", {mDec: 2});
   element.find('.numericNegative').autoNumeric("init", {vMin: -999999999999, mDec: 2});
-  element.find('.txtUppercase').keyup(function() {
+  element.find('.txtUppercase').keyup(function () {
     $(this).val($(this).val().toUpperCase());
   });
 }
 
 $(document).ready(function () {
   //HusDate
-  $(document).on('keyup', '.husDate, .autoDate', function(e) {
+  $(document).on('keyup', '.husDate, .autoDate', function (e) {
     if (e.keyCode == 8 || e.keyCode == 46) {
       return false;
     }
@@ -441,7 +440,7 @@ $(document).ready(function () {
     if (/\D\-$/.test(input)) {
       input = input.substr(0, input.length - 3);
     }
-    var values = input.split('-').map(function(v) {
+    var values = input.split('-').map(function (v) {
       if ($.inArray(v, months) !== -1) {
         return v;
       }
@@ -452,12 +451,12 @@ $(document).ready(function () {
     if (values[0]) values[0] = checkDate(values[0], 31);
     if (values[1] && $.inArray(values[1], months) === -1) values[1] = checkDate(values[1], 12);
 
-    var output = values.map(function(v, i) {
+    var output = values.map(function (v, i) {
       if (v.length != 2 || i > 1) {
         return v + ($.inArray(v, months) === -1 ? '' : '-');
       }
 
-      var result = (i ? months[v-1] : v);
+      var result = (i ? months[v - 1] : v);
       return result + '-';
     });
     this.value = output.join('').substr(0, 11);
@@ -476,12 +475,12 @@ $(document).ready(function () {
     size: 17,
     noneSelectedText: 'Select an item ...'
   });
-  $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+  $.fn.modal.Constructor.prototype._enforceFocus = function () {};
   //End HusDate
 
   //HusTime
   $('.husTime').mask("99:99");
-  $(document).on('change', '.husTime', function() {
+  $(document).on('change', '.husTime', function () {
     var timeArr = $(this).val().split(':');
     if (timeArr.length == 2) {
       var hourStr = timeArr[0];
@@ -500,12 +499,12 @@ $(document).ready(function () {
         minStr = "00";
       }
 
-      $(this).val(hourStr +":"+ minStr);
+      $(this).val(hourStr + ":" + minStr);
     }
   });
   //End HusTime
   //TxtUppercase
-  $(document).on('keyup', '.txtUppercase', function() {
+  $(document).on('keyup', '.txtUppercase', function () {
     $(this).val($(this).val().toUpperCase());
   });
   //NumberOnly
@@ -521,7 +520,7 @@ $(document).ready(function () {
   $(document).on('click', 'table.sortable thead > tr > th.cursor-pointer', function () {
     var sortField = $(this).data('sortfield'), sortType = $(this).data('sorttype');
     var page = parseInt($(this).closest('table').data('page')) || 1;
-    var sortFunc = $(this).closest('table').data('sortfunc') + '('+ page +', "'+ sortField +'", "'+ sortType +'")';
+    var sortFunc = $(this).closest('table').data('sortfunc') + '(' + page + ', "' + sortField + '", "' + sortType + '")';
 
     eval(sortFunc);
   });
@@ -538,16 +537,18 @@ $(document).ready(function () {
     addClass: "ui-contextmenu",
     delegate: ".contextMenu",
     menu: "#contextMenuOptions",
-    blur: function(event, ui) {},
-    beforeOpen: function(event) {},
-    open: function(event, ui) {
+    blur: function (event, ui) {
+    },
+    beforeOpen: function (event) {
+    },
+    open: function (event, ui) {
       var dataObj = $(event.currentTarget).data();
-      $.each(dataObj, function(key, value) {
+      $.each(dataObj, function (key, value) {
         ui.extraData[key] = value;
       });
     },
-    select: function(event, ui) {
-      eval(ui.cmd +'(ui.extraData)');
+    select: function (event, ui) {
+      eval(ui.cmd + '(ui.extraData)');
     }
   });
   //Trigger Shown Modal Events
@@ -555,11 +556,11 @@ $(document).ready(function () {
     triggerShownModalEvents($(this));
   });
   //For ENTER key trigger on form
-  $(document).on('keypress', 'form.eventEnterKey',function(e) {
-    if(e.keyCode == 13) {
+  $(document).on('keypress', 'form.eventEnterKey', function (e) {
+    if (e.keyCode == 13) {
       e.preventDefault();
       var idObj = $(this).data('enterkey');
-      $('#'+idObj).trigger('click');
+      $('#' + idObj).trigger('click');
     }
   });
 });
