@@ -406,6 +406,13 @@ function checkDate(str, max) {
 
 function triggerShownModalEvents(element) {
   element.find('[autofocus]').focus();
+  element.find('.selectpicker').selectpicker({
+    actionsBox: true,
+    liveSearch: true,
+    multipleSeparator: '; ',
+    size: 17,
+    noneSelectedText: 'Select an item ...'
+  });
   element.find('.birthday').datepicker({
     dateFormat: 'dd-M-yy',
     yearRange: 'c-100:c+10',
