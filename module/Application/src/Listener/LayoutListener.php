@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Listener;
+namespace Application\Listener;
 
 use Laminas\EventManager\AbstractListenerAggregate;
 use Laminas\EventManager\EventManagerInterface;

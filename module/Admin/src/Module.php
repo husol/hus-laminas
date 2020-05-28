@@ -7,7 +7,7 @@
 
 namespace Admin;
 
-use Admin\Listener\LayoutListener;
+use Application\Listener\LayoutListener;
 use Laminas\Mvc\MvcEvent;
 use Laminas\View\Resolver\TemplateMapResolver;
 
