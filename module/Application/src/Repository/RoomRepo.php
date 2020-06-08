@@ -9,7 +9,7 @@ class RoomRepo extends VlsRepo
   public function __construct($container)
   {
     parent::__construct($container);
-    $this->apiHost = $this->config['SERVICES']['HUS_HOST']. DS. 'pms';
+    $this->apiHost = $this->config['SERVICES']['HUS_HOST']. '/pms';
     $this->entity = 'rooms';
   }
 }
