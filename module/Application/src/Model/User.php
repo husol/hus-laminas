@@ -12,7 +12,7 @@ class User extends HusDao
   protected static $instance = null;
 
   /**
-   * Policies constructor.
+   * Dao constructor.
    */
   public function __construct()
   {
