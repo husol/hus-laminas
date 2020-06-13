@@ -12,13 +12,10 @@
  */
 
 return [
-  // Stage environment in LOCAL, DEV, STG, PROD
-  'STAGE' => 'LOCAL',
   //Log Level in ERROR, DEBUG, INFO
   'LOG_LEVEL' => 'ERROR',
   'IS_LIVE' => true,
-  'SENTRY_DSN' => '',
-
+  'IS_SOFT_DELETION' => true,
   //Google Captcha Setting
   'CAPTCHA'=> [
     'siteKey' => '{Google Captcha Site Key}',
@@ -27,9 +24,9 @@ return [
   //SMTP Setting for sending email
   'SMTP_OPTIONS' => [
     'name' => '{System Name}',//Husol
-    'host' => '{SMTP_HOST}',//smtp.gmail.com
-    'port' => {SMTP_PORT},//587
-    'connection_class' => 'plain',
+    'host' =>'{SMTP_HOST}',//smtp.gmail.com
+    'port' => 587,//587
+    'connection_class'  => 'plain',
     'connection_config' => [
       'username' => '{SMTP_USERNAME}',//Gmail account
       'password' => '{SMTP_PASSWORD}',//Gmail password
