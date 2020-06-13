@@ -25,7 +25,7 @@ return [
   'SMTP_OPTIONS' => [
     'name' => '{System Name}',//Husol
     'host' =>'{SMTP_HOST}',//smtp.gmail.com
-    'port' => {SMTP_PORT},//587
+    'port' => 587,//587
     'connection_class'  => 'plain',
     'connection_config' => [
       'username' => '{SMTP_USERNAME}',//Gmail account
