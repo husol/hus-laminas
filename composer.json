@@ -25,7 +25,8 @@
         "laminas/laminas-log": "^2.12",
         "tasmaniski/laminas-current-route": "^2.0",
         "guzzlehttp/guzzle": "^6.5",
-        "mpdf/mpdf": "^8.0"
+        "mpdf/mpdf": "^8.0",
+        "aws/aws-sdk-php": "^3.142"
     },
     "autoload": {
         "psr-4": {
