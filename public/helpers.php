@@ -433,7 +433,7 @@ function convertImageUrlByType($url, $type = "origin")
   }
   $arrUrl = explode('/', $url);
   $filename = end($arrUrl);
-  $newFileName = preg_replace('/(\.[^.]+)$/', sprintf('-%s$1', $type), $filename);
+  $newFileName = preg_replace('/(\.[^.]+)$/', sprintf('_%s$1', $type), $filename);
   array_pop($arrUrl);
   array_push($arrUrl, $newFileName);
 

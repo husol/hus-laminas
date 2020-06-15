@@ -2,6 +2,7 @@
 
 namespace Application\Controller;
 
+use Laminas\Config\Factory;
 use Laminas\Mvc\Controller\AbstractActionController;
 
 class HusController extends AbstractActionController
@@ -24,6 +25,12 @@ class HusController extends AbstractActionController
     return sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
   }
 
+  public function getImgUrl()
+  {
+    $configPos = Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    return $configPos['ASSET_CONFIG']['endpoint'];
+  }
+
   public function getLoggedUser($param = '')
   {
     $loggedUser = $this->session->loggedUser;
@@ -37,7 +44,7 @@ class HusController extends AbstractActionController
   private function escapeValuesSQL($values)
   {
     $search = ["\x00", "\n", "\r", "\\", "'", "\"", "\x1a"];
-    $replace = ["\\x00", "\\n", "\\r", "\\\\" ,"\'", "\\\"", "\\\x1a"];
+    $replace = ["\\x00", "\\n", "\\r", "\\\\", "\'", "\\\"", "\\\x1a"];
     $result = [];
     foreach ($values as $value) {
       if (is_string($value)) {
