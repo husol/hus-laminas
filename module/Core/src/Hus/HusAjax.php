@@ -80,14 +80,14 @@ class HusAjax
         $ascii = '';
         $length = strlen($var);
         for ($iterator = 0; $iterator < $length; $iterator ++) {
-            $char = $var{$iterator};
+            $char = $var[$iterator];
             $charCode = ord($char);
             if ($charCode < 128) {
                 $ascii .= $char;
             } elseif ($charCode >> 5 == 6) {
                 $byteOne = ($charCode & 31);
                 $iterator ++;
-                $char = $var{$iterator};
+                $char = $var[$iterator];
                 $charCode = ord($char);
                 $byteTwo = ($charCode & 63);
                 $charCode = ($byteOne * 64) + $byteTwo;
@@ -95,11 +95,11 @@ class HusAjax
             } elseif ($charCode >> 4 == 14) {
                 $byteOne = ($charCode & 31);
                 $iterator ++;
-                $char = $var{$iterator};
+                $char = $var[$iterator];
                 $charCode = ord($char);
                 $byteTwo = ($charCode & 63);
                 $iterator ++;
-                $char = $var{$iterator};
+                $char = $var[$iterator];
                 $charCode = ord($char);
                 $byteThree = ($charCode & 63);
                 $charCode = ((($byteOne * 64) + $byteTwo) * 64) + $byteThree;
@@ -107,15 +107,15 @@ class HusAjax
             } elseif ($charCode >> 3 == 30) {
                 $byteOne = ($charCode & 31);
                 $iterator ++;
-                $char = $var{$iterator};
+                $char = $var[$iterator];
                 $charCode = ord($char);
                 $byteTwo = ($charCode & 63);
                 $iterator ++;
-                $char = $var{$iterator};
+                $char = $var[$iterator];
                 $charCode = ord($char);
                 $byteThree = ($charCode & 63);
                 $iterator ++;
-                $char = $var{$iterator};
+                $char = $var[$iterator];
                 $charCode = ord($char);
                 $byteFour = ($charCode & 63);
                 $charCode = ((((($byteOne * 64) + $byteTwo) * 64) + $byteThree) * 64) + $byteFour;
