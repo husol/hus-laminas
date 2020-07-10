@@ -103,7 +103,7 @@ CREATE TABLE `products` (
   `category_id` bigint(20) NOT NULL,
   `model_name` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `name` varchar(128) CHARACTER SET utf8 DEFAULT NULL,
-  `cover` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `short_description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `description` text CHARACTER SET utf8 DEFAULT NULL,
   `price` decimal(19,4) NOT NULL DEFAULT 0.0000,
