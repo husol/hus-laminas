@@ -62,7 +62,7 @@ CREATE TABLE `news` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `title` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `cover` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `description` text CHARACTER SET utf8 DEFAULT NULL,
   `status` enum('INACTIVE','ACTIVE','DELETED') CHARACTER SET utf8 NOT NULL DEFAULT 'INACTIVE',
   `created_by` bigint(20) NOT NULL,
