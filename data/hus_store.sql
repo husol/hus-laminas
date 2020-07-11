@@ -21,7 +21,7 @@ USE `hus_store`;
 DROP TABLE IF EXISTS `categories`;
 
 CREATE TABLE `categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `parent_id` bigint(20) NOT NULL DEFAULT 0,
   `name` varchar(128) CHARACTER SET utf8 NOT NULL,
   `status` enum('INACTIVE','ACTIVE','DELETED') COLLATE utf8mb4_unicode_ci DEFAULT 'INACTIVE',
@@ -41,8 +41,7 @@ DROP TABLE IF EXISTS `comments`;
 
 CREATE TABLE `comments` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `product_id` bigint(20) unsigned NOT NULL,
+  `product_id` bigint(20) NOT NULL,
   `content` varchar(255) CHARACTER SET utf8 NOT NULL,
   `status` enum('INACTIVE','ACTIVE','DELETED') CHARACTER SET utf8 NOT NULL DEFAULT 'INACTIVE',
   `created_by` bigint(20) NOT NULL,
@@ -60,7 +59,6 @@ DROP TABLE IF EXISTS `news`;
 
 CREATE TABLE `news` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
   `title` varchar(255) CHARACTER SET utf8 NOT NULL,
   `image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `description` text CHARACTER SET utf8 DEFAULT NULL,
