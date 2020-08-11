@@ -167,18 +167,21 @@ class HusFile
 
     // Fix Orientation
     $exif = @exif_read_data($source);
-    $orientation = $exif['Orientation'];
 
-    switch ($orientation) {
-      case 3:
-        $newImage = imagerotate($newImage, 180, 0);
-        break;
-      case 6:
-        $newImage = imagerotate($newImage, -90, 0);
-        break;
-      case 8:
-        $newImage = imagerotate($newImage, 90, 0);
-        break;
+    if (isset($exif['Orientation'])) {
+      $orientation = $exif['Orientation'];
+
+      switch ($orientation) {
+        case 3:
+          $newImage = imagerotate($newImage, 180, 0);
+          break;
+        case 6:
+          $newImage = imagerotate($newImage, -90, 0);
+          break;
+        case 8:
+          $newImage = imagerotate($newImage, 90, 0);
+          break;
+      }
     }
 
     return $store($newImage, $destination);
