@@ -11,7 +11,7 @@ trim_trailing_whitespace = true
 [Makefile]
 indent_style = tab
 
-[*.{html,js,php,go,yml}]
+[*.{html,js,php,phtml,yml}]
 indent_style = space
 indent_size = 2
 charset = utf-8
