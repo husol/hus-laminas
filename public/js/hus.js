@@ -406,7 +406,7 @@ function checkDate(str, max) {
 
 function triggerShownModalEvents(element) {
   element.find('[autofocus]').focus();
-  element.find('.selectpicker').selectpicker({
+  element.find('.husSelect').selectpicker({
     actionsBox: true,
     liveSearch: true,
     multipleSeparator: '; ',
@@ -436,6 +436,16 @@ function triggerShownModalEvents(element) {
 }
 
 $(document).ready(function () {
+  //HusSelect
+  $('.husSelect').selectpicker({
+    actionsBox: true,
+    liveSearch: true,
+    multipleSeparator: '; ',
+    size: 17,
+    noneSelectedText: 'Select an item ...'
+  });
+  //End HusSelect
+
   //HusDate
   $(document).on('keyup', '.husDate, .autoDate', function (e) {
     if (e.keyCode == 8 || e.keyCode == 46) {
@@ -475,38 +485,50 @@ $(document).ready(function () {
     changeYear: true,
     firstDay: 1
   });
-  $('.selectpicker').selectpicker({
-    actionsBox: true,
-    liveSearch: true,
-    multipleSeparator: '; ',
-    size: 17,
-    noneSelectedText: 'Select an item ...'
-  });
   $.fn.modal.Constructor.prototype._enforceFocus = function () {};
   //End HusDate
 
   //HusTime
   $('.husTime').mask("99:99");
-  $(document).on('change', '.husTime', function () {
-    var timeArr = $(this).val().split(':');
-    if (timeArr.length == 2) {
-      var hourStr = timeArr[0];
-      if (hourStr.length < 2) {
-        hourStr = "0" + hourStr;
-      }
-      if (hourStr == 0 || hourStr > 23) {
-        hourStr = "00";
-      }
+  $(document).on('focusout', '.husTime', function () {
+    var timeStr = $(this).val();
+    if (timeStr.includes(':')) {
+      var timeArr = timeStr.split(':');
+      if (timeArr.length == 2) {
+        var hourStr = timeArr[0];
+        if (hourStr.length < 2) {
+          hourStr = "0" + hourStr;
+        }
+        if (hourStr == 0 || hourStr > 23) {
+          hourStr = "00";
+        }
 
-      var minStr = timeArr[1];
-      if (minStr.length < 2) {
-        minStr = "0" + minStr;
-      }
-      if (minStr == 0 || minStr > 59) {
-        minStr = "00";
-      }
+        var minStr = timeArr[1];
+        if (minStr.length < 2) {
+          minStr = "0" + minStr;
+        }
+        if (minStr == 0 || minStr > 59) {
+          minStr = "00";
+        }
 
-      $(this).val(hourStr + ":" + minStr);
+        $(this).val(hourStr + ":" + minStr);
+      }
+    }
+    else {
+      switch(timeStr.length) {
+        case 0:
+          $(this).val("00:00");
+          break;
+        case 1:
+          $(this).val("0" + $(this).val() + ":00");
+          break;
+        case 2:
+          var hNumber = $(this).val();
+          if (parseInt(hNumber) > 23)
+            hNumber = "00";
+          $(this).val(hNumber + ":00");
+          break;
+      }
     }
   });
   //End HusTime
