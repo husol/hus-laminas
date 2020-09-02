@@ -15,7 +15,7 @@
         <div class="row">
           <div class="form-group label-float col-md-4d5">
             <label for="parentCategory" class="required">Parent Category</label>
-            <select class="form-control selectpicker" id="parentCategory" name="parentCategory">
+            <select class="form-control husSelect" id="parentCategory" name="parentCategory">
               <option value="0">None</option>
             <?php foreach ($this->parentCategories as $parentCategory):?>
               <option value="<?=$parentCategory->id?>"<?=isset($this->myCategory) && $this->myCategory->parent_id == $parentCategory->id ? ' selected' : ''?>><?=$parentCategory->name?></option>

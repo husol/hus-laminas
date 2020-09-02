@@ -35,7 +35,7 @@
           <!--Grid column-->
           <div class="form-group label-float col-lg-3 col-md-3">
             <label for="fparentCategory">Parent Category</label>
-            <select class="form-control selectpicker" id="fparentCategory" name="fparentCategory">
+            <select class="form-control husSelect" id="fparentCategory" name="fparentCategory">
               <option value="0" selected>ALL</option>
             <?php foreach ($this->parentCategories as $parentCategory):?>
               <option value="<?=$parentCategory->id?>"><?=$parentCategory->name?></option>
