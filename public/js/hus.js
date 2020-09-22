@@ -517,7 +517,12 @@ $(document).ready(function () {
     else {
       switch(timeStr.length) {
         case 0:
-          $(this).val("00:00");
+          var defaultTime = "00:00";
+          if (typeof $(this).data('default') != "undefined") {
+            defaultTime = $(this).data('default');
+          }
+
+          $(this).val(defaultTime);
           break;
         case 1:
           $(this).val("0" + $(this).val() + ":00");
