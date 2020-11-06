@@ -78,9 +78,11 @@ class HusUploader
           'ContentType' => mime_content_type($this->sourcefile)
         ]);
 
+        $arr = parse_url($result['ObjectURL']);
+
         return [
           'error' => self::ERROR_UPLOAD_OK,
-          'path' => str_replace($this->endpoint, "", $result['ObjectURL'])
+          'path' => $arr['path']
         ];
       } catch (\Aws\S3\Exception\S3Exception $e) {
         return [

@@ -50,10 +50,10 @@ class HusFile
       $namePart = $namePart . "_" . $suffix;
     }
     $name = $namePart . '.' . $extPart;
-    $pathConf = $type == 'images' ? $configPos['PATH_CONFIG'][$type]['imageDirectory'] : $configPos['PATH_CONFIG'][$type]['fileDirectory'];
+    $pathConf = $type == 'images' ? $configHus['PATH_CONFIG'][$type]['imageDirectory'] : $configHus['PATH_CONFIG'][$type]['fileDirectory'];
     $file = $pathConf. $pathDir . $name;
 
-    $uploader = new VlsUploader($configPos['S3_CONFIG'], $file, ['file' => $this->file['tmp_name'], 'name' => $this->file['name']], true);
+    $uploader = new HusUploader($configHus['S3_CONFIG'], $file, ['file' => $this->file['tmp_name'], 'name' => $this->file['name']], true);
     $result = $uploader->upload();
 
     if ($result['error'] == 0 && $type == 'images') {
