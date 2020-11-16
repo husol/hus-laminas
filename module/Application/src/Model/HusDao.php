@@ -11,22 +11,6 @@ class HusDao extends Dao
   protected $table = null;
   protected $connTrans;
 
-  /**
-   * @param $strName
-   * @param $logs
-   */
-
-  protected function __logs($strName, $logs)
-  {
-    $fn = sprintf('%s.%s.txt', $strName, date('Y.m.d'));
-    $writer = new \Laminas\Log\Writer\Stream(ROOT_DIR . DS .'logs'. DS . $fn);
-    $formatter = new \Laminas\Log\Formatter\Simple('%message%');
-    $writer->setFormatter($formatter);
-    $logger = new \Laminas\Log\Logger();
-    $logger->addWriter($writer);
-    $logger->info(Json::encode($logs));
-  }
-
   public function update($table, $data = [], $where = [])
   {
     if(!is_array($data) || empty($data)) {

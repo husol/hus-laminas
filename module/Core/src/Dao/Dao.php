@@ -5,6 +5,7 @@ namespace Core\Dao;
 use Laminas\Db\Sql\Sql;
 use Laminas\Db\Adapter\Driver\ResultInterface;
 use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Json\Json;
 
 abstract class Dao
 {
@@ -127,13 +128,14 @@ abstract class Dao
       $sqlStr = $this->sql->getSqlStringForSqlObject($delete);
       return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
     } catch (\Exception $e) {
+      $this->__logs("Hus_ModelMysql_{$table}.sqlDelete", $e->getMessage());
     }
 
     return false;
   }
 
   /**
-   * @returns a Laminas\Db\Sql\Insert instance
+   * @returns Laminas\Db\Sql\Insert instance
    */
   public function sqlInsert($table, $data = [])
   {
@@ -141,12 +143,12 @@ abstract class Dao
       return false;
     }
     try {
-      $sql = $this->sql();
       $insert = $this->sql->insert($table);
       $insert->values($data);
       $sqlStr = $this->sql->getSqlStringForSqlObject($insert);
       return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
     } catch (\Exception $e) {
+      $this->__logs("Hus_ModelMysql_{$table}.sqlInsert", $e->getMessage());
     }
 
     return false;
@@ -175,6 +177,7 @@ abstract class Dao
       $sqlStr = $this->sql->getSqlStringForSqlObject($update);
       return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
     } catch (\Exception $e) {
+      $this->__logs("Hus_ModelMysql_{$table}.sqlUpdate", $e->getMessage());
     }
 
     return false;
@@ -204,5 +207,21 @@ abstract class Dao
     }
 
     return false;
+  }
+
+  /**
+   * @param $strName
+   * @param $logs
+   */
+
+  protected function __logs($strName, $logs)
+  {
+    $fn = sprintf('%s.%s.txt', $strName, date('Y.m.d'));
+    $writer = new \Laminas\Log\Writer\Stream(ROOT_DIR . DS . 'logs' . DS . $fn);
+    $formatter = new \Laminas\Log\Formatter\Simple('%message%');
+    $writer->setFormatter($formatter);
+    $logger = new \Laminas\Log\Logger();
+    $logger->addWriter($writer);
+    $logger->info(Json::encode($logs));
   }
 }
