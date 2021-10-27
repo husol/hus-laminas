@@ -25,7 +25,7 @@ class HusController extends AbstractActionController
     return sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
   }
 
-  public function getImgUrl()
+  public function getAssetUrl()
   {
     $configPos = Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
     return $configPos['ASSET_CONFIG']['endpoint'];
