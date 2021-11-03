@@ -2,10 +2,10 @@
 
 namespace Application\Repository;
 
-use Core\Hus\HUsAjax;
+use Core\Hus\HusAjax;
 use Core\Hus\HusLogger;
 
-class VlsRepo
+class HusRepo
 {
   protected $container;
   protected $session;
@@ -16,7 +16,7 @@ class VlsRepo
   public function __construct($container)
   {
     $this->container = $container;
-    $this->session = $this->container->get('PosSessionContainer');
+    $this->session = $this->container->get('HusSessionContainer');
     $this->config = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
   }
 

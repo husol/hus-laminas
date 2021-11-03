@@ -2,7 +2,7 @@
 
 namespace Application\Repository;
 
-class RoomRepo extends VlsRepo
+class RoomRepo extends HusRepo
 {
   const PAGE_SIZE = 20;
 

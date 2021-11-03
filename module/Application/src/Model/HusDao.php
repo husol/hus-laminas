@@ -34,9 +34,7 @@ class HusDao extends Dao
     }
 
     $delete = $this->sql->delete($table);
-    if(!empty($where) && (is_array($where) || is_string($where))) {
-      $delete->where($where);
-    }
+    $delete->where($where);
 
     $sqlStr = $this->sql->getSqlStringForSqlObject($delete);
     return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
@@ -66,8 +64,8 @@ class HusDao extends Dao
     try {
       $sql = $this->sql->select();
       $sql->from($this->table);
-      if ($husConfig['IS_SOFT_DELETION']) {
-        $sql->where->expression("status <> ?", 'DELETED');
+      if (!in_array($this->table, $husConfig['HARD_DELETED_TABLES'])) {
+        $sql->where->isNotNull('deleted_at');
       }
 
       if ($id) {
@@ -191,7 +189,7 @@ class HusDao extends Dao
   public function save($data, $id = 0)
   {
     try {
-      $insertBatch = $id == -1 ? true : false;
+      $insertBatch = $id == -1;
 
       if (is_object($data)) {
         $data = (array)$data;
@@ -227,17 +225,22 @@ class HusDao extends Dao
    */
   public function remove($where, $flag = 0)
   {
+    $husConfig = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+
     try {
       if (is_object($where)) {
         $where = (array)$where;
       }
-      if ($flag == -1) {
+
+      if (in_array($this->table, $husConfig['HARD_DELETED_TABLES']) || $flag == -1) {
         $this->delete($this->table, $where);
       } else {
-        $data = ['status' => 'DELETED'];
+        $data = ['deleted_at' => date('Y-m-d H:i:s')];
+
         if ($flag > 0) {
-          $data['updatedBy'] = $flag;
+          $data['updated_by'] = $flag;
         }
+
         $this->update($this->table, $data, $where);
       }
 
