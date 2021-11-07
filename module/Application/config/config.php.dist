@@ -15,7 +15,7 @@ return [
   //Log Level in ERROR, DEBUG, INFO
   'LOG_LEVEL' => 'ERROR',
   'IS_LIVE' => true,
-  'HARD_DELETED_TABLES' => ['comments', 'order'],
+  'HARD_DELETED_TABLES' => ['comments', 'orders'],
   //Google Captcha Setting
   'CAPTCHA'=> [
     'siteKey' => '{Google Captcha Site Key}',
