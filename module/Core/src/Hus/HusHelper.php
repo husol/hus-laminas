@@ -104,4 +104,22 @@ class HusHelper
 
     return $randomString;
   }
+
+  /**
+   * @throws \Exception
+   */
+  public static function encryptAES($data, $secretKey)
+  {
+    $salt = random_bytes(256);
+    $iv = random_bytes(16);
+
+    $iterations = 999;
+    $key = hash_pbkdf2("sha512", $secretKey, $salt, $iterations, 64);
+
+    $encrypted_data = openssl_encrypt($data, 'aes-256-cbc', hex2bin($key), OPENSSL_RAW_DATA, $iv);
+
+    $data = ["ciphertext" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "salt" => bin2hex($salt)];
+
+    return json_encode($data);
+  }
 }

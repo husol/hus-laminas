@@ -21,6 +21,7 @@
   <!-- Scripts -->
   <?= $this->inlineScript()
     ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/crypto-js.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))

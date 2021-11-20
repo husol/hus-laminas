@@ -58,6 +58,20 @@ function base64_decode(data) {
   }).join(''));
 }
 
+function decryptAES(encryptedJsonStr, secretKey){
+  var objJSON = JSON.parse(encryptedJsonStr);
+
+  var encrypted = objJSON.ciphertext;
+  var salt = CryptoJS.enc.Hex.parse(objJSON.salt);
+  var iv = CryptoJS.enc.Hex.parse(objJSON.iv);
+
+  var key = CryptoJS.PBKDF2(secretKey, salt, {hasher: CryptoJS.algo.SHA512, keySize: 64 / 8, iterations: 999});
+
+  var decrypted = CryptoJS.AES.decrypt(encrypted, key, {iv: iv});
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
+}
+
 function fetchForm(formObj, getAll, upload) {
   if (upload == undefined) {
     upload = false;
@@ -158,7 +172,7 @@ function callAjax(controller, method, args, callback) {
         showErrorBubble("", msg.messages);
       }
 
-      eval(base64_decode(msg.html));
+      eval(decryptAES(msg.html, "husol123#@!"));
 
       if (callback != null) {
         if (msg.result == undefined) {
