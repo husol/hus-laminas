@@ -65,7 +65,7 @@ class HusDao extends Dao
       $sql = $this->sql->select();
       $sql->from($this->table);
       if (!in_array($this->table, $husConfig['HARD_DELETED_TABLES'])) {
-        $sql->where->isNotNull('deleted_at');
+        $sql->where->isNull('deleted_at');
       }
 
       if ($id) {
