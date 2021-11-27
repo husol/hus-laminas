@@ -13,5 +13,5 @@
 
 return [
   'APP_VERSION' => '1.0.1',
-  'DATE_VERSION' => '2020010309'
+  'DATE_VERSION' => '2021091315'
 ];
