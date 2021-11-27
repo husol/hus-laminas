@@ -5,6 +5,7 @@ phpunit.xml
 .vscode/
 .phpintel/
 nbproject/
+.DS_Store
 *.iml
 .env
 composer.lock
