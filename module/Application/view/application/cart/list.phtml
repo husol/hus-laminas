@@ -1,0 +1,42 @@
+<table class="table text-nowrap">
+  <thead>
+  <tr class="text-sm">
+    <th width="30%" class="border-gray-300 border-top py-3" colspan="2">Sản phẩm</th>
+    <th width="10%" class="border-gray-300 border-top py-3">Số lượng</th>
+    <th width="20%" class="border-gray-300 border-top py-3">Đơn giá</th>
+    <th width="10%" class="border-gray-300 border-top py-3">Giảm giá</th>
+    <th width="20%" class="border-gray-300 border-top py-3">Thành tiền</th>
+    <th width="10%" class="border-gray-300 border-top py-3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php $total = 0;?>
+<?php if (empty($this->products)):?>
+  <tr class="text-sm"><td class="text-center" colspan="6">Không có sản phẩm nào</td></tr>
+<?php else:?>
+  <?php foreach($this->products as $product):?>
+  <tr id="product<?=$product->id?>" data-price="<?=$product->price?>" class="text-sm">
+    <td class="align-middle border-gray-300 py-3"><a href="/products/<?=$product->id?>"><img class="img-fluid flex-shrink-0" src="<?=$product->image?>" alt="<?=$product->name?>" style="min-width: 50px" width="50"></a></td>
+    <td class="align-middle border-gray-300 py-3"><a href="/products/<?=$product->id?>"><?=$product->name?></a></td>
+    <td class="align-middle border-gray-300 py-3">
+      <input class="form-control" type="number" name="cartProducts[][quantity]" value="<?=$product->quantity?>" onchange="updateAmount(<?=$product->id?>);">
+      <input type="hidden" name="cartProducts[][id]" value="<?=$product->id?>">
+    </td>
+    <td class="align-middle border-gray-300 py-3"><?=formatNumber($product->price)?> VND</td>
+    <td class="align-middle border-gray-300 py-3">0 VND</td>
+    <td class="align-middle border-gray-300 py-3"><?=formatNumber($product->amount)?> VND</td>
+    <td class="align-middle border-gray-300 py-3">
+      <a class="btn btn-link p-0" type="button" href="javascript:removeItemFromCart(<?=$product->id?>)"><i class="fas fa-trash-alt"></i></a>
+    </td>
+  </tr>
+  <?php $total += $product->amount;?>
+  <?php endforeach;?>
+<?php endif;?>
+  </tbody>
+  <tfoot>
+  <tr>
+    <th class="py-3 border-0" colspan="5"> <span class="h4 text-gray-700 mb-0">Tổng cộng</span></th>
+    <th class="py-3 border-0 text-end" colspan="2"> <span class="h4 text-gray-700 mb-0"><?=formatNumber($total)?> VND</span></th>
+  </tr>
+  </tfoot>
+</table>

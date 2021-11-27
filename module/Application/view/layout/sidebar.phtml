@@ -1,0 +1,45 @@
+<!-- SHOP SIDEBAR-->
+<div class="col-lg-3">
+  <!-- Categories-->
+  <h3 class="h4 lined text-uppercase mb-4">Loại sản phẩm</h3>
+  <ul class="nav flex-column nav-pills mb-4">
+  <?php foreach($this->categories as $kind => $category):?>
+    <li class="nav-item">
+      <a class="nav-link" href="/products?category_kind=<?=$kind?>">
+        <div class="d-flex align-items-center justify-content-between"><span class="fw-bold text-uppercase"><?=$category['name']?></span></div>
+      </a>
+      <ul class="list-unstyled text-sm text-muted mb-0">
+      <?php foreach($category['items'] as $item):?>
+        <li><a class="nav-link ps-4 text-muted letter-spacing-1" href="/products?category_id=<?=$item->id?>"> <span class="ps-2"><?=$item->name?></span></a></li>
+      <?php endforeach;?>
+      </ul>
+    </li>
+  <?php endforeach;?>
+  </ul>
+  <!-- Price filter -->
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="h4 lined text-uppercase">Lọc theo giá</h3>
+    <button class="btn btn-sm btn-danger" type="button"><i class="fas fa-times-circle me-2"></i>Clear</button>
+  </div>
+  <form id="formFilterPrice" class="mb-4" action="#">
+    <div class="form-check">
+      <input class="form-check-input" id="fprice1" name="fprice" value="5000000" type="radio">
+      <label class="ps-2 form-check-label" for="fprice1">< 5,000,000 VND</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" id="fprice2" name="fprice" value="10000000" type="radio">
+      <label class="ps-2 form-check-label" for="fprice2">< 10,000,000 VND</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" id="fprice3" name="fprice" value="20000000" type="radio">
+      <label class="ps-2 form-check-label" for="fprice3">< 20,000,000 VND</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" id="fprice4" name="fprice" value="50000000" type="radio">
+      <label class="ps-2 form-check-label" for="fprice4">< 50,000,000 VND</label>
+    </div>
+    <button id="btnFilterPrice" class="btn btn-sm btn-outline-primary mt-3" type="button">
+      <i class="fas fa-pencil-alt me-2"></i>Apply
+    </button>
+  </form>
+</div>

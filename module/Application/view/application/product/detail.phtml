@@ -1,0 +1,123 @@
+<!-- HEADING BREADCRUMB-->
+<section class="bg-pentagon py-4">
+  <div class="container py-3">
+    <div class="row d-flex align-items-center gy-4">
+      <div class="col-md-7">
+        <h1 class="h2 mb-0 text-uppercase"><?=$this->myProduct->name?></h1>
+      </div>
+      <div class="col-md-5">
+        <!-- Breadcrumb-->
+        <ol class="text-sm justify-content-start justify-content-lg-end mb-0 breadcrumb undefined">
+          <li class="breadcrumb-item"><a class="text-uppercase" href="index.html">Sản phẩm</a></li>
+          <li class="breadcrumb-item text-uppercase active"><?=$this->myProduct->name?></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SHOP DETAIL SECTION-->
+<section class="py-5">
+  <div class="container py-4">
+    <div class="row g-5">
+      <div class="col-lg-12">
+        <p class="lead mb-4"><?=$this->myProduct->short_description?></p>
+        <div class="text-center mb-5"><a class="text-muted text-center small text-uppercase text-decoration-underline" href="#details">Cấu hình chi tiết</a></div>
+        <div class="row gy-5 align-items-stretch">
+          <!-- PRODUCTS SLIDER-->
+          <div class="col-lg-6">
+            <div class="swiper-container shop-detail-slider">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img class="img-fluid" src="<?=$this->myProduct->image?>" alt="<?=$this->myProduct->name?>">
+                </div>
+                <div class="swiper-slide">
+                  <?php if (!empty($this->myProduct->image2)):?>
+                  <img class="img-fluid" src="<?=$this->myProduct->image2?>" alt="<?=$this->myProduct->name?>">
+                  <?php endif;?>
+                </div>
+                <div class="swiper-slide">
+                  <?php if (!empty($this->myProduct->image3)):?>
+                  <img class="img-fluid" src="<?=$this->myProduct->image3?>" alt="<?=$this->myProduct->name?>">
+                  <?php endif;?>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- FPRODUCT INFO-->
+          <div class="col-lg-6 d-flex flex-column justify-content-between">
+            <div class="p-4 p-lg-5 border mb-5 bg-light">
+                <p class="h1 text-muted mb-4 text-center fw-normal"><?=formatNumber($this->myProduct->price)?> VND</p>
+                <p class="text-center">
+                  <button id="btnAddToCart" data-id="<?=$this->myProduct->id?>" class="btn btn-outline-primary" type="submit"><i class="fas fa-shopping-cart"></i> Thêm vào Giỏ hàng</button>
+                  <a href="/cart" class="btn btn-primary">Mua ngay</a>
+                </p>
+            </div>
+            <!-- SLIDERS THUMBS -->
+            <div class="swiper-container shop-detail-slider-thumbs w-100">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide swiper-slide-thumb flex-fill">
+                  <img class="img-fluid" src="<?=$this->myProduct->image?>" alt="<?=$this->myProduct->name?>">
+                </div>
+                <div class="swiper-slide swiper-slide-thumb flex-fill">
+                  <?php if (!empty($this->myProduct->image2)):?>
+                  <img class="img-fluid" src="<?=$this->myProduct->image2?>" alt="<?=$this->myProduct->name?>">
+                  <?php endif;?>
+                </div>
+                <div class="swiper-slide swiper-slide-thumb flex-fill">
+                  <?php if (!empty($this->myProduct->image2)):?>
+                  <img class="img-fluid" src="<?=$this->myProduct->image3?>" alt="<?=$this->myProduct->name?>">
+                  <?php endif;?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PRODUCT INFO-->
+        <div id="details">
+          <div class="border-top border-bottom py-4 px-0 px-lg-4 my-5">
+            <h4>Chi tiết</h4>
+            <p>
+              <?=$this->myProduct->description?>
+            </p>
+
+            <figure class="p-4 bg-light border-start border-4 border-primary">
+              <blockquote class="blockquote">
+                <p>Số lượng sản phẩm có giới hạn, hãy nhanh tay để nhận được sản phẩm cho chính bạn.</p>
+              </blockquote>
+            </figure>
+          </div>
+          <!-- SIMILAR PRODUCTS-->
+          <div class="row gy-4 mb-5">
+            <div class="col-lg-3 col-md-6">
+              <div class="py-4 px-0 px-lg-4 border-top border-bottom">
+                <h3 class="text-uppercase mb-0">Sản phẩm liên quan</h3>
+              </div>
+            </div>
+          <?php if (empty($this->relatedProducts)):?>
+              <div class="col-lg-3 col-md-6">Không có sản phẩm</div>
+          <?php else:?>
+            <?php foreach($this->relatedProducts as $index => $product):?>
+            <?php if ($index > 0 && $index % 3 == 0):?>
+                <div class="col-lg-3 col-md-6"></div>
+            <?php endif;?>
+              <div class="col-lg-3 col-md-6">
+                <!-- Product-->
+                <div class="product h-100">
+                  <div class="product-image"><a href="/products/<?=$product->id?>"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>"></a></div>
+                  <div class="py-4 px-3 text-center">
+                    <h3 class="h5 text-uppercase mb-3"><a class="reset-link" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+                    <p class="mb-0"><?=formatNumber($product->price)?> VND</p>
+                  </div>
+                  <ul class="list-unstyled p-0 ribbon-holder mb-0"></ul>
+                </div>
+              </div>
+            <?php endforeach;?>
+          <?php endif;?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php $this->inlineScript()->prependFile($this->basePath("js/modules/product.{$this->layout()->dateVersion}.js")) ?>

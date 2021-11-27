@@ -1,0 +1,37 @@
+<!-- Navbar Sticky-->
+<header class="nav-holder make-sticky">
+  <div class="navbar navbar-light bg-white navbar-expand-lg py-0" id="navbar">
+    <div class="container py-3 py-lg-0 px-lg-0">
+      <!-- Navbar brand--><a class="navbar-brand" href="/"><img class="d-none d-md-inline-block" src="/img/logo.png" alt="Universal logo"><img class="d-inline-block d-md-none" src="/img/logo-small.png" alt="Universal logo"><span class="sr-only">Universal - go to homepage</span></a>
+      <!-- Navbar toggler-->
+      <button class="navbar-toggler text-primary border-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navigationCollapse" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="sr-only">Toggle navigation</span><i class="fas fa-align-justify"></i></button>
+      <!-- Collapsed Navigation    -->
+    <?php
+      $menuIndex = $this->currentRoute()->matchController('indexcontroller');
+      $menuProduct = $this->currentRoute()->matchController('productcontroller');
+      $menuAbout = $this->currentRoute()->matchController('aboutcontroller');
+      $menuContact = $this->currentRoute()->matchController('contactcontroller');
+    ?>
+      <div class="collapse navbar-collapse" id="navigationCollapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <!-- homepage -->
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link<?php if($menuIndex): ?> active<?php endif;?>" id="home" href="/" role="button">Trang chủ</a>
+          </li>
+          <!-- products -->
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link<?php if($menuProduct): ?> active<?php endif;?>" id="products" href="/products" role="button">Sản phẩm</a>
+          </li>
+          <!-- introduction -->
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link<?php if($menuAbout): ?> active<?php endif;?>" id="about" href="/about" role="button">Giới thiệu</a>
+          </li>
+          <!-- contact -->
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link<?php if($menuContact): ?> active<?php endif;?>" id="contact" href="/contact" role="button">Liên hệ</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

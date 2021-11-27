@@ -1,0 +1,38 @@
+<?php if (empty($this->products)):?>
+<div class="text-center">Không có sản phẩm</div>
+<?php else:?>
+<div class="row gy-5 align-items-stretch">
+  <?php foreach($this->products as $product):?>
+    <div class="col-lg-4 col-md-6">
+      <!-- Product-->
+      <div class="product h-100">
+        <div class="product-image"><a href="/products/<?=$product->id?>"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>"></a>
+        </div>
+        <div class="py-4 px-3 text-center">
+          <h3 class="h5 text-uppercase mb-3"><a class="reset-link" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+          <p class="mb-0"><?=formatNumber($product->price)?> VND</p>
+        </div>
+        <ul class="list-unstyled p-0 ribbon-holder mb-0">
+        </ul>
+      </div>
+    </div>
+  <?php endforeach;?>
+</div>
+<?php endif;?>
+
+<div class="space"></div>
+<!--Paginator-->
+<?php if (isset($this->paginator) && $this->paginator->getTotalItemCount() > $this->paginator->getItemCountPerPage()):
+  $from = ($this->paginator->getCurrentPageNumber() - 1)*$this->paginator->getItemCountPerPage() + 1;
+  $to = $this->paginator->getCurrentPageNumber()*$this->paginator->getItemCountPerPage();
+  if ($to > $this->paginator->getTotalItemCount()) {
+    $to = $this->paginator->getTotalItemCount();
+  }
+?>
+  <div class="paginator">
+    <div class="float-left text-blue">
+      <?=$from?> - <?=$to?> of <?=$this->paginator->getTotalItemCount()?>
+    </div>
+    <?= $this->paginationControl($this->paginator, 'Sliding', 'partial/paginator', ['route' => '/', 'ajaxFunc' => 'getProducts']) ?>
+  </div>
+<?php endif; ?>

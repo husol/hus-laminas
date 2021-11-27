@@ -1,0 +1,32 @@
+<!-- HEADING BREADCRUMB-->
+<section class="bg-pentagon py-4">
+  <div class="container py-3">
+    <div class="row d-flex align-items-center gy-4">
+      <div class="col-md-7">
+        <h1 class="h2 mb-0 text-uppercase">Sản phẩm</h1>
+      </div>
+      <div class="col-md-5">
+        <!-- Breadcrumb-->
+        <ol class="text-sm justify-content-start justify-content-lg-end mb-0 breadcrumb undefined">
+          <li class="breadcrumb-item"><a class="text-uppercase" href="/">Trang chủ</a></li>
+          <li class="breadcrumb-item text-uppercase active">Sản phẩm</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP SECTION-->
+<section class="py-5">
+  <div class="container py-4">
+    <div class="row g-5">
+      <?= $this->render('layout/sidebar.phtml') ?>
+
+      <div id="listProduct" class="col-lg-9">
+        <span class="loadingText text-center">Loading</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php $this->inlineScript()->prependFile($this->basePath("js/modules/product.{$this->layout()->dateVersion}.js")) ?>

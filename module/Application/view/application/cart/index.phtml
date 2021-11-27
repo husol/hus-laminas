@@ -1,0 +1,69 @@
+<!-- HEADING BREADCRUMB-->
+<section class="bg-pentagon py-4">
+  <div class="container py-3">
+    <div class="row d-flex align-items-center gy-4">
+      <div class="col-md-7">
+        <h1 class="h2 mb-0 text-uppercase">Giỏ hàng</h1>
+      </div>
+      <div class="col-md-5">
+        <!-- Breadcrumb-->
+        <ol class="text-sm justify-content-start justify-content-lg-end mb-0 breadcrumb undefined">
+          <li class="breadcrumb-item"><a class="text-uppercase" href="/">Trang chủ</a></li>
+          <li class="breadcrumb-item text-uppercase active">Giỏ hàng</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SHOP BASKET SECTION-->
+<section class="py-5">
+  <div class="container py-4">
+    <p class="text-muted lead mb-5">Hiện tại bạn đang có 3 sản phẩm trong giỏ hàng.</p>
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- CART PRODUCTS TABLE-->
+        <form id="formListCart" action="#">
+          <div id="listCart" class="table-responsive">
+            <span class="loadingText text-center">Loading</span>
+          </div>
+          <!-- NAVIGATION FOOTER-->
+          <div class="row gx-lg-0 align-items-center bg-light px-4 py-3 text-center mb-5">
+            <div class="col-md-5 text-md-start py-1"><a class="btn btn-secondary my-1" href="/products"><i class="fas fa-angle-left me-1"></i> Tiếp tục mua hàng</a></div>
+            <div class="col-md-7 text-md-end py-1">
+              <button id="btnUpdateCart" class="btn btn-secondary my-1"><i class="fas fa-sync-alt me-1"></i> Cập nhật giỏ hàng</button>
+              <button class="btn btn-outline-primary my-1">Tiến hành thanh toán <i class="fas fa-angle-right ms-1"></i></button>
+            </div>
+          </div>
+          <!-- RELATED PRODUCTS-->
+          <div class="row gy-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="py-4 px-0 px-lg-4 border-top border-bottom">
+                <h3 class="text-uppercase mb-0">Sản phẩm bạn có thể thích</h3>
+              </div>
+            </div>
+          <?php if (empty($this->relatedProducts)):?>
+          <div class="col-lg-6 col-md-12">Không có sản phẩm</div>
+          <?php else:?>
+            <?php foreach($this->relatedProducts as $product):?>
+            <div class="col-lg-3 col-md-6">
+              <!-- Product-->
+              <div class="product h-100">
+                <div class="product-image"><a href="/products/<?=$product->id?>"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>"></a></div>
+                <div class="py-4 px-3 text-center">
+                  <h3 class="h5 text-uppercase mb-3"><a class="reset-link" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+                  <p class="mb-0"><?=formatNumber($product->price)?> VND</p>
+                </div>
+                <ul class="list-unstyled p-0 ribbon-holder mb-0">
+                </ul>
+              </div>
+            </div>
+            <?php endforeach;?>
+          <?php endif;?>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php $this->inlineScript()->prependFile($this->basePath("js/modules/cart.{$this->layout()->dateVersion}.js")) ?>
