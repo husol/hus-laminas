@@ -9,9 +9,9 @@ nbproject/
 *.iml
 .env
 composer.lock
-#config/development.config.php
-#config/database.config.php
-#module/Application/config/config.php
+config/development.config.php
+config/database.config.php
+module/Application/config/config.php
 logs/*
 data/*
 !data/countries.json
