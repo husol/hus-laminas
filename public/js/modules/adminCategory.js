@@ -58,7 +58,7 @@ function formCategoryCallback(result) {
       liveSearch: true,
       multipleSeparator: '; ',
       size: 17,
-      noneSelectedText: 'Select a category ...'
+      noneSelectedText: 'Chọn một loại sản phẩm ...'
     });
 
     $('#btnSave').on('click', function () {
@@ -74,14 +74,14 @@ function formCategoryCallback(result) {
 function updateCategoryCallback(result) {
   if (result !== false) {
     $('#commonDialog').modal('hide');
-    showSuccessBubble('Update Category ' + result.name + ' successfully.');
+    showSuccessBubble('Cập nhật Loại sản phẩm ' + result.name + ' thành công.');
     getCategories($('.page-item.active > a').html());
   }
   return false;
 }
 
 function deleteCategory(id) {
-  if (confirm('Are you sure to delete this Category?')) {
+  if (confirm('Bạn có chắc muốn xóa loại sản phẩm này?')) {
     callAjax('admin/categories', 'delete', {
       idRecord: id
     }, deleteCategoryCallback);
@@ -95,6 +95,6 @@ function deleteCategoryCallback(result) {
       page = $('.page-item.active > a').html();
     }
     getCategories(page);
-    showSuccessBubble('Delete Category ' + result.name + ' successfully.');
+    showSuccessBubble('Xóa Loại sản phẩm ' + result.name + ' thành công.');
   }
 }

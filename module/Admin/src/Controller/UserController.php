@@ -38,7 +38,7 @@ class UserController extends HusController
     $page = $this->params()->fromPost('page', 0);
     $sort = $this->params()->fromPost('sort');
     $ffullName = $this->params()->fromPost('ffullName', '');
-    $fstatus = $this->params()->fromPost('fstatus', '');
+    $fstatus = $this->params()->fromPost('fstatus', -1);
 
     $params = [
       'pagination' => ['page' => $page, 'pageSize' => User::PAGE_SIZE]
@@ -55,7 +55,7 @@ class UserController extends HusController
       ];
     }
 
-    if ($fstatus != '') {
+    if ($fstatus > -1) {
       $params['conditions']['status'] = $fstatus;
     }
 
@@ -65,7 +65,25 @@ class UserController extends HusController
     $users = [];
     if (!empty($result)) {
       $count = $result->count;
-      $users = $result->data;
+      foreach ($result->data as $user) {
+        switch ($user->role) {
+          case 1:
+            $user->roleName = 'STAFF';
+            break;
+          case 2:
+            $user->roleName = 'ADMIN';
+            break;
+          default:
+            $user->roleName = 'CLIENT';
+        }
+
+        $user->statusName = 'INACTIVE';
+        if ($user->status == 1) {
+          $user->statusName = 'ACTIVE';
+        }
+
+        $users[] = $user;
+      }
     }
 
     //Pagination
@@ -108,10 +126,10 @@ class UserController extends HusController
     $email = $this->params()->fromPost('email', '');
     $password = $this->params()->fromPost('password', '');
     $confirmPassword = $this->params()->fromPost('confirmPassword', '');
-    $role = $this->params()->fromPost('role', '');
+    $role = $this->params()->fromPost('role', 0);
     $mobile = $this->params()->fromPost('mobile', '');
     $address = $this->params()->fromPost('address', '');
-    $status = $this->params()->fromPost('status', '');
+    $status = $this->params()->fromPost('status', 0);
 
     $data = [];
     //Validate
@@ -167,10 +185,6 @@ class UserController extends HusController
       $data['password'] = hash('sha256', $password);
     }
 
-    if (!$validatorNotEmpty->isValid($role)) {
-      HusAjax::setMessage('Sai Vai trò.');
-      HusAjax::outData(false);
-    }
     $data['role'] = $role;
 
     if (!empty($mobile)) {
@@ -180,10 +194,6 @@ class UserController extends HusController
       $data['address'] = $address;
     }
 
-    if (!$validatorNotEmpty->isValid($status)) {
-      HusAjax::setMessage('Sai Trạng thái.');
-      HusAjax::outData(false);
-    }
     $data['status'] = $status;
 
     if (intval($idRecord)) {

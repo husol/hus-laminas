@@ -30,6 +30,7 @@ $(document).ready(function () {
     }
 
     localStorage.setItem('cart', JSON.stringify(cartProducts));
+    loadCartBadge();
   });
 });
 

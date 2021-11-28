@@ -18,7 +18,7 @@
 <!-- SHOP BASKET SECTION-->
 <section class="py-5">
   <div class="container py-4">
-    <p class="text-muted lead mb-5">Hiện tại bạn đang có 3 sản phẩm trong giỏ hàng.</p>
+    <p class="text-muted lead mb-5">Hiện tại bạn đang có <span class="badeNum">0</span> sản phẩm trong giỏ hàng.</p>
     <div class="row">
       <div class="col-lg-12">
         <!-- CART PRODUCTS TABLE-->
@@ -31,7 +31,7 @@
             <div class="col-md-5 text-md-start py-1"><a class="btn btn-secondary my-1" href="/products"><i class="fas fa-angle-left me-1"></i> Tiếp tục mua hàng</a></div>
             <div class="col-md-7 text-md-end py-1">
               <button id="btnUpdateCart" class="btn btn-secondary my-1"><i class="fas fa-sync-alt me-1"></i> Cập nhật giỏ hàng</button>
-              <button class="btn btn-outline-primary my-1">Tiến hành thanh toán <i class="fas fa-angle-right ms-1"></i></button>
+              <button id="btnConfirmCart" class="btn btn-outline-primary my-1">Tiến hành thanh toán <i class="fas fa-angle-right ms-1"></i></button>
             </div>
           </div>
           <!-- RELATED PRODUCTS-->
@@ -53,8 +53,7 @@
                   <h3 class="h5 text-uppercase mb-3"><a class="reset-link" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
                   <p class="mb-0"><?=formatNumber($product->price)?> VND</p>
                 </div>
-                <ul class="list-unstyled p-0 ribbon-holder mb-0">
-                </ul>
+                <ul class="list-unstyled p-0 ribbon-holder mb-0"></ul>
               </div>
             </div>
             <?php endforeach;?>

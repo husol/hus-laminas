@@ -10,12 +10,9 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
+use Application\Model\Contact;
 use Core\Hus\HusAjax;
-use Core\Hus\HusFile;
-use Laminas\Json\Json;
-use Laminas\Validator\File\IsImage;
-use Laminas\Validator\File\Size;
-use Laminas\Validator\File\UploadFile;
+use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
@@ -25,6 +22,7 @@ class ContactController extends HusController
   public function __construct($container)
   {
     parent::__construct($container);
+    $this->dao = Contact::initDao();
   }
 
   public function indexAction()
@@ -33,5 +31,58 @@ class ContactController extends HusController
     $captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
 
     return new ViewModel(['captchaSiteKey' => $captchaSiteKey]);
+  }
+
+  public function saveAction()
+  {
+    $fullName = $this->params()->fromPost('fullName', '');
+    $email = $this->params()->fromPost('email', '');
+    $mobile = $this->params()->fromPost('mobile', '');
+    $title = $this->params()->fromPost('title', '');
+    $content = $this->params()->fromPost('content', '');
+
+    //Validate
+    $validatorNotEmpty = new ValidatorChain();
+    $validatorNotEmpty->attach(new NotEmpty());
+
+    if (!$validatorNotEmpty->isValid($fullName)) {
+      HusAjax::setMessage('Vui lòng nhập Họ và tên.');
+      HusAjax::outData(false);
+    }
+
+    if (!$validatorNotEmpty->isValid($mobile)) {
+      HusAjax::setMessage('Vui lòng nhập Số điện thoại.');
+      HusAjax::outData(false);
+    }
+
+    if (!$validatorNotEmpty->isValid($title)) {
+      HusAjax::setMessage('Vui lòng nhập Tiêu đề.');
+      HusAjax::outData(false);
+    }
+
+    if (!$validatorNotEmpty->isValid($content)) {
+      HusAjax::setMessage('Vui lòng nhập Nội dung.');
+      HusAjax::outData(false);
+    }
+
+    $validatorEmail = new ValidatorChain();
+    $validatorEmail->attach(new EmailAddress());
+
+    if (!$validatorEmail->isValid($email)) {
+      HusAjax::setMessage('Email chưa đúng định dạng.');
+      HusAjax::outData(false);
+    }
+
+    $data = [
+      'full_name' => $fullName,
+      'email' => $email,
+      'mobile' => $mobile,
+      'title' => $title,
+      'content' => $content
+    ];
+
+    $myContact = $this->dao->save($data);
+
+    HusAjax::outData($myContact);
   }
 }

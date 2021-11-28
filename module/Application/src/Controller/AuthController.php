@@ -41,8 +41,14 @@ class AuthController extends AbstractActionController
 
   public function indexAction()
   {
-    $this->layout("layout/layout_auth");
-    return new ViewModel();
+    $view = new ViewModel();
+
+    //Render html
+    $view->setTemplate('application/auth/login_form');
+    $html = $this->renderer->render($view);
+
+    HusAjax::setHtml('commonDialog', $html);
+    HusAjax::outData();
   }
 
   public function loginAction()
@@ -83,7 +89,7 @@ class AuthController extends AbstractActionController
       HusAjax::outData(false);
     }
 
-    if ($myUser->status == 'INACTIVE') {
+    if ($myUser->status == 0) {
       HusAjax::setMessage("Tài khoản của bạn chưa được kích hoạt.");
       HusAjax::outData(false);
     }
@@ -92,6 +98,17 @@ class AuthController extends AbstractActionController
     unset($myUser->password);
 
     //Store loggedUser session
+    switch ($myUser->role) {
+      case 1:
+        $myUser->roleName = 'STAFF';
+        break;
+      case 2:
+        $myUser->roleName = 'ADMIN';
+        break;
+      default:
+        $myUser->roleName = 'CLIENT';
+    }
+
     $this->session->loggedUser = $myUser;
 
     HusAjax::outData($myUser);
@@ -181,14 +198,14 @@ class AuthController extends AbstractActionController
     //Send email with activate-account url
     $activateUrl = "{$baseUrl}/auth/activateAccount?email={$email}&token=$tokenStr";
 
-    $content = "Welcome to Hus Laminas.\n";
+    $content = "Chào mừng đến với XsmartPhone.\n";
     $content .= "You have registered your account. Please click the link below to activate it:\n";
     $content .= $activateUrl;
 
     $husEmail = new HusEmail($this->husConfig['SMTP_OPTIONS']);
     $husEmail->setFrom(['No-Reply' => 'noreply@husol.org']);
     $husEmail->setTo([$email]);
-    $husEmail->setSubject('Activate your account on Hus Laminas');
+    $husEmail->setSubject('Activate your account on XsmartPhone');
 
     $result = $husEmail->send($content);
 
@@ -385,14 +402,14 @@ class AuthController extends AbstractActionController
     //Send email with reset-password url
     $resetUrl = "{$baseUrl}/auth/resetPassword?email={$email}&token=$tokenStr";
 
-    $content = "Welcome to Hus Laminas.\n";
+    $content = "Chào mừng đến với XsmartPhone.\n";
     $content .= "You have request to reset your password account. Please click the link below to reset it:\n";
     $content .= $resetUrl;
 
     $husEmail = new HusEmail($this->husConfig['SMTP_OPTIONS']);
     $husEmail->setFrom(['No-Reply' => 'noreply@husol.org']);
     $husEmail->setTo([$email]);
-    $husEmail->setSubject('Reset Your Password on Hus Laminas');
+    $husEmail->setSubject('Reset Your Password on XsmartPhone');
 
     $result = $husEmail->send($content);
 
@@ -481,7 +498,7 @@ class AuthController extends AbstractActionController
   public function logoutAction()
   {
     unset($this->session->loggedUser);
-    $this->redirect()->toRoute('login');
+    $this->redirect()->toRoute('home');
   }
 
   public function error403Action()

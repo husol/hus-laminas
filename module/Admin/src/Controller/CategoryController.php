@@ -31,50 +31,49 @@ class CategoryController extends HusController
 
   public function indexAction()
   {
-    $parentCategories = $this->dao->find();
-
-    return new ViewModel(['parentCategories' => $parentCategories]);
+    return new ViewModel();
   }
 
   public function getCategoriesAction()
   {
     $page = $this->params()->fromPost('page', 0);
     $sort = $this->params()->fromPost('sort');
-    $fparentCategory = $this->params()->fromPost('fparentCategory', 0);
+    $fkind = $this->params()->fromPost('fkind', -1);
     $fname = $this->params()->fromPost('fname', '');
-    $fstatus = $this->params()->fromPost('fstatus', '');
 
     $params = [
       'pagination' => ['page' => $page, 'pageSize' => Category::PAGE_SIZE],
     ];
 
     if (in_array($sort['field'], ['name', 'updated_at'])) {
-      $params['order'] = ["parent_id ASC", "{$sort['field']} {$sort['type']}"];
+      $params['order'] = ["kind ASC", "{$sort['field']} {$sort['type']}"];
     }
 
     //For filter
-    if ($fparentCategory > 0) {
-      $params['conditions']['parent_id'] = $fparentCategory;
+    if ($fkind > -1) {
+      $params['conditions']['kind'] = $fkind;
     }
     if (!empty($fname)) {
       $params['conditions']['flexible'] = [
         ['like' => ['name', "%{$fname}%"]]
       ];
     }
-    if (!empty($fstatus)) {
-      $params['conditions']['status'] = $fstatus;
-    }
 
     $result = $this->dao->find($params);
-
+mlog($result);
     $categories = [];
     $count = 0;
     if (!empty($result)) {
       foreach ($result->data as $category) {
-        $category->parentCategory = "";
-        if ($category->parent_id > 0) {
-          $myCategory = $this->dao->find([], $category->parent_id);
-          $category->parentCategory = $myCategory->name;
+        switch ($category->kind) {
+          case 1:
+            $category->kindName = "Android";
+            break;
+          case 2:
+            $category->kindName = "Phụ kiện điện thoại";
+            break;
+          default:
+            $category->kindName = "iOS";
         }
 
         $categories[] = $category;
@@ -103,9 +102,6 @@ class CategoryController extends HusController
 
     $view = new ViewModel();
 
-    $parentCategories = $this->dao->find();
-    $view->setVariable('parentCategories', $parentCategories);
-
     if ($recordID > 0) {
       $myCategory = $this->dao->find([], intval($recordID));
       $view->setVariable('myCategory', $myCategory);
@@ -122,64 +118,25 @@ class CategoryController extends HusController
   public function updateAction()
   {
     $recordID = $this->params()->fromPost('idRecord', 0);
-    $parentCategory = $this->params()->fromPost('parentCategory', 0);
+    $kind = $this->params()->fromPost('kind', -1);
     $name = $this->params()->fromPost('name', '');
-    $status = $this->params()->fromPost('status', '');
 
-    $data = ['parent_id' => intval($parentCategory)];
+    if ($kind == -1) {
+      HusAjax::setMessage('Vui lòng chọn Lớp sản phẩm.');
+      HusAjax::outData(false);
+    }
+
+    $data = ['kind' => intval($kind)];
+
     //Validate
     $validatorNotEmpty = new ValidatorChain();
     $validatorNotEmpty->attach(new NotEmpty());
 
-    if (!$validatorNotEmpty->isValid($name)) {
+    if (!$validatorNotEmpty->isValid(trim($name))) {
       HusAjax::setMessage('Please input Name.');
       HusAjax::outData(false);
     }
-    $data['name'] = $name;
-
-    if (!$validatorNotEmpty->isValid($status)) {
-      HusAjax::setMessage('Invalid Status.');
-      HusAjax::outData(false);
-    }
-    $data['status'] = $status;
-
-    if ($recordID > 0) {
-      $data['updated_by'] = $this->getLoggedUser('id');
-    } else {
-      $data['created_by'] = $this->getLoggedUser('id');
-    }
-
-    // Example for using DB transaction commit / rollback
-    /*
-    $trans = $this->dao->beginTransaction();
-
-    try {
-      $daoUser = User::initDao($trans);
-      $result1 = $daoUser->save([
-        "email" => "tester@husol.org",
-        "full_name" => "Tester",
-        "password" => "12345678",
-        "role" => ROLE_STAFF,
-        "created_by" => $this->getLoggedUser('id')
-      ]);
-
-      if ($result1 === false) {
-        HusAjax::setMessage('Error create user.');
-        HusAjax::outData(false);
-      }
-
-      $data["updated_b"] = $result1->id;
-      $result = $this->dao->save($data, intval($recordID));
-      if ($result === false) {
-        HusAjax::setMessage('Error saving category.');
-        HusAjax::outData(false);
-      }
-
-      $this->dao->commit();
-    } catch (\Exception $e) {
-      $this->dao->rollback();
-    }
-    */
+    $data['name'] = trim($name);
 
     $result = $this->dao->save($data, intval($recordID));
 
@@ -188,27 +145,19 @@ class CategoryController extends HusController
 
   public function deleteAction()
   {
-    $idRecord = $this->params()->fromPost('idRecord', 0);
+    $recordID = $this->params()->fromPost('idRecord', 0);
 
     //Check if category is existed
-    $myCategory = $this->dao->find([], intval($idRecord));
+    $myCategory = $this->dao->find([], intval($recordID));
 
     if (empty($myCategory)) {
-      HusAjax::setMessage("The category is not existed in system.");
-      HusAjax::outData(false);
-    }
-
-    //Check if category has children
-    $params['conditions'] = ['parent_id' => $myCategory->id];
-    $categoryChildren = $this->dao->find($params);
-    if (!empty($categoryChildren)) {
-      HusAjax::setMessage("The category is already used as parent. Please delete its children firstly.");
+      HusAjax::setMessage("Loại sản phẩm này không tồn tại trong hệ thống.");
       HusAjax::outData(false);
     }
 
     //Remove category
     $conditions = [
-      'id' => $idRecord
+      'id' => $recordID
     ];
     $this->dao->remove($conditions);
 

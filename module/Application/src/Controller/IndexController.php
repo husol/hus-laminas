@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
+use Application\Model\Product;
 use Core\Hus\HusAjax;
 use Core\Hus\HusFile;
 use Laminas\Json\Json;
@@ -29,57 +30,31 @@ class IndexController extends HusController
 
   public function indexAction()
   {
-    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
-    $captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
+    $daoProduct = Product::initDao();
 
-    /*
-    //Upload to S3 usage
-    $images = $this->params()->fromFiles('images');
+    $params = [
+      'conditions' => [
+        'is_feature' => 1,
+        'status' => 1
+      ]
+    ];
+    $featuredProducts = $daoProduct->find($params);
 
-    //Validate
-    $validatorEmpty = new ValidatorChain();
-    $validatorEmpty->attach(new NotEmpty());
+    $params = [
+      'conditions' => ['status' => 1],
+      'order' => ['count_view DESC'],
+      'limit' => 8
+    ];
+    $mostViewedProducts = $daoProduct->find($params);
 
-    $validatorFile = new ValidatorChain();
-    $validatorFile->attach(new UploadFile());
-    $validatorFile->attach(new Size('10MB'));
-    $validatorFile->attach(new IsImage());
+    return new ViewModel([
+      'featuredProducts' => $featuredProducts,
+      'mostViewedProducts' => $mostViewedProducts
+    ]);
+  }
 
-    $code = 123456;
-    $objType = 'MENU';
-    $objID = 1;
-    $pathDir = "{$code}/". strtolower($objType);
-    foreach ($images as $image) {
-      if (!$validatorFile->isValid($image)) {
-        HusAjax::setMessage("{$image['name']} must be image and less than 10MB.");
-        HusAjax::outData(false);
-      }
+  public function loginForm()
+  {
 
-      $imageInfo = getimagesize($image['tmp_name']);
-
-      $file = new HusFile($image);
-      $result = $file->uploadToS3($pathDir, '', 'images', $objID);
-
-      if ($result['error']) {
-        HusAjax::setMessage("Error Upload File: " . $result['info']);
-        HusAjax::outData(false);
-      }
-
-      //Use $result['path']
-      $data = [
-        'obj_id' => $objID,
-        'obj_type' => $objType,
-        'name' => $image['name'],
-        'path' => $result['path'],
-        'size' => $image['size'],
-        'info' => Json::encode($imageInfo)
-      ];
-      $daoAsset = Asset::initDao();
-      $myAsset = $daoAsset->save($data);
-    }
-    //End upload to S3 usage
-    */
-
-    return new ViewModel(['captchaSiteKey' => $captchaSiteKey]);
   }
 }

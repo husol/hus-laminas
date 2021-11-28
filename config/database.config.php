@@ -4,10 +4,10 @@ return [
     'driver'    => 'Pdo_Mysql',
     'hostname'  => 'localhost',
     'port'      => '3306',
-    'database'  => 'hus_store',
+    'database'  => 'store',
     'charset'   => 'utf8',
     'username'  => 'root',
-    'password'  => ''
+    'password'  => 'husol123ok'
   ],
   'slave' => [
     'driver'    => 'Pdo_Mysql',

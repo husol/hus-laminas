@@ -18,6 +18,16 @@ function checkFileExt(file, ext) {
   return false;
 }
 
+var myModal;
+function showModal(modalID) {
+  myModal = new bootstrap.Modal($("#"+modalID), {backdrop: 'static'});
+  myModal.show();
+}
+
+function hideModal() {
+  myModal.hide();
+}
+
 //////////////////// Sort alphabet option select list /////////////////////////
 function sortAlphabet(id) {
   var prePrepend = "#";

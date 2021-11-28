@@ -17,6 +17,10 @@ return [
     ],
     'Application' => [
       'Application\Controller\IndexController',
+      'Application\Controller\ProductController',
+      'Application\Controller\CartController',
+      'Application\Controller\AboutController',
+      'Application\Controller\ContactController',
     ],
   ],
 
@@ -26,9 +30,26 @@ return [
         'allow' => ['index'],
         'deny' => null
       ],
+      'Application\Controller\ProductController' => [
+        'allow' => ['index', 'detail'],
+        'deny' => null
+      ],
+      'Application\Controller\CartController' => [
+        'allow' => ['index', 'getListCart', 'confirm', 'save'],
+        'deny' => null
+      ],
+      'Application\Controller\AboutController' => [
+        'allow' => ['index'],
+        'deny' => null
+      ],
+      'Application\Controller\ContactController' => [
+        'allow' => ['index'],
+        'deny' => null
+      ],
     ],
 
     //For Admin
+    ROLE_STAFF => null,
     ROLE_ADMIN => null
   ],
 

@@ -11,14 +11,14 @@
         <i class="flaticon-right-arrow"></i>
       </li>
       <li class="nav-item">
-        <a href="/admin/categories">Categories</a>
+        <a href="/admin/categories">Loại sản phẩm</a>
       </li>
     </ul>
   </div>
   <div class="card">
     <div class="card-header">
       <div class="card-title mt-2 float-left col-md-10">
-        <span class="font-weight-bold">Categories</span>
+        <span class="font-weight-bold">Danh sách Loại sản phẩm</span>
       </div>
       <div class="float-right col-md-2">
         <button id="btnAdd" class="btn btn-success btn-round float-right"><?=$this->layout()->translator->getLang('btn_new')?></button>
@@ -33,26 +33,18 @@
           <!--Grid column-->
 
           <!--Grid column-->
-          <div class="form-group label-float col-lg-3 col-md-3">
-            <label for="fparentCategory">Parent Category</label>
-            <select class="form-control husSelect" id="fparentCategory" name="fparentCategory">
-              <option value="0" selected>ALL</option>
-            <?php foreach ($this->parentCategories as $parentCategory):?>
-              <option value="<?=$parentCategory->id?>"><?=$parentCategory->name?></option>
-            <?php endforeach;?>
-            </select>
-          </div>
-          <div class="form-group label-float col-lg-3 col-md-3">
-            <label for="fname">Category Name</label>
-            <input type="text" class="form-control" id="fname" name="fname" placeholder="Category name" autofocus>
-          </div>
-          <div class="form-group label-float col-lg-2 col-md-2">
-            <label for="fstatus">Status</label>
-            <select class="form-control" id="fstatus" name="fstatus">
+          <div class="form-group label-float col-lg-4 col-md-4">
+            <label for="fkind">Lớp sản phẩm</label>
+            <select class="form-control husSelect" id="fkind" name="fkind">
               <option value="" selected>ALL</option>
-              <option value="INACTIVE">INACTIVE</option>
-              <option value="ACTIVE">ACTIVE</option>
+              <option value="0">iOS</option>
+              <option value="1">Android</option>
+              <option value="2">Phụ kiện điện thoại</option>
             </select>
+          </div>
+          <div class="form-group label-float col-lg-4 col-md-4">
+            <label for="fname">Tên loại sản phẩm</label>
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="Tên loại sản phẩm" autofocus>
           </div>
           <!--Grid column-->
 

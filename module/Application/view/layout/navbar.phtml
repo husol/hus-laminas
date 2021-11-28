@@ -33,5 +33,11 @@
         </ul>
       </div>
     </div>
+  <?php if(isset($this->layout()->loggedUser)):?>
+    <a id="cart" class="cart position-relative cursor-pointer" title="Giỏ hàng" href="/cart">
+      <i class="fa fa-shopping-cart text-green"></i>
+      <span class="badeNum position-absolute bottom-50 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+    </a>
+  <?php endif;?>
   </div>
 </header>

@@ -3,13 +3,13 @@
   <div class="container py-3">
     <div class="row d-flex align-items-center gy-4">
       <div class="col-md-7">
-        <h1 class="h2 mb-0 text-uppercase">Contact</h1>
+        <h1 class="h2 mb-0 text-uppercase">Liên hệ</h1>
       </div>
       <div class="col-md-5">
         <!-- Breadcrumb-->
         <ol class="text-sm justify-content-start justify-content-lg-end mb-0 breadcrumb undefined">
-          <li class="breadcrumb-item"><a class="text-uppercase" href="index.html">Home</a></li>
-          <li class="breadcrumb-item text-uppercase active">Contact      </li>
+          <li class="breadcrumb-item"><a class="text-uppercase" href="index.html">Trang chủ</a></li>
+          <li class="breadcrumb-item text-uppercase active">Liên hệ</li>
         </ol>
       </div>
     </div>
@@ -25,26 +25,30 @@
         <p class="text-sm mb-4">Đừng e ngại, hãy liên hệ với chúng tôi. Dịch vụ của chúng tôi sẽ hỗ trợ bạn 24/7.</p>
         <!-- CONTACT FORM-->
         <h2 class="lined text-uppercase mb-4">Form liên hệ</h2>
-        <form action="#">
+        <form id="contactForm" action="#">
           <div class="row">
             <div class="col-md-6 mb-4">
-              <label class="form-label" for="fullName">Họ và tên</label>
-              <input class="form-control" id="fullName" type="text">
+              <label class="form-label required" for="fullName">Họ và tên</label>
+              <input class="form-control" id="fullName" name="fullName" type="text" required>
             </div>
             <div class="col-md-6 mb-4">
-              <label class="form-label" for="email">Email</label>
-              <input class="form-control" id="email" type="email">
+              <label class="form-label required" for="email">Email</label>
+              <input class="form-control" id="email" name="email" type="email" required>
             </div>
             <div class="col-md-6 mb-4">
-              <label class="form-label" for="subject">Tiêu đề</label>
-              <input class="form-control" id="subject" type="text">
+              <label class="form-label required" for="title">Tiêu đề</label>
+              <input class="form-control" id="title" name="title" type="text" required>
+            </div>
+            <div class="col-md-6 mb-4">
+              <label class="form-label required" for="mobile">Số điện thoại</label>
+              <input class="form-control" id="mobile" name="mobile" type="text" required>
             </div>
             <div class="col-md-12 mb-3">
-              <label class="form-label" for="message">Tin nhắn</label>
-              <textarea class="form-control" id="message" rows="4"></textarea>
+              <label class="form-label required" for="content">Tin nhắn</label>
+              <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
             </div>
             <div class="col-md-12 text-center">
-              <button class="btn btn-outline-primary" type="submit"><i class="far fa-envelope me-2"></i>Gửi tin</button>
+              <button id="btnSendMessage" class="btn btn-outline-primary"><i class="far fa-envelope me-2"></i>Gửi tin</button>
             </div>
           </div>
         </form>
@@ -64,3 +68,6 @@
 <!-- MAP SECTION-->
 
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.4608180550604!2d106.36688431478147!3d11.078992592116633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310b30186d3391cb%3A0x35518abca28d312e!2sHusol!5e0!3m2!1sen!2s!4v1636816860451!5m2!1sen!2s" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+<?php $this->inlineScript()->prependFile($this->basePath("js/modules/contact.{$this->layout()->dateVersion}.js")) ?>
+

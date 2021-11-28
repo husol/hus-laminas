@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <?php $appName = $this->layout()->isLive ? 'Hus Laminas' : 'BETA Hus Laminas'; ?>
+  <?php $appName = $this->layout()->isLive ? 'XsmartPhone' : 'BETA XsmartPhone'; ?>
   <?= $this->headTitle("{$appName} {$this->layout()->appVersion}")->setSeparator(' - ')->setAutoEscape(false) ?>
 
   <?= $this->headMeta()
@@ -16,7 +16,7 @@
   ?>
 
   <!-- Styles -->
-  <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+  <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'])
     ->prependStylesheet($this->basePath("css/admin.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/toastr.min.{$this->layout()->dateVersion}.css"))
@@ -24,7 +24,7 @@
     ->prependStylesheet($this->basePath("css/bootstrap-select.min.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/atlantis.min.{$this->layout()->dateVersion}.css"))
-    ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/bootstrap-4.3.1.min.{$this->layout()->dateVersion}.css"))
   ?>
 
   <!-- Scripts -->
@@ -45,7 +45,7 @@
     ->prependFile($this->basePath("js/crypto-js.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
-    ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/bootstrap-4.3.1.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/webfont.min.{$this->layout()->dateVersion}.js"))
@@ -70,7 +70,7 @@
   <div class="main-header">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="blue">
-      <a href="/" class="text-white font-weight-bold text-decoration-none"><img width="15%" height="15%" src="/img/husol-logo.svg"> Husol Laminas</a>
+      <a href="/" class="text-white font-weight-bold text-decoration-none"><img width="90%" height="90%" src="/img/logo.png"></a>
       <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"><i class="icon-menu"></i></span>
       </button>
@@ -100,7 +100,7 @@
 <!--Footer-->
 <footer class="bg-secondary text-white text-center fixed-bottom row mt-5 pt-2 pb-2">
   <div class="col-md-4">Supported Email: enquiry@husol.org</div>
-  <div class="col-md-4">Hus Laminas &copy; <?=date('Y')?> All rights reserved | <a href="https://husol.org" style="color: #4bffd2">Husol Organization</a></div>
+  <div class="col-md-4">XsmartPhone &copy; <?=date('Y')?> All rights reserved | <a href="https://husol.org" style="color: #4bffd2">Husol Organization</a></div>
   <div class="col-md-4">System Date: <?=date('d-M-Y')?></div>
 </footer>
 <!--/.Footer-->

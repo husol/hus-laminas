@@ -12,6 +12,18 @@ ClassicEditor
  */
 
 $(document).ready(function () {
+  var isErr = $_GET('is_error');
+
+  if (isErr == 403) {
+    showErrorBubble('#login', 'Vui lòng đăng nhập để có thể Mua hàng');
+  }
+
+  $('#login').on('click', function () {
+    callAjax('auth', 'index', {}, loginFormCallback);
+
+    return false;
+  });
+
   $('#register').on('click', function () {
     grecaptcha.ready(function () {
       grecaptcha.execute(captchaSiteKey, {action: 'register'}).then(function (token) {
@@ -34,6 +46,8 @@ $(document).ready(function () {
     }, registerCallback);
     return false;
   });
+
+  loadCartBadge();
 });
 
 function validateForm(formId) {
@@ -68,11 +82,55 @@ function validateForm(formId) {
   return !isErr;
 }
 
+function loginFormCallback(result) {
+  if (result !== false) {
+    showModal('commonDialog');
+
+    $('#btnLogin').on('click', function () {
+      if (!validateForm('loginForm')) {
+        return false;
+      }
+
+      callAjax('auth', 'login', {data: fetchForm($('#loginForm'))}, loginCallback);
+      return false;
+    });
+  }
+
+  return false;
+}
+
 function registerCallback(result) {
   if (result !== false) {
     showSuccessBubble("Tài khoản của bạn vừa được đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản.", 7)
     setTimeout(function () {
       window.location.href = "/sign-in";
     }, 7000);
+  }
+}
+
+function loginCallback(result) {
+  $('#btnLogin').prop("disabled", false);
+  if (result !== false) {
+    if (result.role == 0) {
+      window.location.href = "/";
+    } else {
+      window.location.href = "/admin";
+    }
+  }
+}
+
+function loadCartBadge() {
+  if ($('#cart').length > 0) {
+    var cartJSON = localStorage.getItem('cart');
+    var cartProducts = JSON.parse(cartJSON);
+    var cartCount = 0;
+
+    if (cartProducts != null && cartProducts.length > 0) {
+      $.each(cartProducts, function (index, product) {
+        cartCount += parseInt(product.quantity);
+      });
+    }
+
+    $('span.badeNum').html(cartCount);
   }
 }

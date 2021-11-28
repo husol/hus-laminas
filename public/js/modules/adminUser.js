@@ -69,7 +69,7 @@ function formUserCallback(result) {
 function updateUserCallback(result) {
   if (result !== false) {
     $('#commonDialog').modal('hide');
-    showSuccessBubble('Update User ' + result.name + ' successfully.');
+    showSuccessBubble('Update User ' + result.full_name + ' successfully.');
     getUsers($('.page-item.active > a').html());
   }
   return false;

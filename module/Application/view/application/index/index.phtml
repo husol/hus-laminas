@@ -1,87 +1,100 @@
-<div id="registerDialog" class="modal fade" role="dialog" tabindex="-1">
-  <?=$this->render('register_form.phtml')?>
-</div>
-
-<div class="jumbotron">
-    <h1>Welcome to <span class="zf-green">HUS Laminas MVC Skeleton Application</span></h1>
-
-    <p>
-        Congratulations! You have successfully installed the
-        <a href="https://github.com/laminas/laminas-mvc-skeleton" target="_blank">Laminas MVC Skeleton</a>.
-        This skeleton can serve as a simple starting point for you to begin
-        building your application on Laminas MVC.
-    </p>
-
-    <p><a class="btn btn-success btn-lg" href="https://github.com/laminas" target="_blank">Check Laminas on GitHub &raquo;</a></p>
-</div>
-
-<div class="row">
-
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Follow Development</h2>
+<!-- HERO SLIDER SECTION-->
+<section class="text-white bg-cover bg-center primary-overlay overlay-dense" style="background: url('img/photogrid.jpg') repeat">
+  <div class="overlay-content py-5">
+    <div class="container py-4">
+      <!-- Hero slider-->
+      <div class="swiper-container homepage-slider">
+        <div class="swiper-wrapper">
+          <!-- Hero Slide-->
+        <?php if (!empty($this->featuredProducts)):?>
+          <?php foreach($this->featuredProducts as $product):?>
+          <div class="swiper-slide h-auto mb-5">
+              <div class="row gy-5 h-100 align-items-center">
+                <div class="col-lg-7"><img class="img-fluid" width="400" height="200" src="<?=$product->image?>" alt="<?=$product->name?>"></div>
+                <div class="col-lg-5">
+                  <h1 class="text-uppercase"><?=$product->name?></h1>
+                  <ul class="list-unstyled text-uppercase fw-bold mb-0">
+                    <li class="mb-2">Giá: <?=formatNumber($product->price)?> VND</li>
+                    <li class="mb-2">Hãng: <?=$product->branch_name?></li>
+                    <li>Nhanh tay kẻo hết</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="card-body">
-                <p>
-                    Laminas Project is under active development. If you are
-                    interested in following the development, you can check
-                    <a href="https://getlaminas.org/blog/">Laminas dev blog</a>,
-                    and <a href="https://github.com/issues?utf8=%E2%9C%93&amp;q=is:issue+org:laminas">Laminas issue tracker</a>
-                    (link requires a GitHub account). This is a great resource
-                    for staying up to date with the latest developments!
-                </p>
-
-                <p><a class="btn btn-success pull-right" href="https://getlaminas.org/" target="_blank">Laminas Project Portal &raquo;</a></p>
-            </div>
-        </div>
+          <?php endforeach;?>
+        <?php endif;?>
+        <div class="swiper-pagination swiper-pagination-light"></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Discover Modules</h2>
-            </div>
-            <div class="card-body">
-                <p>
-                    Laminas MVC is a modular application.
-                    You can find multiple compatible modules on packagist.
-                </p>
+<!-- SAN PHAM NOI BAT SECTION-->
+<section class="py-5">
+  <div class="container py-4">
+    <header class="mb-5">
+      <h2 class="lined lined-center text-uppercase mb-4">Sản phẩm nổi bật</h2>
+    </header>
+    <div class="row gy-5">
+      <!-- product box-->
+      <?php if (empty($this->featuredProducts)):?>
+        <div class="col-lg-12 col-md-12">Không có sản phẩm</div>
+      <?php else:?>
+        <?php foreach($this->featuredProducts as $product):?>
+          <div class="col-lg-3 col-md-6">
+            <div class="box-image">
+              <div class="mb-4 primary-overlay"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>">
+                <div class="overlay-content d-flex flex-column justify-content-center p-4">
+                  <ul class="list-inline mb-0 box-image-content text-center">
+                    <li class="list-inline-item"><a class="btn btn-outline-light" href="/products/<?=$product->id?>"> <i class="fas fa-link me-2"></i>Chi tiết</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+                <p class="small text-uppercase text-muted">Giá: <?=formatNumber($product->price)?> VND</p>
 
-                <p><a class="btn btn-success pull-right" href="https://packagist.org/?tags=module~zf2~zendframework~zend%20framework~zend%20framework%202~zf3~zf~zend~laminas" target="_blank">Explore Laminas Modules &raquo;</a></p>
+                <a class="btn btn-outline-primary" href="/products/<?=$product->id?>">Mua ngay</a>
+              </div>
             </div>
-        </div>
+          </div>
+        <?php endforeach;?>
+      <?php endif;?>
     </div>
+  </div>
+</section>
 
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Help &amp; Support</h2>
+<!-- SAN PHAM XEM NHIEU SECTION-->
+<section class="py-5">
+  <div class="container py-4">
+    <header class="mb-5">
+      <h2 class="lined lined-center text-uppercase mb-4">Sản phẩm xem nhiều nhất</h2>
+    </header>
+    <div class="row gy-5">
+      <!-- product box-->
+      <?php if (empty($this->mostViewedProducts)):?>
+        <div class="col-lg-12 col-md-12">Không có sản phẩm</div>
+      <?php else:?>
+        <?php foreach($this->mostViewedProducts as $product):?>
+          <div class="col-lg-3 col-md-6">
+          <div class="box-image">
+            <div class="mb-4 primary-overlay"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>">
+              <div class="overlay-content d-flex flex-column justify-content-center p-4">
+                <ul class="list-inline mb-0 box-image-content text-center">
+                  <li class="list-inline-item"><a class="btn btn-outline-light" href="/products/<?=$product->id?>"> <i class="fas fa-link me-2"></i>Chi tiết</a></li>
+                </ul>
+              </div>
             </div>
-            <div class="card-body">
-                <p>
-                    If you need any help or support while developing with Laminas,
-                    you may reach us via <a href="https://laminas.dev/chat">chat</a> or
-                    <a href="https://discourse.laminas.dev">forum</a>.
-                    We'd love to hear any questions or feedback you may have
-                    regarding any release.
-                </p>
+            <div class="text-center">
+              <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+              <p class="small text-uppercase text-muted">Giá: <?=formatNumber($product->price)?> VND</p>
 
-                <p><a class="btn btn-success pull-right" href="https://laminas.dev/chat" target="_blank">Ping us on chat &raquo;</a></p>
+              <a class="btn btn-outline-primary" href="/products/<?=$product->id?>">Mua ngay</a>
             </div>
+          </div>
         </div>
+        <?php endforeach;?>
+      <?php endif;?>
     </div>
-</div>
-<script src="https://www.google.com/recaptcha/api.js?render=<?=$this->captchaSiteKey?>"></script>
-<script type="text/javascript">
-  if ($_GET('register') == 1) {
-    $(document).ready(function() {
-      setTimeout(function() {
-        $('#register').trigger('click');
-      }, 1700);
-    });
-  }
-</script>
-
-<?php $this->inlineScript()->prependFile($this->basePath("js/modules/home.{$this->layout()->dateVersion}.js")) ?>
-
+  </div>
+</section>

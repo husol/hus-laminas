@@ -21,8 +21,8 @@
       <td class="text-center"><img src="<?=$user->avatar?>"></td>
       <td class="text-left"><?=$user->full_name?></td>
       <td class="text-left"><?=$user->email?></td>
-      <td class="text-center"><?=$user->role?></td>
-      <td class="text-center"><?=$user->status?></td>
+      <td class="text-center"><?=$user->roleName?></td>
+      <td class="text-center"><?=$user->statusName?></td>
       <td class="text-center"><?=convertToDateDisplay($user->last_login, true)?></td>
       <td class="text-center">
       <?php if ($this->layout()->loggedUser->id != $user->id):?>

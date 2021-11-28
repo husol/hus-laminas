@@ -62,12 +62,69 @@ return [
           ],
         ],
       ],
+      'products' => [
+        'type' => Segment::class,
+        'options' => [
+          'route'    => '/products[/:action]',
+          'defaults' => [
+            'controller' => Controller\ProductController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
+      'product-detail' => [
+        'type' => Segment::class,
+        'options' => [
+          'route'    => '/products/:id',
+          'defaults' => [
+            'controller' => Controller\ProductController::class,
+            'action'     => 'detail',
+          ],
+          'constraints' => [
+            'id' => '\d+',
+          ],
+        ],
+      ],
+      'cart' => [
+        'type' => Segment::class,
+        'options' => [
+          'route'    => '/cart[/:action]',
+          'defaults' => [
+            'controller' => Controller\CartController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
+      'about' => [
+        'type' => Segment::class,
+        'options' => [
+          'route'    => '/about[/:action]',
+          'defaults' => [
+            'controller' => Controller\AboutController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
+      'contact' => [
+        'type' => Segment::class,
+        'options' => [
+          'route'    => '/contact[/:action]',
+          'defaults' => [
+            'controller' => Controller\ContactController::class,
+            'action'     => 'index',
+          ],
+        ],
+      ],
     ],
   ],
   'controllers' => [
     'factories' => [
       Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
       Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
+      Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
+      Controller\AboutController::class => Controller\Factory\AboutControllerFactory::class,
+      Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
+      Controller\ContactController::class => Controller\Factory\ContactControllerFactory::class,
     ],
   ],
   'view_manager' => [

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <?php $appName = $this->layout()->isLive ? 'Hus Laminas MVC' : 'BETA Hus Laminas MVC'; ?>
+  <?php $appName = $this->layout()->isLive ? 'XsmartPhone' : 'BETA XsmartPhone'; ?>
   <?= $this->headTitle("{$appName} {$this->layout()->appVersion}")->setSeparator(' - ')->setAutoEscape(false) ?>
 
   <?= $this->headMeta()
@@ -16,8 +16,11 @@
     ->prependStylesheet($this->basePath("css/hus.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/toastr.min.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.css"))
-    ->prependStylesheet($this->basePath("css/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/bootstrap-5.0.2.min.{$this->layout()->dateVersion}.css"))
     ->prependStylesheet($this->basePath("css/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/choices.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet($this->basePath("css/swiper-bundle.min.{$this->layout()->dateVersion}.css"))
+    ->prependStylesheet("https://fonts.googleapis.com/css?family=Roboto:300,400,700")
   ?>
 
   <!-- Scripts -->
@@ -32,7 +35,11 @@
     ->prependFile($this->basePath("js/crypto-js.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery.serializejson.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery-ui-1.12.1.min.{$this->layout()->dateVersion}.js"))
-    ->prependFile($this->basePath("js/bootstrap-4.4.1.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/theme.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/choices.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/swiper-bundle.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/noframework.waypoints.min.{$this->layout()->dateVersion}.js"))
+    ->prependFile($this->basePath("js/bootstrap-5.0.2.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/fontawesome-5.12.1.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/popper.min.{$this->layout()->dateVersion}.js"))
     ->prependFile($this->basePath("js/jquery-3.4.1.min.{$this->layout()->dateVersion}.js"))
@@ -43,47 +50,89 @@
 <!-- The Modal -->
 <div id="commonDialog" class="modal fade" role="dialog" tabindex="-1"></div>
 <div id="childDialog" class="modal fade" role="dialog" tabindex="-1"></div>
-
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="<?= $this->url('home') ?>">
-        <img src="<?= $this->basePath('img/husol-logo.svg') ?>" height="28" alt="Hus Laminas MVC"/>&nbsp;Hus Laminas MVC
-      </a>
-    </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a id="register" class="nav-link" href="javascript:void(0);">Register</a>
-        </li>
-        <li class="nav-item">
-        <?php if (isset($this->layout()->loggedUser)):?>
-          <a class="nav-link" href="/sign-out">Logout</a>
-        <?php else:?>
-          <a class="nav-link" href="/sign-in">Login</a>
-        <?php endif;?>
-        </li>
-      </ul>
+<div class="wide" id="all">
+  <!-- Top bar-->
+  <div class="top-bar py-2" id="topBar" style="background: #555">
+    <div class="container px-lg-0 text-light py-1">
+      <div class="row d-flex align-items-center">
+        <div class="col-md-6 d-md-block d-none">
+          <p class="mb-0 text-xs">Liên hệ chúng tôi ngay với số điện thoại <span class="text-green">+84 987654321</span> hoặc email <a href="mailto:requirement@husol.org">requirement@husol.org</a>.</p>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-md-end justify-content-between">
+            <ul class="list-inline d-block d-md-none mb-0">
+              <li class="list-inline-item"><a class="text-xs" href="#"><i class="fa fa-phone"></i></a></li>
+              <li class="list-inline-item"><a class="text-xs" href="#"><i class="fa fa-envelope"></i></a></li>
+            </ul>
+            <ul class="list-inline mb-0">
+            <?php if(isset($this->layout()->loggedUser)):?>
+              <li class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="customer-register.html">
+                  <i class="fas fa-user me-2"></i><span class="d-none d-md-inline-block"><?=$this->layout()->loggedUser->full_name?></span>
+              </a></li>
+              <li id="logout" class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="/auth/logout"><i class="fas fa-door-closed me-2"></i><span class="d-none d-md-inline-block">Đăng xuất</span></a></li>
+            <?php else:?>
+              <li id="login" class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="#"><i class="fas fa-door-open me-2"></i><span class="d-none d-md-inline-block">Đăng nhập</span></a></li>
+              <li class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="customer-register.html"><i class="fas fa-user me-2"></i><span class="d-none d-md-inline-block">Đăng ký</span></a></li>
+            <?php endif;?>
+            </ul>
+            <ul class="list-inline mb-0 ms-lg-4">
+              <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+              <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+              <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+              <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Email"><i class="fas fa-envelope"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</nav>
-<div class="container">
-  <?= $this->content ?>
-</div>
+  <!-- Top bar end-->
 
-<!--Footer-->
-<footer class="bg-secondary text-white text-center fixed-bottom mt-5 pt-2">
-  <p>Husol Store &copy; <?= date('Y') ?> All rights reserved | <a href="https://husol.org" style="color: #4bffd2">Husol
-      Organization</a></p>
-</footer>
-<!--/.Footer-->
+  <?= $this->render('navbar.phtml') ?>
+
+  <?= $this->content ?>
+
+  <!--Footer-->
+  <footer>
+    <!-- MAIN FOOTER-->
+    <div class="bg-gray-700 text-white py-5">
+      <div class="container py-4">
+        <div class="row gy-4">
+          <div class="col-lg-6">
+            <h4 class="mb-3 text-uppercase">Tổng quan về chúng tôi</h4>
+            <p class="text-sm text-gray-500">Của hàng Husol tự hào là một trong những cửa hàng độc quyền về điện thoại thông minh ở Thị xã Trảng Bàng - Thành phố Tây Ninh.</p>
+            <hr>
+            <h4 class="h6 text-uppercase">Đăng ký nhận thông tin mới nhất của chúng tôi</h4>
+            <form>
+              <div class="input-group border mb-3">
+                <input class="form-control bg-none border-0 shadow-0 text-white" type="email" placeholder="Email address" aria-label="Email address" aria-describedby="button-submit">
+                <button class="btn btn-outline-light bg-none border-0" id="button-submit" type="button"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <h4 class="mb-3 text-uppercase">Liên hệ</h4>
+            <p class="text-uppercase text-sm text-gray-500">
+              <span><b>Email:</b> enquiry@husol.org</span><br>
+              <span><b>Số điện thoại:</b> 0987654321</span><br>
+              <span><b>Địa chỉ:</b> 113 đường Tỉnh lộ 7, Khu phố Lộc Thọ, Phường Lộc Hưng, Thị xã Trảng Bàng, Tp. Tây Ninh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- COPYRIGHTS -->
+    <div class="bg-dark py-5">
+      <div class="container">
+        <div class="row align-items-cenrer gy-3 text-center">
+          <div class="col-md-12 text-md-center">
+            <p class="mb-0 text-sm text-gray-500">&copy; 2021. Husol Organization</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/.Footer-->
+</div>
 <div id="loading" class="notification_box">
   <p><span id="infoText">Processing...</span></p>
   <i class="fas fa-spinner fa-pulse text-dark mt-1 float-right"></i>

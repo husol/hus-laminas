@@ -1,11 +1,5 @@
 $(document).ready(function () {
-  $('#btnLogin').on('click', function () {
-    if (!validateForm('loginForm')) {
-      return false;
-    }
-    callAjax('auth', 'login', {data: fetchForm($('#loginForm'))}, loginCallback);
-    return false;
-  });
+
 
   $('#btnChangePassword').on('click', function () {
     if (!validateForm('changePasswordForm')) {
@@ -15,17 +9,6 @@ $(document).ready(function () {
     return false;
   });
 });
-
-function loginCallback(result) {
-  $('#btnLogin').prop("disabled", false);
-  if (result !== false) {
-    if (result.role == 'CLIENT') {
-      window.location.href = "/";
-    } else {
-      window.location.href = "/admin";
-    }
-  }
-}
 
 function changePasswordCallback(result) {
   $('#btnChangePassword').prop("disabled", false);

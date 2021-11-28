@@ -290,6 +290,16 @@ tr.active {
 }
 /* End Floating label */
 
+.space {
+    height: 20px;
+}
+.float-left {
+    float: left; !important;
+}
+.float-right {
+    float: right; !important;
+}
+
 .grecaptcha-badge{
     display:none;
 }

@@ -20,15 +20,16 @@
           <div class="form-group label-float col-md-4">
             <label for="role">Vai trò</label>
             <select class="form-control" id="role" name="role">
-              <option value="CLIENT"<?=isset($this->myUser) && $this->myUser->role == 'CLIENT' ? ' selected' : ''?>>CLIENT</option>
-              <option value="ADMIN"<?=isset($this->myUser) && $this->myUser->status == 'ADMIN' ? ' selected' : ''?>>ADMIN</option>
+              <option value="0"<?=isset($this->myUser) && $this->myUser->role == 0 ? ' selected' : ''?>>CLIENT</option>
+              <option value="1"<?=isset($this->myUser) && $this->myUser->role == 1 ? ' selected' : ''?>>STAFF</option>
+              <option value="2"<?=isset($this->myUser) && $this->myUser->status == 2 ? ' selected' : ''?>>ADMIN</option>
             </select>
           </div>
           <div class="form-group label-float col-md-4">
             <label for="status">Trạng thái</label>
             <select class="form-control" id="status" name="status">
-              <option value="INACTIVE"<?=isset($this->myUser) && $this->myUser->status == 'INACTIVE' ? ' selected' : ''?>>INACTIVE</option>
-              <option value="ACTIVE"<?=isset($this->myUser) && $this->myUser->status == 'ACTIVE' ? ' selected' : ''?>>ACTIVE</option>
+              <option value="0"<?=isset($this->myUser) && $this->myUser->status == 0 ? ' selected' : ''?>>INACTIVE</option>
+              <option value="1"<?=isset($this->myUser) && $this->myUser->status == 1 ? ' selected' : ''?>>ACTIVE</option>
             </select>
           </div>
         </div>

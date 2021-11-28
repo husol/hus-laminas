@@ -7,10 +7,45 @@ $(document).ready(function () {
 
     localStorage.setItem('cart', JSON.stringify(cart));
 
+    loadCartBadge();
     showSuccessBubble("Cập nhật Giỏ hàng thành công.");
     return false;
   });
+
+  $('#btnConfirmCart').on('click', function () {
+    callAjax('cart', 'confirm', {data: fetchForm($('#formListCart'))}, confirmCartCallback);
+
+    return false;
+  });
 });
+
+function confirmCartCallback(result) {
+  if (result !== false) {
+    showModal('commonDialog');
+
+    $('#btnSave').on('click', function () {
+      callAjax('cart', 'save', {formData: fetchForm($('#transactionForm'))}, saveCartCallback);
+
+      return false;
+    });
+
+    return false;
+  }
+}
+
+function saveCartCallback(result) {
+  if (result !== false) {
+    hideModal("commonDialog");
+    showSuccessBubble('Xác nhận đơn hàng thành công. Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất.');
+    localStorage.removeItem('cart');
+
+    setTimeout(function () {
+      window.location.reload(true);
+    }, 3000);
+
+    return false;
+  }
+}
 
 function getListCart(sortField, sortType) {
   if (typeof sortField == 'undefined') {
@@ -59,6 +94,7 @@ function removeItemFromCart(id) {
   localStorage.setItem('cart', JSON.stringify(cartProducts));
 
   getListCart();
+  loadCartBadge();
 }
 
 function updateAmount(id) {
