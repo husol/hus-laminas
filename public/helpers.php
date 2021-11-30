@@ -3,6 +3,10 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 if (!function_exists('mlog')) {
   function mlog($content, $override = false, $filename = '/tmp/debug')
   {
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && $filename == '/tmp/debug') {
+      $filename = "D:/debug.txt";
+    }
+
     $openType = $override ? 'w' : 'a';
     if (!$handle = @fopen($filename, $openType)) {
       $result = 3; //"Cannot open file ($filename)";
