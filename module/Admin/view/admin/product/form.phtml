@@ -1,0 +1,90 @@
+<div class="modal-dialog modal-lg" role="document">
+  <!--Content-->
+  <div class="modal-content">
+    <!--Header-->
+    <div class="modal-header bg-blue text-white">
+      <h3><?=(isset($this->myProduct)) ? "Cập nhật" : "Tạo"?> Sản phẩm</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!--Body-->
+    <div class="modal-body mb-0">
+      <form id="formProduct" class="eventEnterKey" data-enterkey="btnSave" novalidate>
+        <div class="row">
+          <div class="form-group label-float col-md-2d5">
+            <label for="category" class="required">Loại sản phẩm</label>
+            <select class="form-control husSelect" id="category" name="category" required>
+              <option value="0" selected disabled>Chọn loại sản phẩm</option>
+              <?php foreach($this->categories as $category):?>
+              <option value="<?=$category->id?>"<?=isset($this->myProduct) && $this->myProduct->category_id == $category->id ? ' selected' : ''?>><?=$category->name?></option>
+              <?php endforeach;?>
+            </select>
+          </div>
+          <div class="form-group label-float col-md-2d5">
+            <label for="branch" class="required">Hãng</label>
+            <input type="text" class="form-control" id="branch" name="branch" value="<?=isset($this->myProduct) ? $this->myProduct->branch : ''?>" required>
+          </div>
+          <div class="form-group label-float col-md-5">
+            <label for="name" class="required">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="name" name="name" value="<?=isset($this->myProduct) ? $this->myProduct->name : ''?>" required>
+          </div>
+          <div class="form-group form-check col-md-2">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" id="isFeature" name="isFeature"<?=isset($this->myProduct) && $this->myProduct->is_feature == 1 ? ' checked="checked"' : ''?>>
+              <span class="form-check-sign">Nổi bật</span>
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group label-float col-md-2d5">
+            <label for="status">Trạng thái</label>
+            <select class="form-control" id="status" name="status">
+              <option value="0"<?=isset($this->myProduct) && $this->myProduct->status == 0 ? ' selected' : ''?>>INACTIVE</option>
+              <option value="1"<?=isset($this->myProduct) && $this->myProduct->status == 1 ? ' selected' : ''?>>ACTIVE</option>
+            </select>
+          </div>
+          <div class="form-group label-float col-md-2d5">
+            <label for="price" class="required">Giá</label>
+            <input type="text" class="form-control numeric" id="price" name="price" value="<?=isset($this->myProduct) ? $this->myProduct->price : ''?>" required>
+          </div>
+          <div class="form-group label-float col-md-7">
+            <label for="shortDescription">Mô tả ngắn</label>
+            <input type="text" class="form-control" id="shortDescription" name="shortDescription" value="<?=isset($this->myProduct) ? $this->myProduct->short_description : ''?>">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group label-float col-md-12">
+            <label for="description">Mô tả</label>
+            <textarea class="form-control" id="description" name="description" rows="3"><?=isset($this->myProduct) ? $this->myProduct->description : ''?></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="image">Hình 1</label>
+            <img src="<?=isset($this->myProduct) && !empty($this->myProduct->image) ? $this->myProduct->image : $this->basePath("img/no_image.png")?>" id="imgCover" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
+            <input type="file" style="display: none" id="image" name="image" data-link="<?=isset($this->myProduct) && !empty($this->myProduct->image) ? $this->myProduct->image : ''?>">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="image2">Hình 2</label>
+            <img src="<?=isset($this->myProduct) && !empty($this->myProduct->image2) ? $this->myProduct->image2 : $this->basePath("img/no_image.png")?>" id="imgCover2" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image2" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
+            <input type="file" style="display: none" id="image2" name="image2" data-link="<?=isset($this->myProduct) && !empty($this->myProduct->image2) ? $this->myProduct->image2 : ''?>">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="image3">Hình 3</label>
+            <img src="<?=isset($this->myProduct) && !empty($this->myProduct->image3) ? $this->myProduct->image3 : $this->basePath("img/no_image.png")?>" id="imgCover3" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image3" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
+            <input type="file" style="display: none" id="image3" name="image3" data-link="<?=isset($this->myProduct) && !empty($this->myProduct->image3) ? $this->myProduct->image3 : ''?>">
+          </div>
+        </div>
+
+        <input type="hidden" id="recordID" name="recordID" value="<?=isset($this->myProduct)? $this->myProduct->id : 0?>">
+      </form>
+    </div>
+
+    <div class="modal-footer justify-content-center">
+      <button id="btnSave" class="btn btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span> <?=$this->layout()->translator->getLang('btn_save')?></button>
+    </div>
+  </div>
+  <!--/.Content-->
+</div>

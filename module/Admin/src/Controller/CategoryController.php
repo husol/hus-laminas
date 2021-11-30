@@ -60,7 +60,7 @@ class CategoryController extends HusController
     }
 
     $result = $this->dao->find($params);
-mlog($result);
+
     $categories = [];
     $count = 0;
     if (!empty($result)) {

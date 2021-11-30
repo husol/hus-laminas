@@ -58,7 +58,7 @@ function formCategoryCallback(result) {
       liveSearch: true,
       multipleSeparator: '; ',
       size: 17,
-      noneSelectedText: 'Chọn một loại sản phẩm ...'
+      noneSelectedText: 'Chọn một lớp sản phẩm ...'
     });
 
     $('#btnSave').on('click', function () {

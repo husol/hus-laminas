@@ -14,6 +14,7 @@ return [
       'Admin\Controller\HomeController',
       'Admin\Controller\UserController',
       'Admin\Controller\CategoryController',
+      'Admin\Controller\ProductController',
     ],
     'Application' => [
       'Application\Controller\IndexController',

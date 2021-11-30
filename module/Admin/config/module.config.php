@@ -45,6 +45,16 @@ return [
           ],
         ],
       ],
+      'adminProduct' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/admin/products[/:action]',
+          'defaults' => [
+            'controller' => Controller\ProductController::class,
+            'action' => 'index',
+          ],
+        ],
+      ],
     ],
   ],
   'controllers' => [
@@ -52,6 +62,7 @@ return [
       Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
       Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
       Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
+      Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
     ],
   ],
   'view_manager' => [

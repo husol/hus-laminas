@@ -27,7 +27,7 @@ class HusFile
       $pathDest = DS.$dirName.DS.$fileName;
       move_uploaded_file($this->file['tmp_name'], $uploadsDir.$pathDest);
 
-      return ['status' => true, 'path' => $pathDest, 'pathUrl' => str_replace('\\', '/', $pathDest)];
+      return ['status' => true, 'path' => DS.'uploads'.$pathDest, 'pathUrl' => '/uploads'.str_replace('\\', '/', $pathDest)];
     }
     catch (\Exception $e) {
       return ['status' => false, 'message' => $e->getMessage()];

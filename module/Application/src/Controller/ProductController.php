@@ -22,6 +22,7 @@ class ProductController extends HusController
   public function __construct($container)
   {
     parent::__construct($container);
+    $this->dao = Product::initDao();
   }
 
   public function indexAction()
@@ -65,6 +66,9 @@ class ProductController extends HusController
       ]
     ];
     $relatedProducts = $daoProduct->find($params);
+
+    // Increase count_view
+    $this->dao->save(['count_view' => $myProduct->count_view + 1], $myProduct->id);
 
     return new ViewModel([
       'myProduct' => $myProduct,

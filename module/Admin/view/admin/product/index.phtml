@@ -1,0 +1,74 @@
+<div class="page-inner">
+  <div class="page-header">
+    <h4 class="page-title">General</h4>
+    <ul class="breadcrumbs">
+      <li class="nav-home">
+        <a href="/admin">
+          <i class="fas fa-home"></i>
+        </a>
+      </li>
+      <li class="separator">
+        <i class="flaticon-right-arrow"></i>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/products">Sản phẩm</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title mt-2 float-left col-md-10">
+        <span class="font-weight-bold">Danh sách Sản phẩm</span>
+      </div>
+      <div class="float-right col-md-2">
+        <button id="btnAdd" class="btn btn-success btn-round float-right"><?=$this->layout()->translator->getLang('btn_new')?></button>
+      </div>
+    </div>
+    <div class="card-header">
+      <form id="searchForm">
+        <!--Grid row-->
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-lg-1d5 col-md-1"></div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="form-group label-float col-lg-3 col-md-3">
+            <label for="fcategory">Loại sản phẩm</label>
+            <select class="form-control husSelect" id="fkind" name="fkind">
+              <option value="" selected>ALL</option>
+              <?php foreach($this->categories as $category):?>
+              <option value="<?=$category->id?>"><?=$category->name?></option>
+              <?php endforeach;?>
+            </select>
+          </div>
+          <div class="form-group label-float col-lg-2d5 col-md-2d5">
+            <label for="fbranch">Tên hãng</label>
+            <input type="text" class="form-control" id="fbranch" name="fbranch" placeholder="Tên hãng" autofocus>
+          </div>
+          <div class="form-group label-float col-lg-3 col-md-3">
+            <label for="fname">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="Tên sản phẩm" autofocus>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-1 col-md-1 mt-2">
+            <button id="btnSearch" class="btn btn-primary" title="Filter"><i class="fas fa-filter"></i></button>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-1d5 col-md-1d5"></div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </form>
+    </div>
+    <div id="listProduct" class="card-body table-responsive">
+        <span class="loadingText text-center">Loading</span>
+    </div>
+  </div>
+</div>
+
+<?php $this->inlineScript()->prependFile($this->basePath("js/modules/adminProduct.{$this->layout()->dateVersion}.js")) ?>
