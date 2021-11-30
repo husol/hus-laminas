@@ -62,17 +62,17 @@
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label for="image">Hình 1</label>
+            <label for="image" class="required">Hình 1</label>
             <img src="<?=isset($this->myProduct) && !empty($this->myProduct->image) ? $this->myProduct->image : $this->basePath("img/no_image.png")?>" id="imgCover" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
             <input type="file" style="display: none" id="image" name="image" data-link="<?=isset($this->myProduct) && !empty($this->myProduct->image) ? $this->myProduct->image : ''?>">
           </div>
           <div class="form-group col-md-4">
-            <label for="image2">Hình 2</label>
+            <label for="image2" class="required">Hình 2</label>
             <img src="<?=isset($this->myProduct) && !empty($this->myProduct->image2) ? $this->myProduct->image2 : $this->basePath("img/no_image.png")?>" id="imgCover2" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image2" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
             <input type="file" style="display: none" id="image2" name="image2" data-link="<?=isset($this->myProduct) && !empty($this->myProduct->image2) ? $this->myProduct->image2 : ''?>">
           </div>
           <div class="form-group col-md-4">
-            <label for="image3">Hình 3</label>
+            <label for="image3" class="required">Hình 3</label>
             <img src="<?=isset($this->myProduct) && !empty($this->myProduct->image3) ? $this->myProduct->image3 : $this->basePath("img/no_image.png")?>" id="imgCover3" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image3" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
             <input type="file" style="display: none" id="image3" name="image3" data-link="<?=isset($this->myProduct) && !empty($this->myProduct->image3) ? $this->myProduct->image3 : ''?>">
           </div>

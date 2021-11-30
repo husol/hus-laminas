@@ -142,7 +142,7 @@ class ProductController extends HusController
     $image3 = $this->params()->fromFiles('image3');
     $isFeature = $this->params()->fromPost('isFeature', '');
     $status = $this->params()->fromPost('status', 0);
-mlog($isFeature);
+
     if ($category == 0) {
       HusAjax::setMessage('Vui lòng chọn Loại sản phẩm.');
       HusAjax::outData(false);
@@ -187,63 +187,65 @@ mlog($isFeature);
     $validatorFile->attach(new UploadFile());
     $validatorFile->attach(new Size('5MB'));
     $validatorFile->attach(new IsImage());
-    if (!$image['error']) {
-      //Upload image
-      if (!$validatorFile->isValid($image)) {
-        HusAjax::setMessage("{$image['name']} must be image and less than 5MB.");
-        HusAjax::outData(false);
-      }
 
-      $objID = $myProduct->id;
-      $file = new HusFile($image);
-      $result = $file->upload('products', $objID);
-
-      if (!$result['status']) {
-        HusAjax::setMessage("Error Upload File: " . $result['message']);
-        HusAjax::outData(false);
-      }
-
-      $myProduct = $this->dao->save(['image' => $result['pathUrl']], $myProduct->id);
+    if ($image['error'] || $image2['error'] || $image3['error']) {
+      HusAjax::setMessage("Upload hình không thành công. Vui lòng chọn lại hình.");
+      HusAjax::outData(false);
     }
 
-    if (!$image2['error']) {
-      //Upload image
-      if (!$validatorFile->isValid($image2)) {
-        HusAjax::setMessage("{$image2['name']} must be image and less than 5MB.");
-        HusAjax::outData(false);
-      }
-
-      $objID = $myProduct->id;
-      $file = new HusFile($image2);
-
-      $result = $file->upload('products', $objID);
-
-      if (!$result['status']) {
-        HusAjax::setMessage("Error Upload File: " . $result['message']);
-        HusAjax::outData(false);
-      }
-
-      $myProduct = $this->dao->save(['image2' => $result['pathUrl']], $myProduct->id);
+    //Upload image
+    if (!$validatorFile->isValid($image)) {
+      HusAjax::setMessage("{$image['name']} must be image and less than 5MB.");
+      HusAjax::outData(false);
     }
 
-    if (!$image3['error']) {
-      //Upload image
-      if (!$validatorFile->isValid($image3)) {
-        HusAjax::setMessage("{$image3['name']} must be image and less than 5MB.");
-        HusAjax::outData(false);
-      }
+    $objID = $myProduct->id;
+    $file = new HusFile($image);
+    $result = $file->upload('products', $objID);
 
-      $objID = $myProduct->id;
-      $file = new HusFile($image3);
-      $result = $file->upload('products', $objID);
-
-      if (!$result['status']) {
-        HusAjax::setMessage("Error Upload File: " . $result['message']);
-        HusAjax::outData(false);
-      }
-
-      $myProduct = $this->dao->save(['image3' => $result['pathUrl']], $myProduct->id);
+    if (!$result['status']) {
+      HusAjax::setMessage("Error Upload File: " . $result['message']);
+      HusAjax::outData(false);
     }
+
+    $data = ['image' => $result['pathUrl']];
+
+    //Upload image2
+    if (!$validatorFile->isValid($image2)) {
+      HusAjax::setMessage("{$image2['name']} must be image and less than 5MB.");
+      HusAjax::outData(false);
+    }
+
+    $objID = $myProduct->id;
+    $file = new HusFile($image2);
+
+    $result = $file->upload('products', $objID);
+
+    if (!$result['status']) {
+      HusAjax::setMessage("Error Upload File: " . $result['message']);
+      HusAjax::outData(false);
+    }
+
+    $data['image2'] = $result['pathUrl'];
+
+    //Upload image3
+    if (!$validatorFile->isValid($image3)) {
+      HusAjax::setMessage("{$image3['name']} must be image and less than 5MB.");
+      HusAjax::outData(false);
+    }
+
+    $objID = $myProduct->id;
+    $file = new HusFile($image3);
+    $result = $file->upload('products', $objID);
+
+    if (!$result['status']) {
+      HusAjax::setMessage("Error Upload File: " . $result['message']);
+      HusAjax::outData(false);
+    }
+
+    $data['image3'] = $result['pathUrl'];
+
+    $myProduct = $this->dao->save($data, $myProduct->id);
 
     HusAjax::outData($myProduct);
   }

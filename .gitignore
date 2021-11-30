@@ -18,5 +18,4 @@ data/*
 !data/cache/.gitkeep
 public/images/*
 public/files/*
-uploads/images/*/*
-uploads/files/*/*
+uploads/*
