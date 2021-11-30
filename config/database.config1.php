@@ -7,7 +7,7 @@ return [
     'database'  => 'store',
     'charset'   => 'utf8',
     'username'  => 'root',
-    'password'  => 'husol123ok'
+    'password'  => ''
   ],
   'slave' => [
     'driver'    => 'Pdo_Mysql',
