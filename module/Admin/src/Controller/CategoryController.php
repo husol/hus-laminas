@@ -11,9 +11,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Application\Model\Category;
-use Application\Model\HusDao;
-use Application\Model\User;
-use Core\Dao\Dao;
+use Application\Model\Product;
 use Core\Hus\HusAjax;
 use Core\Paginator\Adapter\Offset;
 use Laminas\Paginator\Paginator;
@@ -147,7 +145,7 @@ class CategoryController extends HusController
   {
     $recordID = $this->params()->fromPost('idRecord', 0);
 
-    //Check if category is existed
+    // Check if category is existed
     $myCategory = $this->dao->find([], intval($recordID));
 
     if (empty($myCategory)) {
@@ -155,7 +153,15 @@ class CategoryController extends HusController
       HusAjax::outData(false);
     }
 
-    //Remove category
+    // Check if category has children
+    $daoProduct = Product::initDao();
+    $products = $daoProduct->find(['category_id' => $myCategory->id]);
+    if (!empty($products)) {
+      HusAjax::setMessage("Loại sản phẩm này đang được sử dụng.");
+      HusAjax::outData(false);
+    }
+
+    // Remove category
     $conditions = [
       'id' => $recordID
     ];
