@@ -55,6 +55,16 @@ return [
           ],
         ],
       ],
+      'adminContact' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/admin/contacts[/:action]',
+          'defaults' => [
+            'controller' => Controller\ContactController::class,
+            'action' => 'index',
+          ],
+        ],
+      ],
     ],
   ],
   'controllers' => [
@@ -63,6 +73,7 @@ return [
       Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
       Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
       Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
+      Controller\ContactController::class => Controller\Factory\ContactControllerFactory::class,
     ],
   ],
   'view_manager' => [

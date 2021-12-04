@@ -1,0 +1,66 @@
+<div class="page-inner">
+  <div class="page-header">
+    <h4 class="page-title">General</h4>
+    <ul class="breadcrumbs">
+      <li class="nav-home">
+        <a href="/admin">
+          <i class="fas fa-home"></i>
+        </a>
+      </li>
+      <li class="separator">
+        <i class="flaticon-right-arrow"></i>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/contacts">Người liên hệ</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title mt-2 float-left col-md-10">
+        <span class="font-weight-bold">Danh sách Người liên hệ</span>
+      </div>
+    </div>
+    <div class="card-header">
+      <form id="searchForm">
+        <!--Grid row-->
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-lg-0d5 col-md-0d5"></div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="form-group label-float col-lg-3d5 col-md-3d5">
+            <label for="ffullName">Họ và tên</label>
+            <input type="text" class="form-control" id="ffullName" name="ffullName" placeholder="Họ và tên" autofocus>
+          </div>
+          <div class="form-group label-float col-lg-3d5 col-md-3d5">
+            <label for="femail">Email</label>
+            <input type="text" class="form-control" id="femail" name="femail" placeholder="Email" autofocus>
+          </div>
+          <div class="form-group label-float col-lg-3 col-md-3">
+            <label for="fmobile">Số điện thoại</label>
+            <input type="text" class="form-control" id="fmobile" name="fmobile" placeholder="Số điện thoại" autofocus>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-1 col-md-1 mt-2">
+            <button id="btnSearch" class="btn btn-primary" title="Filter"><i class="fas fa-filter"></i></button>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-0d5 col-md-0d5"></div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </form>
+    </div>
+    <div id="listContact" class="card-body table-responsive">
+        <span class="loadingText text-center">Loading</span>
+    </div>
+  </div>
+</div>
+
+<?php $this->inlineScript()->prependFile($this->basePath("js/modules/adminContact.{$this->layout()->dateVersion}.js")) ?>

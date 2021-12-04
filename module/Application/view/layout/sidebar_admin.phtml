@@ -63,9 +63,10 @@
       </ul>
 
       <?php
-      $menuCategory = $this->layout()->controller == "Admin\Controller\CategoryController";
-      $menuProduct = $this->layout()->controller == "Admin\Controller\ProductController";
-      $menuAdministration = $menuCategory || $menuProduct;
+      $menuCategory = $this->currentRoute()->matchController('categorycontroller');
+      $menuProduct = $this->currentRoute()->matchController('productcontroller');
+      $menuContact = $this->currentRoute()->matchController('contactcontroller');
+      $menuAdministration = $menuCategory || $menuProduct || $menuContact;
       ?>
       <ul class="nav nav-primary">
         <li class="nav-item active">
@@ -81,6 +82,9 @@
               </li>
               <li<?=$menuProduct ? ' class="active"' : ''?>>
                 <a href="/admin/products"><i class="fas fa-barcode"></i> Sản phẩm</a>
+              </li>
+              <li<?=$menuContact ? ' class="active"' : ''?>>
+                <a href="/admin/contacts"><i class="fas fa-address-card"></i> Người liên hệ</a>
               </li>
             </ul>
           </div>

@@ -1,0 +1,52 @@
+<table class="table table-striped table-hover">
+<thead>
+  <tr>
+    <th width="15%" class="text-left">Họ và tên</th>
+    <th width="15%" class="text-left">Email</th>
+    <th width="10%" class="text-left">Số điện thoại</th>
+    <th width="20%" class="text-left">Tiêu đề</th>
+    <th width="30%" class="text-left">Nội dung</th>
+    <th width="10%" class="text-center">Trạng thái</th>
+  </tr>
+</thead>
+<tbody>
+<?php if (empty($this->contacts)):?>
+  <tr>
+    <td colspan="6" class="text-center">Không người liên hệ nào.</td>
+  </tr>
+<?php else:?>
+  <?php foreach ($this->contacts as $contact):?>
+    <tr>
+      <td class="text-left"><?=$contact->full_name?></td>
+      <td class="text-left"><?=$contact->email?></td>
+      <td class="text-left"><?=$contact->mobile?></td>
+      <td class="text-left"><?=$contact->title?></td>
+      <td class="text-left"><?=$contact->content?></td>
+      <td class="text-center">
+        <select onchange="updateStatus(<?=$contact->id?>, this.value);">
+          <option value="0"<?=$contact->status == 0 ? ' selected' : ''?>>PENDING</option>
+          <option value="1"<?=$contact->status == 1 ? ' selected' : ''?>>SERVED</option>
+        </select>
+      </td>
+    </tr>
+  <?php endforeach;?>
+<?php endif;?>
+</tbody>
+</table>
+
+<?php
+if (isset($this->paginator) && $this->paginator->getTotalItemCount() > $this->paginator->getItemCountPerPage()):
+  $from = ($this->paginator->getCurrentPageNumber() - 1)*$this->paginator->getItemCountPerPage() + 1;
+  $to = $this->paginator->getCurrentPageNumber()*$this->paginator->getItemCountPerPage();
+  if ($to > $this->paginator->getTotalItemCount()) {
+    $to = $this->paginator->getTotalItemCount();
+  }
+?>
+  <!--Paginator-->
+  <div class="paginator">
+    <div class="float-left text-blue">
+      <?=$from?> - <?=$to?> of <?=$this->paginator->getTotalItemCount()?>
+    </div>
+    <?= $this->paginationControl($this->paginator, 'Sliding', 'partial/paginator', ['route' => '/', 'ajaxFunc' => 'getContacts']) ?>
+  </div>
+<?php endif; ?>
