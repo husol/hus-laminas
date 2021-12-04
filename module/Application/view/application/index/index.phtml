@@ -54,7 +54,7 @@
                 <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
                 <p class="small text-uppercase text-muted">Giá: <?=formatNumber($product->price)?> VND</p>
 
-                <a class="btn btn-outline-primary" href="/products/<?=$product->id?>">Mua ngay</a>
+                <button data-id="<?=$product->id?>" class="btnBuy btn btn-outline-primary">Mua ngay</button>
               </div>
             </div>
           </div>

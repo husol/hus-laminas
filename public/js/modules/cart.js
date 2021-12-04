@@ -100,7 +100,13 @@ function removeItemFromCart(id) {
 function updateAmount(id) {
   var quantity = $('#product'+id).find("input:first-child").val();
   var price = $('#product'+id).data('price');
-  var amount = quantity * price;
+  var amount = $('#product'+id).find('td:nth-child(6)').html().replace( /\D/g, '');
+  var totalAmount = $('#product'+id).closest('table').find('tfoot > tr > th:last-child > span').html().replace( /\D/g, '');
+
+  totalAmount -= amount;
+  amount = quantity * price;
+  totalAmount += amount;
 
   $('#product'+id).find('td:nth-child(6)').html(formatNumber(amount, 0) + ' VND');
+  $('#product'+id).closest('table').find('tfoot > tr > th:last-child > span').html(formatNumber(totalAmount, 0) + ' VND');
 }

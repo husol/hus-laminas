@@ -49,7 +49,7 @@
                 <p class="h1 text-muted mb-4 text-center fw-normal"><?=formatNumber($this->myProduct->price)?> VND</p>
                 <p class="text-center">
                   <button id="btnAddToCart" data-id="<?=$this->myProduct->id?>" class="btn btn-outline-primary" type="submit"><i class="fas fa-shopping-cart"></i> Thêm vào Giỏ hàng</button>
-                  <a href="/cart" class="btn btn-primary">Mua ngay</a>
+                  <button data-id="<?=$this->myProduct->id?>" class="btnBuy btn btn-primary">Mua ngay</button>
                 </p>
             </div>
             <!-- SLIDERS THUMBS -->
