@@ -47,6 +47,11 @@ $(document).ready(function () {
     return false;
   });
 
+  var cartJSON = localStorage.getItem('cart');
+  if (cartJSON == null) {
+    localStorage.setItem('cart', JSON.stringify([]));
+  }
+
   loadCartBadge();
 });
 
