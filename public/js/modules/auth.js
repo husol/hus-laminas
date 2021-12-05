@@ -1,5 +1,12 @@
 $(document).ready(function () {
-
+  if ($('#formRegister').length > 0) {
+    grecaptcha.ready(function () {
+      grecaptcha.execute(captchaSiteKey, {action: 'register'}).then(function (token) {
+        //Verify the token on the server
+        $('#reCaptchaToken').val(token);
+      });
+    });
+  }
 
   $('#btnChangePassword').on('click', function () {
     if (!validateForm('changePasswordForm')) {

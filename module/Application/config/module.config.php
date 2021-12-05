@@ -22,6 +22,16 @@ return [
           ],
         ],
       ],
+      'register' => [
+        'type'    => Segment::class,
+        'options' => [
+          'route'    => '/register',
+          'defaults' => [
+            'controller' => Controller\AuthController::class,
+            'action'     => 'registerForm',
+          ],
+        ],
+      ],
       'login' => [
         'type'    => Segment::class,
         'options' => [

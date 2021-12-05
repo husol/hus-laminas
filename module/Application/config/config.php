@@ -18,18 +18,18 @@ return [
   'HARD_DELETED_TABLES' => ['contacts', 'comments', 'orders'],
   //Google Captcha Setting
   'CAPTCHA'=> [
-    'siteKey' => '{Google Captcha Site Key}',
-    'secretKey' => '{Google Captcha Secret Key}'
+    'siteKey' => '6Lcl7KkUAAAAAO-swSREVmlYsQcSqPL3t9S999M4',
+    'secretKey' => '6Lcl7KkUAAAAACqf1lI-QSKNZUu3CgIJhrO2B-Z8'
   ],
   //SMTP Setting for sending email
   'SMTP_OPTIONS' => [
-    'name' => '{System Name}',//Husol
-    'host' =>'{SMTP_HOST}',//smtp.gmail.com
+    'name' => 'Husol',//Husol
+    'host' =>'smtp.gmail.com',//smtp.gmail.com
     'port' => 587,//587
     'connection_class'  => 'plain',
     'connection_config' => [
-      'username' => '{SMTP_USERNAME}',//Gmail account
-      'password' => '{SMTP_PASSWORD}',//Gmail password
+      'username' => 'projects.husol@gmail.com',//Gmail account
+      'password' => 'husol123ok',//Gmail password
       'ssl'      => 'tls',
     ]
   ],

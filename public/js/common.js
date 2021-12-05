@@ -132,10 +132,11 @@ function loginFormCallback(result) {
 }
 
 function registerCallback(result) {
+  $('#btnRegister').prop("disabled", false);
   if (result !== false) {
     showSuccessBubble("Tài khoản của bạn vừa được đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản.", 7)
     setTimeout(function () {
-      window.location.href = "/sign-in";
+      window.location.href = "/";
     }, 7000);
   }
 }

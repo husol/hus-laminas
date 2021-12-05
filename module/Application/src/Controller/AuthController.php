@@ -114,6 +114,14 @@ class AuthController extends AbstractActionController
     HusAjax::outData($myUser);
   }
 
+  public function registerFormAction()
+  {
+    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
+
+    return new ViewModel(['captchaSiteKey' => $captchaSiteKey]);
+  }
+
   public function registerAction()
   {
     $fullName = $this->params()->fromPost('fullName', '');
@@ -125,7 +133,7 @@ class AuthController extends AbstractActionController
     $gRecaptchaResponse = $this->params()->fromPost('gRecaptchaResponse', '');
 
     $data = [
-      'role' => 'CLIENT',
+      'role' => 0,
       'created_by' => 0
     ];
     //Validate
@@ -198,7 +206,7 @@ class AuthController extends AbstractActionController
     //Send email with activate-account url
     $activateUrl = "{$baseUrl}/auth/activateAccount?email={$email}&token=$tokenStr";
 
-    $content = "Chào mừng đến với XsmartPhone.\n";
+    $content = "Welcom to XsmartPhone.\n";
     $content .= "You have registered your account. Please click the link below to activate it:\n";
     $content .= $activateUrl;
 

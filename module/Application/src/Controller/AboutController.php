@@ -29,9 +29,6 @@ class AboutController extends HusController
 
   public function indexAction()
   {
-    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
-    $captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
-
-    return new ViewModel(['captchaSiteKey' => $captchaSiteKey]);
+    return new ViewModel();
   }
 }
