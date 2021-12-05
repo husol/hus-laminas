@@ -16,15 +16,15 @@
           <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
             <div class="px-2 pb-2 pb-md-0 text-center">
               <h6 class="fw-bold mb-3">Người dùng</h6>
-              <h3 class="fw-bold"><?=$this->countUser?></h3>
+              <h3 class="fw-bold"><?=$this->totalActiveUser?></h3>
             </div>
             <div class="px-2 pb-2 pb-md-0 text-center">
               <h6 class="fw-bold mb-3">Loại sản phẩm</h6>
-              <h3 class="fw-bold"><?=$this->countCategory?></h3>
+              <h3 class="fw-bold"><?=$this->totalCategory?></h3>
             </div>
             <div class="px-2 pb-2 pb-md-0 text-center">
               <h6 class="fw-bold mb-3">Sản phẩm</h6>
-              <h3 class="fw-bold"><?=$this->countProduct?></h3>
+              <h3 class="fw-bold"><?=$this->totalActiveProduct?></h3>
             </div>
           </div>
         </div>
@@ -37,15 +37,15 @@
           <div class="row col-md-12 py-3">
             <div class="col-md-4 text-center">
               <h6 class="fw-bold text-uppercase text-danger op-8">Giao dịch mới</h6>
-              <h3 class="fw-bold"><?=$this->sumOther?></h3>
+              <h3 class="fw-bold"><?=$this->totalPendingTransaction?></h3>
             </div>
             <div class="col-md-4 text-center">
               <h6 class="fw-bold text-uppercase text-blue op-8">Đang giao hàng</h6>
-              <h3 class="fw-bold"><?=$this->sumBeverage?></h3>
+              <h3 class="fw-bold"><?=$this->totalDeliveringTransaction?></h3>
             </div>
             <div class="col-md-4 text-center">
               <h6 class="fw-bold text-uppercase text-success op-8">Đã giao hàng</h6>
-              <h3 class="fw-bold"><?=$this->sumFood?></h3>
+              <h3 class="fw-bold"><?=$this->totalCompletedTransaction?></h3>
             </div>
           </div>
         </div>
