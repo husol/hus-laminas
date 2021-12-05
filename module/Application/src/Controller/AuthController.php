@@ -265,7 +265,7 @@ class AuthController extends AbstractActionController
 
     //Change status
     $data = [
-      'status' => 'ACTIVE',
+      'status' => 1,
       'token' => ''
     ];
     $myUser = $this->dao->save($data, $myUser->id);
