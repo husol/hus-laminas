@@ -15,6 +15,7 @@ return [
       'Admin\Controller\UserController',
       'Admin\Controller\CategoryController',
       'Admin\Controller\ProductController',
+      'Admin\Controller\TransactionController',
       'Admin\Controller\ContactController',
     ],
     'Application' => [

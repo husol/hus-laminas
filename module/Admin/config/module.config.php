@@ -55,6 +55,16 @@ return [
           ],
         ],
       ],
+      'adminTransaction' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/admin/transactions[/:action]',
+          'defaults' => [
+            'controller' => Controller\TransactionController::class,
+            'action' => 'index',
+          ],
+        ],
+      ],
       'adminContact' => [
         'type' => Segment::class,
         'options' => [
@@ -73,6 +83,7 @@ return [
       Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
       Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
       Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
+      Controller\TransactionController::class => Controller\Factory\TransactionControllerFactory::class,
       Controller\ContactController::class => Controller\Factory\ContactControllerFactory::class,
     ],
   ],
