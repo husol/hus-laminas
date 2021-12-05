@@ -10,7 +10,11 @@
       <li class="nav-item dropdown hidden-caret">
         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
           <div class="avatar-sm">
-            <img src="https://ui-avatars.com/api/?name=<?=$this->layout()->loggedUser->full_name?>" alt="avatar" class="avatar-img rounded-circle">
+            <?php if(empty($this->layout()->loggedUser->avatar)):?>
+              <img src="https://ui-avatars.com/api/?name=<?=$this->layout()->loggedUser->full_name?>" alt="avatar" class="avatar-img rounded-circle">
+            <?php else:?>
+              <img src="<?=$this->layout()->loggedUser->avatar?>" alt="avatar" class="avatar-img rounded-circle">
+            <?php endif;?>
           </div>
         </a>
         <ul class="dropdown-menu dropdown-user animated fadeIn">

@@ -12,10 +12,14 @@ namespace Application\Controller;
 use Application\Model\User;
 use Core\Hus\HusAjax;
 use Core\Hus\HusEmail;
+use Core\Hus\HusFile;
 use Core\Hus\HusHelper;
 use Core\Hus\HusRedis;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Validator\EmailAddress;
+use Laminas\Validator\File\IsImage;
+use Laminas\Validator\File\Size;
+use Laminas\Validator\File\UploadFile;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
@@ -289,7 +293,11 @@ class AuthController extends AbstractActionController
     $view->setVariable('myAccount', $myAccount);
 
     //Render html
-    $view->setTemplate('application/auth/account_form');
+    $template = 'application/auth/account_form';
+    if ($this->session->loggedUser->role == 0) {
+      $template = 'application/auth/account_customer_form';
+    }
+    $view->setTemplate($template);
     $html = $this->renderer->render($view);
 
     HusAjax::setHtml('commonDialog', $html);
@@ -357,8 +365,47 @@ class AuthController extends AbstractActionController
 
     $myUser = $this->dao->save($data, $idRecord);
 
+    $validatorFile = new ValidatorChain();
+    $validatorFile->attach(new UploadFile());
+    $validatorFile->attach(new Size('1MB'));
+    $validatorFile->attach(new IsImage());
+mlog($avatar);
+    if ($avatar['error']) {
+      HusAjax::setMessage("Upload avatar không thành công. Vui lòng chọn lại hình.");
+      HusAjax::outData(false);
+    }
+
+    //Upload image
+    if (!$validatorFile->isValid($avatar)) {
+      HusAjax::setMessage("{$avatar['name']} must be image and less than 1MB.");
+      HusAjax::outData(false);
+    }
+
+    $objID = $myUser->id;
+    $file = new HusFile($avatar);
+    $result = $file->upload('avatars', $objID);
+
+    if (!$result['status']) {
+      HusAjax::setMessage("Error Upload File: " . $result['message']);
+      HusAjax::outData(false);
+    }
+
+    $data = ['avatar' => $result['pathUrl']];
+    $myUser = $this->dao->save($data, $myUser->id);
+
     //Update loggedUser session
     unset($myUser->password);
+    switch ($myUser->role) {
+      case 1:
+        $myUser->roleName = 'STAFF';
+        break;
+      case 2:
+        $myUser->roleName = 'ADMIN';
+        break;
+      default:
+        $myUser->roleName = 'CLIENT';
+    }
+
     $this->session->loggedUser = $myUser;
 
     HusAjax::outData();

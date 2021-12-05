@@ -1,0 +1,60 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title text-uppercase">Tài khoản của bạn</h4>
+      <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form id="formMyAccount">
+        <div class="row">
+          <div class="form-group col-md-6 mb-3">
+            <label for="fullName" class="required">Họ và tên</label>
+            <input type="text" id="fullName" name="fullName" value="<?= $this->myAccount->full_name ?>" class="form-control" required autofocus>
+            <div class="invalid-feedback">Sai họ và tên</div>
+          </div>
+          <div class="form-group col-md-6 mb-3">
+            <label for="email" class="required">Email</label>
+            <input type="text" id="email" name="email" value="<?=$this->myAccount->email?>" class="form-control" disabled required>
+            <div class="invalid-feedback">Sai email</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4 mb-3">
+            <label for="currentPassword" class="required">Mật khẩu hiện tại</label>
+            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+            <div class="invalid-feedback">Sai mật khẩu hiện tại</div>
+          </div>
+          <div class="form-group col-md-4 mb-3">
+            <label for="password">Mật khẩu mới</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Bỏ trống để giữ mật khẩu hiện tại">
+          </div>
+          <div class="form-group col-md-4 mb-3">
+            <label for="confirmPassword">Xác nhận mật khẩu</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4 mb-3">
+            <label for="mobile">Điện thoại</label>
+            <input type="text" id="mobile" name="mobile" value="<?= isset($this->myAccount->mobile) ? $this->myAccount->mobile : '' ?>" class="form-control">
+          </div>
+          <div class="form-group col-md-8 mb-3">
+            <label for="address">Địa chỉ</label>
+            <input type="text" id="address" name="address" value="<?= isset($this->myAccount->address) ? $this->myAccount->address : '' ?>" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 mb-3">
+            <label for="image">Avatar</label>
+            <img src="<?=isset($this->myAccount) && !empty($this->myAccount->avatar) ? $this->myAccount->avatar : '/img/no_image.png'?>" id="imgCover" class="img-thumbnail cursor-pointer" title="Click to change image" alt="Image" style="padding:4px;max-width:336px; max-height:280px; width:50%;">
+            <input type="file" style="display: none" id="image" name="avatar" data-link="<?=isset($this->myAccount) && !empty($this->myAccount->avatar) ? $this->myAccount->avatar : ''?>">
+          </div>
+        </div>
+        <input type="hidden" name="idRecord" value="<?= $this->myAccount->id ?>">
+      </form>
+      <p class="text-center">
+        <button id="btnSave" class="btn btn-outline-primary"><span class="btn-label"><i class="fa fa-save"></i></span> <?=$this->layout()->translator->getLang('btn_save')?></button>
+      </p>
+    </div>
+  </div>
+</div>

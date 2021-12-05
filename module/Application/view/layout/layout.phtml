@@ -66,7 +66,7 @@
             </ul>
             <ul class="list-inline mb-0">
             <?php if(isset($this->layout()->loggedUser)):?>
-              <li class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="customer-register.html">
+              <li class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="<?=$this->layout()->loggedUser->role == 0 ? 'javascript:updateMyAccount();' : '#'?>">
                   <i class="fas fa-user me-2"></i><span class="d-none d-md-inline-block"><?=$this->layout()->loggedUser->full_name?></span>
               </a></li>
               <li id="logout" class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="/auth/logout"><i class="fas fa-door-closed me-2"></i><span class="d-none d-md-inline-block">Đăng xuất</span></a></li>

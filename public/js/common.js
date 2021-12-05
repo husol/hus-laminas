@@ -152,6 +152,65 @@ function loginCallback(result) {
   }
 }
 
+//My Account
+function updateMyAccount() {
+  callAjax('auth', 'myAccountForm', {}, formMyAccountCallback);
+}
+
+function formMyAccountCallback(result) {
+  if (result !== false) {
+    showModal('commonDialog');
+
+    $("#imgCover").on("click", function () {
+      $("#image").trigger("click");
+    });
+
+    $("#image").change(function (e) {
+      //Validate file type / size
+      var validImageTypes = ["image/png", "image/jpeg", "image/gif"];
+      var files = e.originalEvent.target.files;
+      for (var i = 0, len = this.files.length; i < len; i++) {
+        var n = files[i].name,
+          t = files[i].type,
+          s = files[i].size;
+        if (!validImageTypes.includes(t)) {
+          $(this).val("");
+          showErrorBubble('image', "Supported image formats are PNG, JPEG, JPG, GIF.");
+          return false;
+        }
+        if (s > 1048576) {// Max file size is 1 MB
+          $(this).val("");
+          showErrorBubble('image', "Maximum size for image is 1 MB.");
+          return false;
+        }
+      }
+
+      previewImage(this, "imgCover");
+    });
+
+    $('#btnSave').on('click', function () {
+      if (!validateForm('formMyAccount')) {
+        return false;
+      }
+
+      callAjax('auth', 'updateMyAccount', {formData: fetchForm($('#formMyAccount'), false, true), upload: true}, updateMyAccountCallback);
+      return false;
+    });
+  }
+  return false;
+}
+
+function updateMyAccountCallback(result) {
+  if (result !== false) {
+    $('#commonDialog').modal('hide');
+    showSuccessBubble("Cập nhật Tài khoản của bạn thành công.");
+    setTimeout(function () {
+      location.reload();
+    }, 3000);
+  }
+  return false;
+}
+
 function loadCartBadge() {
   if ($('#cart').length > 0) {
     var cartJSON = localStorage.getItem('cart');

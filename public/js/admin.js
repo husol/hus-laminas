@@ -87,7 +87,7 @@ function formMyAccountCallback(result) {
       if (!validateForm('formMyAccount')) {
         return false;
       }
-      callAjax('auth', 'updateMyAccount', {formData: fetchForm($('#formMyAccount'))}, updateMyAccountCallback);
+      callAjax('auth', 'updateMyAccount', {formData: fetchForm($('#formMyAccount'), false, true), upload: true}, updateMyAccountCallback);
     });
   }
   return false;
