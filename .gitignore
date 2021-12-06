@@ -11,7 +11,6 @@ nbproject/
 composer.lock
 config/development.config.php
 config/database.config.php
-config/autoload/development.local.php
 module/Application/config/config.php
 logs/*
 data/*
