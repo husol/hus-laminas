@@ -381,6 +381,12 @@ class AuthController extends AbstractActionController
       HusAjax::outData(false);
     }
 
+    // Delete old avatar if any
+    if (!empty($myUser->avatar)) {
+      $publicDir = ROOT_DIR.DS.'public';
+      @unlink($publicDir.DS.$myUser->avatar);
+    }
+
     $objID = $myUser->id;
     $file = new HusFile($avatar);
     $result = $file->upload('avatars', $objID);

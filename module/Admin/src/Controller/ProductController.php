@@ -199,6 +199,12 @@ class ProductController extends HusController
       HusAjax::outData(false);
     }
 
+    // Delete old image if any
+    if (!empty($myProduct->image)) {
+      $publicDir = ROOT_DIR.DS.'public';
+      @unlink($publicDir.DS.$myProduct->image);
+    }
+
     $objID = $myProduct->id;
     $file = new HusFile($image);
     $result = $file->upload('products', $objID);
@@ -214,6 +220,12 @@ class ProductController extends HusController
     if (!$validatorFile->isValid($image2)) {
       HusAjax::setMessage("{$image2['name']} must be image and less than 5MB.");
       HusAjax::outData(false);
+    }
+
+    // Delete old image2 if any
+    if (!empty($myProduct->image2)) {
+      $publicDir = ROOT_DIR.DS.'public';
+      @unlink($publicDir.DS.$myProduct->image2);
     }
 
     $objID = $myProduct->id;
@@ -232,6 +244,12 @@ class ProductController extends HusController
     if (!$validatorFile->isValid($image3)) {
       HusAjax::setMessage("{$image3['name']} must be image and less than 5MB.");
       HusAjax::outData(false);
+    }
+
+    // Delete old image3 if any
+    if (!empty($myProduct->image3)) {
+      $publicDir = ROOT_DIR.DS.'public';
+      @unlink($publicDir.DS.$myProduct->image3);
     }
 
     $objID = $myProduct->id;
