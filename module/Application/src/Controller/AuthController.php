@@ -369,7 +369,7 @@ class AuthController extends AbstractActionController
     $validatorFile->attach(new UploadFile());
     $validatorFile->attach(new Size('1MB'));
     $validatorFile->attach(new IsImage());
-mlog($avatar);
+
     if ($avatar['error']) {
       HusAjax::setMessage("Upload avatar không thành công. Vui lòng chọn lại hình.");
       HusAjax::outData(false);
