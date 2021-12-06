@@ -12,6 +12,8 @@ namespace Application\Controller;
 
 use Application\Model\Contact;
 use Core\Hus\HusAjax;
+use Core\Hus\HusHelper;
+use Laminas\Json\Json;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorChain;
@@ -40,6 +42,7 @@ class ContactController extends HusController
     $mobile = $this->params()->fromPost('mobile', '');
     $title = $this->params()->fromPost('title', '');
     $content = $this->params()->fromPost('content', '');
+    $gRecaptchaResponse = $this->params()->fromPost('gRecaptchaResponse', '');
 
     //Validate
     $validatorNotEmpty = new ValidatorChain();
@@ -70,6 +73,16 @@ class ContactController extends HusController
 
     if (!$validatorEmail->isValid($email)) {
       HusAjax::setMessage('Email chưa đúng định dạng.');
+      HusAjax::outData(false);
+    }
+
+    //Verify gReCaptcha
+    $husConfig = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $clientInfo = HusHelper::getClientInfoFromRequest($this->getRequest());
+    $response = Json::decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$husConfig['CAPTCHA']['secretKey']}&response={$gRecaptchaResponse}&remoteip={$clientInfo['ip']}"));
+
+    if (!($response->success && $response->action == 'contact' && $response->score >= 0.7)) {
+      HusAjax::setMessage('Vui lòng xác thực Captcha thành công.');
       HusAjax::outData(false);
     }
 

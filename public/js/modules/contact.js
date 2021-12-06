@@ -1,10 +1,20 @@
 $(document).ready(function () {
+  grecaptcha.ready(function () {
+    grecaptcha.execute(captchaSiteKey, {action: 'contact'}).then(function (token) {
+      //Verify the token on the server
+      $('#reCaptchaToken').val(token);
+    });
+  });
+
   $('#btnSendMessage').on('click', function () {
     if (!validateForm('contactForm')) {
       return false;
     }
 
-    callAjax("contact", "save", {formData: fetchForm($('#contactForm'))},saveContactCallback);
+    callAjax("contact", "save", {
+      formData: fetchForm($('#contactForm')),
+      gRecaptchaResponse: $('[name=g-recaptcha-response]').val()
+    },saveContactCallback);
 
     return false;
   });
