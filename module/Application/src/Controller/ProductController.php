@@ -81,6 +81,7 @@ class ProductController extends HusController
     $page = $this->params()->fromPost('page', 1);
     $categoryKind = $this->params()->fromPost('categoryKind', -1);
     $categoryID = $this->params()->fromPost('categoryID', 0);
+    $keyword = $this->params()->fromPost('keyword', '');
     $fprice = $this->params()->fromPost('fprice', 0);
 
     $daoProduct = Product::initDao();
@@ -91,10 +92,14 @@ class ProductController extends HusController
       'conditions' => ['status' => 1]
     ];
 
-    if ($fprice > 0) {
+    if (!empty($keyword)) {
       $params['conditions']['flexible'] = [
-        ['expression' => ['price < ?', $fprice]]
+        ['like' => ['name', "%$keyword%"]]
       ];
+    }
+
+    if ($fprice > 0) {
+      $params['conditions']['flexible'][] = ['expression' => ['price < ?', $fprice]];
     }
 
     $products = [];

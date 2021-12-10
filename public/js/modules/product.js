@@ -3,6 +3,12 @@ $(document).ready(function () {
     getProducts(1);
   }
 
+  $('#searchProduct').on('keyup', debounce(function () {
+    setQueryStringParam('keyword', $(this).val());
+
+    getProducts(1);
+  }, 1700));
+
   $("#btnFilterPrice").on('click', function () {
     getProducts(1);
   });
@@ -59,6 +65,11 @@ function getProducts(page, sortField, sortType) {
   var categoryID = $_GET('category_id');
   if (categoryID != null) {
     dataObj['categoryID'] = categoryID;
+  }
+
+  var keyword = $_GET('keyword');
+  if (keyword != null) {
+    dataObj['keyword'] = keyword;
   }
 
   callAjax('products', 'getProducts', dataObj, getProductsCallback);

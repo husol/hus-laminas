@@ -19,8 +19,9 @@ function checkFileExt(file, ext) {
 }
 
 var myModal;
+
 function showModal(modalID) {
-  myModal = new bootstrap.Modal($("#"+modalID), {backdrop: 'static'});
+  myModal = new bootstrap.Modal($("#" + modalID), {backdrop: 'static'});
   myModal.show();
 }
 
@@ -68,7 +69,7 @@ function base64_decode(data) {
   }).join(''));
 }
 
-function decryptAES(encryptedJsonStr, secretKey){
+function decryptAES(encryptedJsonStr, secretKey) {
   var objJSON = JSON.parse(encryptedJsonStr);
 
   var encrypted = objJSON.ciphertext;
@@ -212,6 +213,12 @@ function callAjax(controller, method, args, callback) {
 }
 
 /////////////////////// End callAjax jQuery ///////////////////////////////////
+
+function setQueryStringParam(name, value) {
+  const params = new URLSearchParams(window.location.search);
+  params.set(name, value);
+  window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+}
 
 function $_GET(param) {
   var vars = {};
@@ -459,6 +466,25 @@ function triggerShownModalEvents(element) {
   });
 }
 
+function debounce(cb, interval, immediate) {
+  var timeout;
+
+  return function () {
+    var context = this, args = arguments;
+    var later = function () {
+      timeout = null;
+      if (!immediate) cb.apply(context, args);
+    };
+
+    var callNow = immediate && !timeout;
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, interval);
+
+    if (callNow) cb.apply(context, args);
+  };
+}
+
 $(document).ready(function () {
   //HusSelect
   $('.husSelect').selectpicker({
@@ -509,7 +535,8 @@ $(document).ready(function () {
     changeYear: true,
     firstDay: 1
   });
-  $.fn.modal.Constructor.prototype._enforceFocus = function () {};
+  $.fn.modal.Constructor.prototype._enforceFocus = function () {
+  };
   //End HusDate
 
   //HusTime
@@ -537,9 +564,8 @@ $(document).ready(function () {
 
         $(this).val(hourStr + ":" + minStr);
       }
-    }
-    else {
-      switch(timeStr.length) {
+    } else {
+      switch (timeStr.length) {
         case 0:
           var defaultTime = "00:00";
           if (typeof $(this).data('default') != "undefined") {
