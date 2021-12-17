@@ -14,8 +14,6 @@ use Application\Model\Contact;
 use Core\Hus\HusAjax;
 use Core\Paginator\Adapter\Offset;
 use Laminas\Paginator\Paginator;
-use Laminas\Validator\NotEmpty;
-use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
 
 class ContactController extends HusController

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use Application\Model\Transaction;
 use Application\Model\User;
 use Core\Hus\HusAjax;
 use Core\Paginator\Adapter\Offset;
@@ -209,19 +210,28 @@ class UserController extends HusController
 
   public function deleteAction()
   {
-    $idRecord = $this->params()->fromPost('idRecord', 0);
+    $recordID = $this->params()->fromPost('idRecord', 0);
 
     //Check if user is existed
-    $myUser = $this->dao->find([], intval($idRecord));
+    $myUser = $this->dao->find([], intval($recordID));
 
     if (empty($myUser)) {
       HusAjax::setMessage("The user is not existed in system");
       HusAjax::outData(false);
     }
 
+    //Check if user is already used
+    $daoTransaction = Transaction::initDao();
+    $transactions = $daoTransaction->find(['conditions' => ['user_id' => $myUser->id]]);
+
+    if (!empty($transactions)) {
+      HusAjax::setMessage("The user is already used in system");
+      HusAjax::outData(false);
+    }
+
     //Remove user
     $conditions = [
-      'id' => $idRecord
+      'id' => $recordID
     ];
     $this->dao->remove($conditions);
 

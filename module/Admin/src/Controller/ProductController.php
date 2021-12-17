@@ -10,15 +10,12 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use Application\Model\Asset;
 use Application\Model\Category;
+use Application\Model\Order;
 use Application\Model\Product;
 use Core\Hus\HusAjax;
 use Core\Hus\HusFile;
 use Core\Paginator\Adapter\Offset;
-use Core\Vls\VlsAjax;
-use Core\Vls\VlsFile;
-use Laminas\Json\Json;
 use Laminas\Paginator\Paginator;
 use Laminas\Validator\File\IsImage;
 use Laminas\Validator\File\Size;
@@ -272,20 +269,28 @@ class ProductController extends HusController
   {
     $recordID = $this->params()->fromPost('idRecord', 0);
 
-    //Check if category is existed
-    $myCategory = $this->dao->find([], intval($recordID));
+    //Check if product is existed
+    $myProduct = $this->dao->find([], intval($recordID));
 
-    if (empty($myCategory)) {
-      HusAjax::setMessage("Loại sản phẩm này không tồn tại trong hệ thống.");
+    if (empty($myProduct)) {
+      HusAjax::setMessage("Sản phẩm này không tồn tại trong hệ thống.");
       HusAjax::outData(false);
     }
 
-    //Remove category
+    // Check if product is already used
+    $daoOrder = Order::initDao();
+    $orders = $daoOrder->find(['product_id' => $myProduct->id]);
+    if (!empty($orders)) {
+      HusAjax::setMessage("Sản phẩm này đang được sử dụng.");
+      HusAjax::outData(false);
+    }
+
+    //Remove product
     $conditions = [
       'id' => $recordID
     ];
     $this->dao->remove($conditions);
 
-    HusAjax::outData($myCategory);
+    HusAjax::outData($myProduct);
   }
 }
