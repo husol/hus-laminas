@@ -92,6 +92,8 @@ class ProductController extends HusController
       'conditions' => ['status' => 1]
     ];
 
+    $keyword = str_replace("+", " ", $keyword);
+
     if (!empty($keyword)) {
       $params['conditions']['flexible'] = [
         ['like' => ['name', "%$keyword%"]]
