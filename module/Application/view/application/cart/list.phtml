@@ -19,7 +19,7 @@
     <td class="align-middle border-gray-300 py-3"><a href="/products/<?=$product->id?>"><img class="img-fluid flex-shrink-0" src="<?=$product->image?>" alt="<?=$product->name?>" style="min-width: 50px" width="50"></a></td>
     <td class="align-middle border-gray-300 py-3"><a href="/products/<?=$product->id?>"><?=$product->name?></a></td>
     <td class="align-middle border-gray-300 py-3">
-      <input class="form-control" type="number" name="cartProducts[][quantity]" value="<?=$product->quantity?>" onchange="updateAmount(<?=$product->id?>);">
+      <input class="form-control" type="number" name="cartProducts[][quantity]" min="1" value="<?=$product->quantity?>" onchange="updateAmount(<?=$product->id?>);">
       <input type="hidden" name="cartProducts[][id]" value="<?=$product->id?>">
     </td>
     <td class="align-middle border-gray-300 py-3"><?=formatNumber($product->price)?> VND</td>

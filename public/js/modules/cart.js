@@ -3,6 +3,22 @@ $(document).ready(function () {
 
   $('#btnUpdateCart').on('click', function () {
     var cartProducts = fetchForm($('#formListCart'));
+    var hasError = false;
+
+    // Validate quantity
+    $.each(cartProducts.cartProducts, function(index, product) {
+      if (product.quantity <= 0) {
+        hasError = true
+        showErrorBubble("#btnUpdateCart", "Vui lòng nhập số lượng sản phẩm lớn hơn 0");
+
+        return false;
+      }
+    });
+
+    if (hasError) {
+      return false;
+    }
+
     var cart = cartProducts.cartProducts;
 
     localStorage.setItem('cart', JSON.stringify(cart));
