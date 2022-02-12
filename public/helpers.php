@@ -343,12 +343,11 @@ function convertToMySqlDate($date)
   if (empty($date)) {
     return null;
   }
-  $temp = strpos($date, '/') === false ?
-    explode('-', $date) :
-    explode('/', $date);
+
+  $temp = str_contains($date, '/') ? explode('/', $date) : explode('-', $date);
 
   if (count($temp) == 3) {
-    $months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     $month = is_numeric($temp[1]) ? $temp[1] : array_search($temp[1], $months) + 1;
     $day = $temp[0];
     $year = $temp[2];
@@ -366,9 +365,9 @@ function convertToMySqlDate($date)
     }
 
     return "{$year}-{$month}-{$day}";
-  } else {
-    return '0-1-1';
   }
+
+  return false;
 }
 
 function convertToDateDisplay($dateStr, $detail = false, $timezone = [])
