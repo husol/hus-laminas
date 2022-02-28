@@ -120,7 +120,9 @@ class HusDao extends Dao
                 $sql->where("({$condition[$operator]})");
                 break;
               default:
-                $this->__logs("Hus_ModelMysql_{$this->table}.find", "Type of condition is not supported.");
+                $message = sprintf("Type of condition is not supported. (URI: %s)", $_SERVER['REQUEST_URI']);
+                $this->__logs("Hus_ModelMysql_{$this->table}.find", $message);
+
                 return false;
             }
           }
@@ -176,7 +178,9 @@ class HusDao extends Dao
 
       return Json::decode(Json::encode($result));
     } catch (\Exception $e) {
-      $this->__logs("Hus_ModelMysql_{$this->table}.find", $e->getMessage());
+      $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
+      $this->__logs("Hus_ModelMysql_{$this->table}.find", $message);
+
       return false;
     }
   }
@@ -213,7 +217,9 @@ class HusDao extends Dao
 
       return $this->query($sql)->fetch();
     } catch (\Exception $e) {
-      $this->__logs("Hus_ModelMysql_{$this->table}.save", $e->getMessage());
+      $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
+      $this->__logs("Hus_ModelMysql_{$this->table}.save", $message);
+
       return false;
     }
   }
@@ -246,7 +252,9 @@ class HusDao extends Dao
 
       return true;
     } catch (\Exception $e) {
-      $this->__logs("Hus_ModelMysql_{$this->table}.remove", $e->getMessage());
+      $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
+      $this->__logs("Hus_ModelMysql_{$this->table}.remove", $message);
+
       return false;
     }
   }
