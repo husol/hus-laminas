@@ -18,6 +18,7 @@ return [
   'tooltip_detail'                                => 'Chi tiết',
 
   /**Buttons*/
+  'btn_confirm'                                   => 'Xác nhận',
   'btn_submit'                                    => 'Gửi',
   'btn_save'                                      => 'Lưu',
   'btn_cancel'                                    => 'Hủy',
@@ -32,6 +33,7 @@ return [
   'btn_add_photo'                                 => 'Thêm ảnh',
 
   /**Titles*/
+  'title_confirmation'                            => 'Xác nhận',
   'title_add'                                     => 'Thêm',
   'title_edit'                                    => 'Sửa thông tin',
   'title_update'                                  => 'Cập nhật',
@@ -45,6 +47,7 @@ return [
 
   /**Messages*/
   'msg_invalid'                                   => 'Sai %s',
+  'msg_confirmation'                              => 'Bạn có chắc chắn muốn tiếp tục hành động này?',
 
   /**Other*/
   'lang_login'                                    => 'Đăng nhập',

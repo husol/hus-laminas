@@ -18,6 +18,7 @@ return [
   'tooltip_detail'                                => 'Detail',
 
   /**Buttons*/
+  'btn_confirm'                                   => 'Confirm',
   'btn_submit'                                    => 'Submit',
   'btn_save'                                      => 'Save',
   'btn_cancel'                                    => 'Cancel',
@@ -32,6 +33,7 @@ return [
   'btn_add_photo'                                 => 'Add photo',
 
   /**Titles*/
+  'title_confirmation'                            => 'Confirmation',
   'title_add'                                     => 'Add',
   'title_edit'                                    => 'Edit',
   'title_update'                                  => 'Update',
@@ -45,6 +47,7 @@ return [
 
   /**Messages*/
   'msg_invalid'                                   => 'Invalid %s',
+  'msg_confirmation'                              => 'Are you sure to continue this action?',
 
   /**Other*/
   'lang_login'                                    => 'Login',

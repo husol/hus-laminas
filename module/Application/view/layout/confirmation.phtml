@@ -1,0 +1,14 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4><?=$this->layout()->translator->getLang('title_confirmation')?></h4>
+      <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <?= $this->message ?? $this->layout()->translator->getLang('msg_confirmation') ?>
+    </div>
+    <div class="modal-footer justify-content-center">
+      <button id="btnConfirm" class="btn btn-indigo"><?=$this->layout()->translator->getLang('btn_confirm')?></button>
+    </div>
+  </div>
+</div>
