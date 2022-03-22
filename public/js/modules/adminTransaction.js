@@ -37,8 +37,8 @@ function getTransactionsCallback(result) {
   if (result !== false) {
     $('#btnSearch').prop("disabled", false);
 
-    $('tr.transaction').on('click', function () {
-      var id = $(this).data('id');
+    $('tr.transaction > td:not(:last-child)').on('click', function () {
+      var id = $(this).parent().data('id');
 
       callAjax('admin/transactions', 'viewTransaction', {recordID: id}, viewTransactionCallback);
     });
