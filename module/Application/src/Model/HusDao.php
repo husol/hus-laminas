@@ -2,9 +2,11 @@
 
 namespace Application\Model;
 
-use Core\Dao\Dao;
 use Laminas\Db\Sql\Expression;
 use Laminas\Json\Json;
+use Core\Dao\Dao;
+use Core\Hus\HusLogger;
+use Core\Hus\HusSentry;
 
 class HusDao extends Dao
 {
@@ -25,6 +27,7 @@ class HusDao extends Dao
     }
 
     $sqlStr = $this->sql->getSqlStringForSqlObject($update);
+
     return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
   }
 
@@ -38,6 +41,7 @@ class HusDao extends Dao
     $delete->where($where);
 
     $sqlStr = $this->sql->getSqlStringForSqlObject($delete);
+
     return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
   }
 
@@ -183,9 +187,10 @@ class HusDao extends Dao
       }
 
       return Json::decode(Json::encode($result));
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
       $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
-      $this->__logs("Hus_ModelMysql_{$this->table}.find", $message);
+      HusLogger::debug($message, "Hus_ModelMysql_{$this->table}", "Find");
+      HusSentry::logError($e);
 
       return false;
     }
@@ -222,12 +227,14 @@ class HusDao extends Dao
       $sql->where(['id' => $id]);
 
       return $this->query($sql)->fetch();
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
       if ($this->activeTrans > 0) {
         $this->rollback();
       }
+
       $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
-      $this->__logs("Hus_ModelMysql_{$this->table}.save", $message);
+      HusLogger::debug($message, "Hus_ModelMysql_{$this->table}", "Save");
+      HusSentry::logError($e);
 
       return false;
     }
@@ -260,9 +267,14 @@ class HusDao extends Dao
       }
 
       return true;
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
+      if ($this->activeTrans > 0) {
+        $this->rollback();
+      }
+
       $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
-      $this->__logs("Hus_ModelMysql_{$this->table}.remove", $message);
+      HusLogger::debug($message, "Hus_ModelMysql_{$this->table}", "Remove");
+      HusSentry::logError($e);
 
       return false;
     }

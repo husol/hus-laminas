@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Laminas\Config\Factory;
 use Laminas\Mvc\Application;
 use Laminas\Stdlib\ArrayUtils;
 
@@ -40,6 +41,18 @@ if (! class_exists(Application::class)) {
         . "- Type `vagrant ssh -c 'composer install'` if you are using Vagrant.\n"
         . "- Type `docker-compose run lamians composer install` if you are using Docker.\n"
     );
+}
+
+// Setup for Sentry
+$config = Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+if (!empty($config['SENTRY_DSN']) && in_array($config['STAGE'], ['DEV', 'STG', 'PROD'])) {
+  $version = Factory::fromFile(ROOT_DIR . '/module/Application/config/version.php');
+  \Sentry\init([
+    'dsn' => $config['SENTRY_DSN'],
+    'environment' => $config['STAGE'],
+    'release' => $version['APP_VERSION'],
+    'attach_stacktrace' => true,
+  ]);
 }
 
 // Retrieve configuration

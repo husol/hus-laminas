@@ -6,6 +6,8 @@ use Laminas\Db\Sql\Sql;
 use Laminas\Db\Adapter\Driver\ResultInterface;
 use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Json\Json;
+use Core\Hus\HusLogger;
+use Core\Hus\HusSentry;
 
 abstract class Dao
 {
@@ -122,21 +124,30 @@ abstract class Dao
     return $this;
   }
 
-  public function sqlDelete($table, $where = [])
+  public function fetch()
   {
-    if (!$table || !is_array($where) || empty($where)) {
-      return false;
-    }
     try {
-      $delete = $this->sql->delete($table);
-      if (is_array($where) && !empty($where)) {
-        $delete->where($where);
+      if ($this->execute instanceof ResultInterface && $this->execute->isQueryResult()) {
+        $resultSet = new ResultSet(ResultSet::TYPE_ARRAYOBJECT);
+        return $resultSet->initialize($this->execute)->current();
       }
+    } catch (\Throwable $e) {
+      HusSentry::logError($e);
+    }
 
-      $sqlStr = $this->sql->getSqlStringForSqlObject($delete);
-      return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
-    } catch (\Exception $e) {
-      $this->__logs("Hus_ModelMysql_{$table}.sqlDelete", $e->getMessage());
+    return false;
+  }
+
+  public function fetchAll()
+  {
+    try {
+      if ($this->execute instanceof ResultInterface && $this->execute->isQueryResult()) {
+        $resultSet = new ResultSet(ResultSet::TYPE_ARRAYOBJECT);
+
+        return $resultSet->initialize($this->execute)->buffer();
+      }
+    } catch (\Throwable $e) {
+      HusSentry::logError($e);
     }
 
     return false;
@@ -155,8 +166,9 @@ abstract class Dao
       $insert->values($data);
       $sqlStr = $this->sql->getSqlStringForSqlObject($insert);
       return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
-    } catch (\Exception $e) {
-      $this->__logs("Hus_ModelMysql_{$table}.sqlInsert", $e->getMessage());
+    } catch (\Throwable $e) {
+      HusLogger::debug($e->getMessage(), "Hus_ModelMysql_{$table}", "sqlInsert");
+      HusSentry::logError($e);
     }
 
     return false;
@@ -184,40 +196,34 @@ abstract class Dao
 
       $sqlStr = $this->sql->getSqlStringForSqlObject($update);
       return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
-    } catch (\Exception $e) {
-      $this->__logs("Hus_ModelMysql_{$table}.sqlUpdate", $e->getMessage());
+    } catch (\Throwable $e) {
+      HusLogger::debug($e->getMessage(), "Hus_ModelMysql_{$table}", "sqlUpdate");
+      HusSentry::logError($e);
     }
 
     return false;
   }
 
-  public function fetch()
+  public function sqlDelete($table, $where = [])
   {
+    if (!$table || !is_array($where) || empty($where)) {
+      return false;
+    }
     try {
-      if ($this->execute instanceof ResultInterface && $this->execute->isQueryResult()) {
-        $resultSet = new ResultSet(ResultSet::TYPE_ARRAYOBJECT);
-        return $resultSet->initialize($this->execute)->current();
+      $delete = $this->sql->delete($table);
+      if (is_array($where) && !empty($where)) {
+        $delete->where($where);
       }
-    } catch (\Exception $e) {
+
+      $sqlStr = $this->sql->getSqlStringForSqlObject($delete);
+      return $this->conn->query($sqlStr, $this->conn::QUERY_MODE_EXECUTE);
+    } catch (\Throwable $e) {
+      HusLogger::debug($e->getMessage(), "Hus_ModelMysql_{$table}", "sqlDelete");
+      HusSentry::logError($e);
     }
 
     return false;
   }
-
-  public function fetchAll()
-  {
-    try {
-      if ($this->execute instanceof ResultInterface && $this->execute->isQueryResult()) {
-        $resultSet = new ResultSet(ResultSet::TYPE_ARRAYOBJECT);
-
-        return $resultSet->initialize($this->execute)->buffer();
-      }
-    } catch (\Exception $e) {
-    }
-
-    return false;
-  }
-
   /**
    * @param $strName
    * @param $logs

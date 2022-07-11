@@ -24,9 +24,10 @@
         "laminas/laminas-paginator": "^2.8",
         "laminas/laminas-log": "^2.12",
         "tasmaniski/laminas-current-route": "^2.0",
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^7.4",
         "mpdf/mpdf": "^8.0",
-        "aws/aws-sdk-php": "^3.142"
+        "aws/aws-sdk-php": "^3.142",
+        "sentry/sdk": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -133,5 +134,10 @@
         ],
         "serve": "php -S 0.0.0.0:8080 -t public",
         "test": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "laminas/laminas-component-installer": true
+        }
     }
 }
