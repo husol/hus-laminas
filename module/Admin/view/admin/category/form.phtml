@@ -29,8 +29,8 @@
           <div class="form-group label-float col-md-3">
             <label for="status">Status</label>
             <select class="form-control" id="status" name="status">
-              <option value="INACTIVE"<?=isset($this->myCategory) && $this->myCategory->status == 'INACTIVE' ? ' selected' : ''?>>INACTIVE</option>
-              <option value="ACTIVE"<?=isset($this->myCategory) && $this->myCategory->status == 'ACTIVE' ? ' selected' : ''?>>ACTIVE</option>
+              <option value="0"<?=isset($this->myCategory) && $this->myCategory->status == 0 ? ' selected' : ''?>>INACTIVE</option>
+              <option value="1"<?=isset($this->myCategory) && $this->myCategory->status == 1 ? ' selected' : ''?>>ACTIVE</option>
             </select>
           </div>
         </div>

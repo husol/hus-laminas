@@ -4,6 +4,10 @@
  *
  */
 
+const ROLE_CLIENT = 0;
+const ROLE_STAFF = 1;
+const ROLE_ADMIN = 2;
+
 return [
   'resources' => [
     'Admin' => [
@@ -17,7 +21,7 @@ return [
   ],
 
   'rules' => [
-    'CLIENT' => [
+    ROLE_CLIENT => [
       'Application\Controller\IndexController' => [
         'allow' => ['index'],
         'deny' => null
@@ -25,13 +29,12 @@ return [
     ],
 
     //For Admin
-    'ADMIN' => null
+    ROLE_ADMIN => null
   ],
 
   'roles' => [
-    'CLIENT' => null,
-    'STAFF' => ['CLIENT'],
-    'SUPER_STAFF' => ['STAFF'],
-    'ADMIN' => null,
+    ROLE_CLIENT => null,
+    ROLE_STAFF => [ROLE_CLIENT],
+    ROLE_ADMIN => null,
   ],
 ];

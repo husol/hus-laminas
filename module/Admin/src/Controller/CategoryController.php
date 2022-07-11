@@ -11,8 +11,10 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Application\Model\Category;
+use Application\Model\HusDao;
+use Application\Model\User;
+use Core\Dao\Dao;
 use Core\Hus\HusAjax;
-use Core\Hus\HusHelper;
 use Core\Paginator\Adapter\Offset;
 use Laminas\Paginator\Paginator;
 use Laminas\Validator\NotEmpty;
@@ -97,15 +99,15 @@ class CategoryController extends HusController
 
   public function formAction()
   {
-    $idRecord = $this->params()->fromPost('idRecord', 0);
+    $recordID = $this->params()->fromPost('idRecord', 0);
 
     $view = new ViewModel();
 
     $parentCategories = $this->dao->find();
     $view->setVariable('parentCategories', $parentCategories);
 
-    if ($idRecord > 0) {
-      $myCategory = $this->dao->find([], intval($idRecord));
+    if ($recordID > 0) {
+      $myCategory = $this->dao->find([], intval($recordID));
       $view->setVariable('myCategory', $myCategory);
     }
 
@@ -119,7 +121,7 @@ class CategoryController extends HusController
 
   public function updateAction()
   {
-    $idRecord = $this->params()->fromPost('idRecord', 0);
+    $recordID = $this->params()->fromPost('idRecord', 0);
     $parentCategory = $this->params()->fromPost('parentCategory', 0);
     $name = $this->params()->fromPost('name', '');
     $status = $this->params()->fromPost('status', '');
@@ -141,13 +143,45 @@ class CategoryController extends HusController
     }
     $data['status'] = $status;
 
-    if ($idRecord > 0) {
+    if ($recordID > 0) {
       $data['updated_by'] = $this->getLoggedUser('id');
     } else {
       $data['created_by'] = $this->getLoggedUser('id');
     }
 
-    $result = $this->dao->save($data, intval($idRecord));
+    // Example for using DB transaction commit / rollback
+    /*
+    $trans = $this->dao->beginTransaction();
+
+    try {
+      $daoUser = User::initDao($trans);
+      $result1 = $daoUser->save([
+        "email" => "tester@husol.org",
+        "full_name" => "Tester",
+        "password" => "12345678",
+        "role" => ROLE_STAFF,
+        "created_by" => $this->getLoggedUser('id')
+      ]);
+
+      if ($result1 === false) {
+        HusAjax::setMessage('Error create user.');
+        HusAjax::outData(false);
+      }
+
+      $data["updated_b"] = $result1->id;
+      $result = $this->dao->save($data, intval($recordID));
+      if ($result === false) {
+        HusAjax::setMessage('Error saving category.');
+        HusAjax::outData(false);
+      }
+
+      $this->dao->commit();
+    } catch (\Exception $e) {
+      $this->dao->rollback();
+    }
+    */
+
+    $result = $this->dao->save($data, intval($recordID));
 
     HusAjax::outData($result);
   }

@@ -50,7 +50,7 @@ abstract class Dao
    * @return Dao
    * @throws \Exception
    */
-  public function setConnection($db = null)
+  public function createConnection($db = null)
   {
     $validator = new \Laminas\Validator\File\Exists(ROOT_DIR . '/config');
     if (!$validator->isValid(ROOT_DIR . '/config/database.config.php')) {
@@ -68,6 +68,13 @@ abstract class Dao
     return $this;
   }
 
+  public function setConnection($conn)
+  {
+    $this->conn = $conn;
+    $this->sql = new Sql($this->conn);
+
+    return $this;
+  }
 
   /**
    * @return Hus_Connection
@@ -85,6 +92,7 @@ abstract class Dao
   public function setLang($lang)
   {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -201,6 +209,7 @@ abstract class Dao
     try {
       if ($this->execute instanceof ResultInterface && $this->execute->isQueryResult()) {
         $resultSet = new ResultSet(ResultSet::TYPE_ARRAYOBJECT);
+
         return $resultSet->initialize($this->execute)->buffer();
       }
     } catch (\Exception $e) {

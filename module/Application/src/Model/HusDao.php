@@ -10,6 +10,7 @@ class HusDao extends Dao
 {
   protected $table = null;
   protected $connTrans;
+  private $activeTrans = 0;
 
   public function update($table, $data = [], $where = [])
   {
@@ -44,16 +45,21 @@ class HusDao extends Dao
   {
     $this->connTrans = $this->conn->getDriver()->getConnection();
     $this->connTrans->beginTransaction();
+    $this->activeTrans++;
+
+    return $this->getConnection();
   }
 
   public function commit()
   {
     $this->connTrans->commit();
+    $this->activeTrans--;
   }
 
   public function rollback()
   {
     $this->connTrans->rollback();
+    $this->activeTrans--;
   }
   /* START STANDARD FUNCTIONS: find, save, remove */
 
@@ -190,7 +196,7 @@ class HusDao extends Dao
    * @param int $id
    * @return array|bool|int|null
    */
-  public function save($data, $id = 0)
+  public function save($data, int $id = 0)
   {
     try {
       $insertBatch = $id == -1;
@@ -217,6 +223,9 @@ class HusDao extends Dao
 
       return $this->query($sql)->fetch();
     } catch (\Exception $e) {
+      if ($this->activeTrans > 0) {
+        $this->rollback();
+      }
       $message = sprintf("%s (URI: %s)", $e->getMessage(), $_SERVER['REQUEST_URI']);
       $this->__logs("Hus_ModelMysql_{$this->table}.save", $message);
 

@@ -17,18 +17,24 @@ class User extends HusDao
   public function __construct()
   {
     $this->table = 'users';
+
     return $this;
   }
 
-  public static function initDao()
+  public static function initDao($conn = null)
   {
     if (null === self::$instance) {
       $thisClass = __CLASS__;
       self::$instance = new $thisClass();
     }
+
     $dao = self::$instance;
 
-    return $dao->setConnection('main');
+    if ($conn !== null) {
+      return $dao->setConnection($conn);
+    }
+
+    return $dao->createConnection('main');;
   }
 
   /* CUSTOM DAO FUNCTIONS */
