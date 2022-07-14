@@ -69,12 +69,14 @@ class HusDao extends Dao
 
   public function find($params = [], $id = 0)
   {
-    $husConfig = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $cfg = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/common.php');
 
     try {
       $sql = $this->sql->select();
       $sql->from($this->table);
-      if (!in_array($this->table, $husConfig['HARD_DELETED_TABLES'])) {
+      if (!in_array($this->table, $cfg['HARD_DELETED_TABLES']) &&
+        !(isset($params['isFetchAll']) && intval($params['isFetchAll']))
+      ) {
         $sql->where->isNull('deleted_at');
       }
 
@@ -247,14 +249,14 @@ class HusDao extends Dao
    */
   public function remove($where, $flag = 0)
   {
-    $husConfig = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $cfg = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/common.php');
 
     try {
       if (is_object($where)) {
         $where = (array)$where;
       }
 
-      if (in_array($this->table, $husConfig['HARD_DELETED_TABLES']) || $flag == -1) {
+      if (in_array($this->table, $cfg['HARD_DELETED_TABLES']) || $flag == -1) {
         $this->delete($this->table, $where);
       } else {
         $data = ['deleted_at' => date('Y-m-d H:i:s')];
