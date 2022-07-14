@@ -46,11 +46,11 @@ if (! class_exists(Application::class)) {
 // Setup for Sentry
 $config = Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
 if (!empty($config['SENTRY_DSN']) && in_array($config['STAGE'], ['DEV', 'STG', 'PROD'])) {
-  $version = Factory::fromFile(ROOT_DIR . '/module/Application/config/version.php');
+  $cfg = Factory::fromFile(ROOT_DIR . '/module/Application/config/common.php');
   \Sentry\init([
     'dsn' => $config['SENTRY_DSN'],
     'environment' => $config['STAGE'],
-    'release' => $version['APP_VERSION'],
+    'release' => $cfg['APP_VERSION'],
     'attach_stacktrace' => true,
   ]);
 }

@@ -13,5 +13,7 @@
 
 return [
   'APP_VERSION' => '1.0.1',
-  'DATE_VERSION' => '2021091315'
+  'DATE_VERSION' => '2021091315',
+
+  'HARD_DELETED_TABLES' => ['comments', 'orders'],
 ];

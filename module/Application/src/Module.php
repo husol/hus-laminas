@@ -10,11 +10,12 @@ declare(strict_types=1);
 
 namespace Application;
 
+use Laminas\Config\Factory;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Session\SessionManager;
 use Core\Authentication\Auth;
 use Core\Hus\HusTranslator;
 use Core\Hus\HusAjax;
-use Laminas\Mvc\MvcEvent;
-use Laminas\Session\SessionManager;
 
 class Module
 {
@@ -54,12 +55,12 @@ class Module
     $routeParams = $routeMatch->getParams();
 
     $viewModel = $app->getMvcEvent()->getViewModel();
-    $versionHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/version.php');
-    $viewModel->appVersion = $versionHus['APP_VERSION'];
-    $viewModel->dateVersion = $versionHus['DATE_VERSION'];
-    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
-    $viewModel->isLive = $configHus['IS_LIVE'];
-    $viewModel->captchaSiteKey = $configHus['CAPTCHA']['siteKey'];
+    $cfg = Factory::fromFile(ROOT_DIR . '/module/Application/config/common.php');
+    $viewModel->appVersion = $cfg['APP_VERSION'];
+    $viewModel->dateVersion = $cfg['DATE_VERSION'];
+    $config = Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+    $viewModel->isLive = $config['IS_LIVE'];
+    $viewModel->captchaSiteKey = $config['CAPTCHA']['siteKey'];
 
     $moduleName = substr($routeParams['controller'], 0, strpos($routeParams['controller'], '\\'));
 
