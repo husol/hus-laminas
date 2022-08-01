@@ -13,6 +13,7 @@ use Application\Model\User;
 use Core\Hus\HusAjax;
 use Core\Hus\HusEmail;
 use Core\Hus\HusHelper;
+use Core\Hus\HusRedis;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;

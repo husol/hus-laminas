@@ -27,7 +27,9 @@
         "guzzlehttp/guzzle": "^7.4",
         "mpdf/mpdf": "^8.0",
         "aws/aws-sdk-php": "^3.142",
-        "sentry/sdk": "^3.2"
+        "sentry/sdk": "^3.2",
+        "laminas/laminas-cache-storage-adapter-redis": "^2.2",
+        "laminas/laminas-cache": "^3.1"
     },
     "autoload": {
         "psr-4": {

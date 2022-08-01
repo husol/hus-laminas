@@ -12,6 +12,7 @@
  * This should be an array of module namespaces used in the application.
  */
 return [
+    'Laminas\Cache',
     'Laminas\Log',
     'Laminas\Filter',
     'Laminas\Paginator',
@@ -22,6 +23,7 @@ return [
     'Laminas\Router',
     'Laminas\Validator',
     'CurrentRoute',
+    'Laminas\Cache\Storage\Adapter\Redis',
     'Core',
     'Admin',
     'Application',
