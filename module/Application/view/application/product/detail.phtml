@@ -1,8 +1,8 @@
 <?= $this->headMeta()
-  ->appendName('og:title', $this->myProduct->name)
-  ->appendName('og:image', "https://xsmartphone.husol.xyz{$this->myProduct->image}")
-  ->appendName('og:url', "https://xsmartphone.husol.xyz/products/{$this->myProduct->id}")
-  ->appendName('og:description', $this->myProduct->short_description)
+  ->appendProperty('og:title', $this->myProduct->name)
+  ->appendProperty('og:image', "https://xsmartphone.husol.xyz{$this->myProduct->image}")
+  ->appendProperty('og:url', "https://xsmartphone.husol.xyz/products/{$this->myProduct->id}")
+  ->appendProperty('og:description', $this->myProduct->short_description)
 ?>
 
 <!-- HEADING BREADCRUMB-->
