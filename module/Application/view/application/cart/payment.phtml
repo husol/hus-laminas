@@ -1,0 +1,51 @@
+<h2 class="lined lined-center text-uppercase mb-4">Vui lòng chọn hình thức thanh toán</h2>
+<div class="space"></div>
+<hr>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="row">
+  <div class="col-md-6 mb-4 text-center">
+    <form action="<?= $this->paypal->url ?>" method="post">
+
+      <!-- Identify your business so that you can collect the payments. -->
+      <input type="hidden" name="business" value="<?= $this->paypal->id ?>">
+
+      <!-- Specify a Buy Now button. -->
+      <input type="hidden" name="cmd" value="_cart">
+      <input type="hidden" name="upload" value="1">
+
+      <!-- Specify details about the item that buyers will purchase. -->
+      <?php foreach ($this->items as $k => $item): ?>
+        <input type="hidden" name="item_number_<?= $k + 1 ?>" value="<?= $item->product_id ?>">
+        <input type="hidden" name="item_name_<?= $k + 1 ?>" value="<?= $item->productName ?>">
+        <input type="hidden" name="amount_<?= $k + 1 ?>" value="<?= $item->amount ?>">
+      <?php endforeach; ?>
+      <input type="hidden" name="currency_code" value="<?= $this->paypal->currency ?>">
+
+      <!-- Specify URLs -->
+      <input type="hidden" name="return" value="<?= $this->paypal->returnURL ?>">
+      <input type="hidden" name="cancel_return" value="<?= $this->paypal->cancelURL ?>">
+
+      <!-- Display the payment button. -->
+      <button type="submit" class="btn btn-outline-primary"><i class="fab fa-paypal me-2"></i>Thanh toán quốc tế với<br>Paypal
+      </button>
+    </form>
+  </div>
+
+  <div class="col-md-6 mb-4 text-center">
+    <button type="submit" class="btn btn-outline-primary"><i class="fas fa-dollar-sign me-2"></i>Thanh toán nội địa
+      với<br>OnePay
+    </button>
+  </div>
+</div>
+
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>

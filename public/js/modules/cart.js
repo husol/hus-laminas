@@ -52,12 +52,26 @@ function confirmCartCallback(result) {
 function saveCartCallback(result) {
   if (result !== false) {
     hideModal("commonDialog");
-    showSuccessBubble('Xác nhận đơn hàng thành công. Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất.');
+    showSuccessBubble('Xác nhận đơn hàng thành công.');
     localStorage.removeItem('cart');
 
     setTimeout(function () {
-      window.location.reload(true);
+      window.location.href = root_url + "cart/"+ result.id +"/payment";
     }, 3000);
+
+    return false;
+  }
+}
+
+function paymentCartCallback(result) {
+  if (result !== false) {
+    showModal('commonDialog');
+
+    $('#btnSave').on('click', function () {
+      callAjax('cart', 'save', {formData: fetchForm($('#transactionForm'))}, saveCartCallback);
+
+      return false;
+    });
 
     return false;
   }

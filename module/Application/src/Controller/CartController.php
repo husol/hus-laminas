@@ -14,6 +14,7 @@ use Application\Model\Order;
 use Application\Model\Product;
 use Application\Model\Transaction;
 use Core\Hus\HusAjax;
+use Laminas\Config\Factory;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
@@ -168,8 +169,51 @@ class CartController extends HusController
       $daoOrder->save($data);
     }
 
-    $this->dao->save(['amount' => $totalAmount], $myTransaction->id);
+    $this->dao->save(['amount' => $totalAmount], intval($myTransaction->id));
 
-    HusAjax::outData();
+    HusAjax::outData($myTransaction);
+  }
+
+  public function paymentAction()
+  {
+    $id = $this->params('id');
+
+    $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
+
+    $paypal = new \stdClass();
+    $paypal->url = $configHus['PAYPAL']['url'];
+    $paypal->id = $configHus['PAYPAL']['id'];
+    $paypal->currency = $configHus['PAYPAL']['currency'];
+    $paypal->returnURL = $this->getBaseUrl() . '/cart/payment/success';
+    $paypal->cancelURL = $this->getBaseUrl() . '/cart/payment/cancel';
+
+    $daoOrder = Order::initDao();
+    $orders = $daoOrder->find(['conditions' => ['transaction_id' => $id]]);
+
+    $items = [];
+
+    $daoProduct = Product::initDao();
+
+    foreach ($orders as $order) {
+      $myProduct = $daoProduct->find([], $order->product_id);
+      $order->productName = $myProduct->name;
+
+      $items[] = $order;
+    }
+
+    return new ViewModel([
+      "paypal" => $paypal,
+      "items" => $items
+    ]);
+  }
+
+  public function successAction()
+  {
+    return new ViewModel();
+  }
+
+  public function cancelAction()
+  {
+    return new ViewModel();
   }
 }

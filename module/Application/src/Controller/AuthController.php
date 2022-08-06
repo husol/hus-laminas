@@ -98,7 +98,7 @@ class AuthController extends AbstractActionController
       HusAjax::outData(false);
     }
 
-    $myUser= $this->dao->save(['last_login' => date('Y-m-d H:i:s')], $myUser->id);
+    $myUser= $this->dao->save(['last_login' => date('Y-m-d H:i:s')], intval($myUser->id));
     unset($myUser->password);
 
     //Store loggedUser session

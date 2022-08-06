@@ -13,82 +13,82 @@ return [
   'router' => [
     'routes' => [
       'forbidden' => [
-        'type'    => Segment::class,
+        'type' => Segment::class,
         'options' => [
-          'route'    => '/error/403',
+          'route' => '/error/403',
           'defaults' => [
             'controller' => Controller\AuthController::class,
-            'action'     => 'error403',
+            'action' => 'error403',
           ],
         ],
       ],
       'register' => [
-        'type'    => Segment::class,
+        'type' => Segment::class,
         'options' => [
-          'route'    => '/register',
+          'route' => '/register',
           'defaults' => [
             'controller' => Controller\AuthController::class,
-            'action'     => 'registerForm',
+            'action' => 'registerForm',
           ],
         ],
       ],
       'login' => [
-        'type'    => Segment::class,
+        'type' => Segment::class,
         'options' => [
-          'route'    => '/sign-in',
+          'route' => '/sign-in',
           'defaults' => [
             'controller' => Controller\AuthController::class,
-            'action'     => 'index',
+            'action' => 'index',
           ],
         ],
       ],
       'logout' => [
-        'type'    => Segment::class,
+        'type' => Segment::class,
         'options' => [
-          'route'    => '/sign-out',
+          'route' => '/sign-out',
           'defaults' => [
             'controller' => Controller\AuthController::class,
-            'action'     => 'logout',
+            'action' => 'logout',
           ],
         ],
       ],
       'auth' => [
-        'type'    => Segment::class,
+        'type' => Segment::class,
         'options' => [
-          'route'    => '/auth/:action',
+          'route' => '/auth/:action',
           'defaults' => [
             'controller' => Controller\AuthController::class,
-            'action'     => 'index',
+            'action' => 'index',
           ],
         ],
       ],
       'home' => [
         'type' => Segment::class,
         'options' => [
-          'route'    => '/[/:action]',
+          'route' => '/[/:action]',
           'defaults' => [
             'controller' => Controller\IndexController::class,
-            'action'     => 'index',
+            'action' => 'index',
           ],
         ],
       ],
       'products' => [
         'type' => Segment::class,
         'options' => [
-          'route'    => '/products[/:action]',
+          'route' => '/products[/:action]',
           'defaults' => [
             'controller' => Controller\ProductController::class,
-            'action'     => 'index',
+            'action' => 'index',
           ],
         ],
       ],
       'product-detail' => [
         'type' => Segment::class,
         'options' => [
-          'route'    => '/products/:id',
+          'route' => '/products/:id',
           'defaults' => [
             'controller' => Controller\ProductController::class,
-            'action'     => 'detail',
+            'action' => 'detail',
           ],
           'constraints' => [
             'id' => '\d+',
@@ -98,30 +98,63 @@ return [
       'cart' => [
         'type' => Segment::class,
         'options' => [
-          'route'    => '/cart[/:action]',
+          'route' => '/cart[/:action]',
           'defaults' => [
             'controller' => Controller\CartController::class,
-            'action'     => 'index',
+            'action' => 'index',
+          ],
+        ],
+      ],
+      'cart-payment' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/cart/:id/payment',
+          'defaults' => [
+            'controller' => Controller\CartController::class,
+            'action' => 'payment',
+          ],
+          'constraints' => [
+            'id' => '\d+',
+          ],
+        ],
+      ],
+      'cart-payment-success' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/cart/payment/success',
+          'defaults' => [
+            'controller' => Controller\CartController::class,
+            'action' => 'success',
+          ],
+        ],
+      ],
+      'cart-payment-cancel' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/cart/payment/cancel',
+          'defaults' => [
+            'controller' => Controller\CartController::class,
+            'action' => 'cancel',
           ],
         ],
       ],
       'about' => [
         'type' => Segment::class,
         'options' => [
-          'route'    => '/about[/:action]',
+          'route' => '/about[/:action]',
           'defaults' => [
             'controller' => Controller\AboutController::class,
-            'action'     => 'index',
+            'action' => 'index',
           ],
         ],
       ],
       'contact' => [
         'type' => Segment::class,
         'options' => [
-          'route'    => '/contact[/:action]',
+          'route' => '/contact[/:action]',
           'defaults' => [
             'controller' => Controller\ContactController::class,
-            'action'     => 'index',
+            'action' => 'index',
           ],
         ],
       ],

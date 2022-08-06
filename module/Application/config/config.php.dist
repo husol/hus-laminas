@@ -37,6 +37,15 @@ return [
     ]
   ],
 
+  // PayPal configuration
+  'PAYPAL' => [
+    'url' => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+    'id' => 'khoa@husol.org',
+    'sandbox' => true,
+    'notify_uri' => '/paypal/ipn',
+    'currency' => 'USD',
+  ],
+
   'SERVICES' => [
     'HUS_HOST' => 'https://services.husol.xyz/api'
   ],
