@@ -7,6 +7,16 @@
   ->appendProperty('og:description', $this->myProduct->short_description)
 ?>
 
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
 <!-- HEADING BREADCRUMB-->
 <section class="bg-pentagon py-4">
   <div class="container py-3">
@@ -83,6 +93,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <div class="float-right fb-share-button" data-href="/products/<?=$this->myProduct->id?>_<?=codau2khongdau($this->myProduct->name, true)?>" data-layout="button_count"></div>
         </div>
         <!-- PRODUCT INFO-->
         <div id="details">
