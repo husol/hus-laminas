@@ -36,7 +36,6 @@ return [
       'ssl'      => 'tls',
     ]
   ],
-
   // PayPal configuration
   'PAYPAL' => [
     'url' => 'https://www.sandbox.paypal.com/cgi-bin/webscr',

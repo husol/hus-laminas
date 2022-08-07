@@ -38,7 +38,7 @@ return [
         'deny' => null
       ],
       'Application\Controller\CartController' => [
-        'allow' => ['index', 'getListCart', 'confirm', 'save'],
+        'allow' => ['index', 'getListCart', 'confirm', 'save', 'payment', 'success', 'cancel'],
         'deny' => null
       ],
       'Application\Controller\AboutController' => [
