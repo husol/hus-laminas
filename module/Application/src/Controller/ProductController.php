@@ -52,11 +52,12 @@ class ProductController extends HusController
 
   public function detailAction()
   {
-    $id = $this->params('id');
+    $slug = $this->params('slug');
+    list($id, $fname) = explode("_", $slug);
 
     $daoProduct = Product::initDao();
 
-    $myProduct = $daoProduct->find(['conditions' => ['status' => 1]], $id);
+    $myProduct = $daoProduct->find(['conditions' => ['status' => 1]], intval($id));
 
     $params = [
       'limit' => 6,

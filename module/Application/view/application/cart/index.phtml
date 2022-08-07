@@ -48,9 +48,9 @@
             <div class="col-lg-3 col-md-6">
               <!-- Product-->
               <div class="product h-100">
-                <div class="product-image"><a href="/products/<?=$product->id?>"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>"></a></div>
+                <div class="product-image"><a href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>"></a></div>
                 <div class="py-4 px-3 text-center">
-                  <h3 class="h5 text-uppercase mb-3"><a class="reset-link" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+                  <h3 class="h5 text-uppercase mb-3"><a class="reset-link" href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>"><?=$product->name?></a></h3>
                   <p class="mb-0"><?=formatNumber($product->price)?> VND</p>
                 </div>
                 <ul class="list-unstyled p-0 ribbon-holder mb-0"></ul>

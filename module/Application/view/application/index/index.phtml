@@ -46,12 +46,12 @@
               <div class="mb-4 primary-overlay"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>">
                 <div class="overlay-content d-flex flex-column justify-content-center p-4">
                   <ul class="list-inline mb-0 box-image-content text-center">
-                    <li class="list-inline-item"><a class="btn btn-outline-light" href="/products/<?=$product->id?>"> <i class="fas fa-link me-2"></i>Chi tiết</a></li>
+                    <li class="list-inline-item"><a class="btn btn-outline-light" href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>"> <i class="fas fa-link me-2"></i>Chi tiết</a></li>
                   </ul>
                 </div>
               </div>
               <div class="text-center">
-                <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+                <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>"><?=$product->name?></a></h3>
                 <p class="small text-uppercase text-muted">Giá: <?=formatNumber($product->price)?> VND</p>
 
                 <button data-id="<?=$product->id?>" class="btnBuy btn btn-outline-primary">Mua ngay</button>
@@ -81,15 +81,15 @@
             <div class="mb-4 primary-overlay"><img class="img-fluid" src="<?=$product->image?>" alt="<?=$product->name?>">
               <div class="overlay-content d-flex flex-column justify-content-center p-4">
                 <ul class="list-inline mb-0 box-image-content text-center">
-                  <li class="list-inline-item"><a class="btn btn-outline-light" href="/products/<?=$product->id?>"> <i class="fas fa-link me-2"></i>Chi tiết</a></li>
+                  <li class="list-inline-item"><a class="btn btn-outline-light" href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>"> <i class="fas fa-link me-2"></i>Chi tiết</a></li>
                 </ul>
               </div>
             </div>
             <div class="text-center">
-              <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>"><?=$product->name?></a></h3>
+              <h3 class="h4 text-uppercase text-primary"> <a class="text-reset" href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>"><?=$product->name?></a></h3>
               <p class="small text-uppercase text-muted">Giá: <?=formatNumber($product->price)?> VND</p>
 
-              <a class="btn btn-outline-primary" href="/products/<?=$product->id?>">Mua ngay</a>
+              <a class="btn btn-outline-primary" href="/products/<?=$product->id?>_<?=codau2khongdau($product->name, true)?>">Mua ngay</a>
             </div>
           </div>
         </div>

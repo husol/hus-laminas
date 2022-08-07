@@ -85,13 +85,13 @@ return [
       'product-detail' => [
         'type' => Segment::class,
         'options' => [
-          'route' => '/products/:id',
+          'route' => '/products/:slug',
           'defaults' => [
             'controller' => Controller\ProductController::class,
             'action' => 'detail',
           ],
           'constraints' => [
-            'id' => '\d+',
+            'slug' => '\d+_.*',
           ],
         ],
       ],
