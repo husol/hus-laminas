@@ -6,7 +6,7 @@ $(document).ready(function () {
     var hasError = false;
 
     // Validate quantity
-    $.each(cartProducts.cartProducts, function(index, product) {
+    $.each(cartProducts.cartProducts, function (index, product) {
       if (product.quantity <= 0) {
         hasError = true
         showErrorBubble("#btnUpdateCart", "Vui lòng nhập số lượng sản phẩm lớn hơn 0");
@@ -56,7 +56,7 @@ function saveCartCallback(result) {
     localStorage.removeItem('cart');
 
     setTimeout(function () {
-      window.location.href = root_url + "cart/"+ result.id +"/payment";
+      window.location.href = root_url + "cart/payment/" + result.id;
     }, 3000);
 
     return false;
@@ -128,15 +128,15 @@ function removeItemFromCart(id) {
 }
 
 function updateAmount(id) {
-  var quantity = $('#product'+id).find("input:first-child").val();
-  var price = $('#product'+id).data('price');
-  var amount = $('#product'+id).find('td:nth-child(6)').html().replace( /\D/g, '');
-  var totalAmount = $('#product'+id).closest('table').find('tfoot > tr > th:last-child > span').html().replace( /\D/g, '');
+  var quantity = $('#product' + id).find("input:first-child").val();
+  var price = $('#product' + id).data('price');
+  var amount = $('#product' + id).find('td:nth-child(6)').html().replace(/\D/g, '');
+  var totalAmount = $('#product' + id).closest('table').find('tfoot > tr > th:last-child > span').html().replace(/\D/g, '');
 
   totalAmount -= amount;
   amount = quantity * price;
   totalAmount += amount;
 
-  $('#product'+id).find('td:nth-child(6)').html(formatNumber(amount, 0) + ' VND');
-  $('#product'+id).closest('table').find('tfoot > tr > th:last-child > span').html(formatNumber(totalAmount, 0) + ' VND');
+  $('#product' + id).find('td:nth-child(6)').html(formatNumber(amount, 0) + ' VND');
+  $('#product' + id).closest('table').find('tfoot > tr > th:last-child > span').html(formatNumber(totalAmount, 0) + ' VND');
 }

@@ -1,0 +1,32 @@
+<?php if ($this->isErr): ?>
+  <h2 class="lined lined-center text-uppercase text-green mb-4">Giao dịch thành công</h2>
+<?php else: ?>
+  <h2 class="lined lined-center text-uppercase text-red mb-4">Giao dịch không thành công</h2>
+<?php endif; ?>
+<div class="space"></div>
+<hr>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <?php if ($this->isErr): ?>
+      <span>Bạn vừa thanh toán thành công. Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất.</span>
+    <?php elseif (empty($this->message)): ?>
+      <span>Bạn vừa thanh toán không thành công. Vui lòng thanh toán lại.</span>
+    <?php else: ?>
+      <span><?= $this->message ?></span>
+    <?php endif; ?>
+    Trở lại <a href="/">Trang chủ</a>
+  </div>
+</div>
+
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="space"></div>

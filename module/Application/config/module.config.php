@@ -108,7 +108,7 @@ return [
       'cart-payment' => [
         'type' => Segment::class,
         'options' => [
-          'route' => '/cart/:id/payment',
+          'route' => '/cart/payment/:id',
           'defaults' => [
             'controller' => Controller\CartController::class,
             'action' => 'payment',
@@ -118,23 +118,16 @@ return [
           ],
         ],
       ],
-      'cart-payment-success' => [
+      'cart-payment-result' => [
         'type' => Segment::class,
         'options' => [
-          'route' => '/cart/payment/success',
+          'route' => '/cart/payment/:id/:status',
           'defaults' => [
             'controller' => Controller\CartController::class,
-            'action' => 'success',
+            'action' => 'paymentResult',
           ],
-        ],
-      ],
-      'cart-payment-cancel' => [
-        'type' => Segment::class,
-        'options' => [
-          'route' => '/cart/payment/cancel',
-          'defaults' => [
-            'controller' => Controller\CartController::class,
-            'action' => 'cancel',
+          'constraints' => [
+            'id' => '\d+',
           ],
         ],
       ],

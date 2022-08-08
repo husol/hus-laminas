@@ -184,8 +184,8 @@ class CartController extends HusController
     $paypal->url = $configHus['PAYPAL']['url'];
     $paypal->id = $configHus['PAYPAL']['id'];
     $paypal->currency = $configHus['PAYPAL']['currency'];
-    $paypal->returnURL = $this->getBaseUrl() . '/cart/payment/success';
-    $paypal->cancelURL = $this->getBaseUrl() . '/cart/payment/cancel';
+    $paypal->returnURL = $this->getBaseUrl() . "/cart/payment/{$id}/success?type=2";
+    $paypal->cancelURL = $this->getBaseUrl() . "/cart/payment/{$id}/cancel?type=2";
 
     $daoOrder = Order::initDao();
     $orders = $daoOrder->find(['conditions' => ['transaction_id' => $id]]);
@@ -207,13 +207,25 @@ class CartController extends HusController
     ]);
   }
 
-  public function successAction()
+  public function paymentResultAction()
   {
-    return new ViewModel();
-  }
+    $transID = $this->params()->fromRoute('id');
+    $status = $this->params()->fromRoute('status');
+    $paymentType = $this->params()->fromQuery('type');
 
-  public function cancelAction()
-  {
-    return new ViewModel();
+    $message = 'Transaction not found.';
+
+    $myTransaction = $this->dao->find([], $transID);
+    if (!empty($myTransaction)) {
+      $message = '';
+      $this->dao->save(['payment_type' => $paymentType], intval($myTransaction->id));
+    }
+
+    $isErr = $status == 'success' && $message == '';
+
+    return new ViewModel([
+      'isErr' => $isErr,
+      'message' => $message
+    ]);
   }
 }
