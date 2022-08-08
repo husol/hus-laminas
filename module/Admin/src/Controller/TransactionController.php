@@ -59,10 +59,10 @@ class TransactionController extends HusController
     $userIDs = [];
     if (!empty($fmobile)) {
       $userParams = ['conditions' => [
-          'flexible' => [
-            ['like' => ['mobile', "%{$fmobile}%"]]
-          ]
+        'flexible' => [
+          ['like' => ['mobile', "%{$fmobile}%"]]
         ]
+      ]
       ];
 
       $users = $daoUser->find($userParams);
@@ -95,19 +95,32 @@ class TransactionController extends HusController
         $transaction->userFullName = $myUser->full_name;
         $transaction->userMobile = $myUser->mobile;
 
-        switch ($transaction->status) {
-          case 0:
-            $transaction->colorClass = 'bg-orange';
-            break;
+        switch ($transaction->payment_type) {
           case 1:
-            $transaction->colorClass = 'bg-blue';
+            $transaction->paymentTypeName = 'One Pay';
             break;
           case 2:
-            $transaction->colorClass = 'bg-red';
+            $transaction->paymentTypeName = 'Paypal';
             break;
-          case 3:
+          default:
+            $transaction->paymentTypeName = 'Cash';
+        }
+
+        switch ($transaction->status) {
+          case 1:// PAID
             $transaction->colorClass = 'bg-green';
             break;
+          case 2:// DELIVERING
+            $transaction->colorClass = 'bg-blue';
+            break;
+          case 3:// CANCELLED
+            $transaction->colorClass = 'bg-red';
+            break;
+          case 4:// COMPLETED
+            $transaction->colorClass = '';
+            break;
+          default:// PENDING
+            $transaction->colorClass = 'bg-orange';
         }
 
         $transactions[] = $transaction;
@@ -189,7 +202,7 @@ class TransactionController extends HusController
 
     $data = ['status' => intval($status)];
 
-    $result = $this->dao->save($data, $myContact->id);
+    $result = $this->dao->save($data, intval($myContact->id));
 
     HusAjax::outData($result);
   }

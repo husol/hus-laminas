@@ -218,7 +218,11 @@ class CartController extends HusController
     $myTransaction = $this->dao->find([], $transID);
     if (!empty($myTransaction)) {
       $message = '';
-      $this->dao->save(['payment_type' => $paymentType], intval($myTransaction->id));
+      $updatedData = [
+        'payment_type' => $paymentType,
+        'status' => 1
+      ];
+      $this->dao->save($updatedData, intval($myTransaction->id));
     }
 
     $isErr = $status == 'success' && $message == '';

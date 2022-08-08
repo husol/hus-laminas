@@ -5,10 +5,11 @@
     <th width="10%" class="text-left">Họ tên người dùng</th>
     <th width="10%" class="text-left">Số điện thoại liên hệ</th>
     <th width="12%" class="text-left">Thông tin người nhận hàng</th>
-    <th width="20%" class="text-left">Địa điểm giao hàng</th>
-    <th width="20%" class="text-left">Ghi chú</th>
+    <th width="15%" class="text-left">Địa điểm giao hàng</th>
+    <th width="13%" class="text-left">Ghi chú</th>
     <th width="10%" class="text-right">Tổng tiền</th>
-    <th width="8%" class="text-center">Trạng thái</th>
+    <th width="10%" class="text-center">Phương thức thanh toán</th>
+    <th class="text-center">Trạng thái</th>
   </tr>
 </thead>
 <tbody>
@@ -26,12 +27,14 @@
       <td class="text-left"><?=$transaction->deliver_place?></td>
       <td class="text-left"><?=$transaction->notes?></td>
       <td class="text-right"><?=formatNumber($transaction->amount)?></td>
+      <td class="text-center"><?=$transaction->paymentTypeName?></td>
       <td class="text-center">
         <select onchange="updateStatus(<?=$transaction->id?>, this.value);">
           <option value="0"<?=$transaction->status == 0 ? ' selected' : ''?>>PENDING</option>
-          <option value="1"<?=$transaction->status == 1 ? ' selected' : ''?>>DELIVERING</option>
-          <option value="2"<?=$transaction->status == 2 ? ' selected' : ''?>>CANCELED</option>
-          <option value="3"<?=$transaction->status == 3 ? ' selected' : ''?>>COMPLETED</option>
+          <option value="1"<?=$transaction->status == 1 ? ' selected' : ''?>>PAID</option>
+          <option value="2"<?=$transaction->status == 2 ? ' selected' : ''?>>DELIVERING</option>
+          <option value="3"<?=$transaction->status == 3 ? ' selected' : ''?>>CANCELED</option>
+          <option value="4"<?=$transaction->status == 4 ? ' selected' : ''?>>COMPLETED</option>
         </select>
       </td>
     </tr>
