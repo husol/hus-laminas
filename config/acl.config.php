@@ -24,6 +24,7 @@ return [
       'Application\Controller\CartController',
       'Application\Controller\AboutController',
       'Application\Controller\ContactController',
+      'Application\Controller\NewsController',
     ],
   ],
 
