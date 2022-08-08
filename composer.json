@@ -28,7 +28,8 @@
         "aws/aws-sdk-php": "^3.142",
         "sentry/sdk": "^3.2",
         "laminas/laminas-cache-storage-adapter-redis": "^2.2",
-        "laminas/laminas-cache": "^3.1"
+        "laminas/laminas-cache": "^3.1",
+      "ext-dom": "*"
     },
     "autoload": {
         "psr-4": {

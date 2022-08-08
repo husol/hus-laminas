@@ -151,6 +151,16 @@ return [
           ],
         ],
       ],
+      'news' => [
+        'type' => Segment::class,
+        'options' => [
+          'route' => '/news[/:action]',
+          'defaults' => [
+            'controller' => Controller\NewsController::class,
+            'action' => 'index',
+          ],
+        ],
+      ],
     ],
   ],
   'controllers' => [
@@ -161,6 +171,7 @@ return [
       Controller\AboutController::class => Controller\Factory\AboutControllerFactory::class,
       Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
       Controller\ContactController::class => Controller\Factory\ContactControllerFactory::class,
+      Controller\NewsController::class => Controller\Factory\NewsControllerFactory::class,
     ],
   ],
   'view_manager' => [

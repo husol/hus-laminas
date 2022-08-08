@@ -80,6 +80,7 @@ class Module
       'Application\Controller\ProductController',
       'Application\Controller\AboutController',
       'Application\Controller\ContactController',
+      'Application\Controller\NewsController',
     ];
 
     if (!in_array($routeParams['controller'], $publicControllers)) {

@@ -11,6 +11,7 @@
       $menuProduct = $this->currentRoute()->matchController('productcontroller');
       $menuAbout = $this->currentRoute()->matchController('aboutcontroller');
       $menuContact = $this->currentRoute()->matchController('contactcontroller');
+      $menuNews = $this->currentRoute()->matchController('newscontroller');
     ?>
       <div class="collapse navbar-collapse" id="navigationCollapse">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -29,6 +30,10 @@
           <!-- contact -->
           <li class="nav-item dropdown menu-large">
             <a class="nav-link<?php if($menuContact): ?> active<?php endif;?>" id="contact" href="/contact" role="button">Liên hệ</a>
+          </li>
+          <!-- news -->
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link<?php if($menuNews): ?> active<?php endif;?>" id="contact" href="/news" role="button">Tin tức</a>
           </li>
         </ul>
       </div>

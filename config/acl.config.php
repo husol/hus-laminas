@@ -49,6 +49,10 @@ return [
         'allow' => ['index'],
         'deny' => null
       ],
+      'Application\Controller\NewsController' => [
+        'allow' => ['index'],
+        'deny' => null
+      ],
     ],
 
     //For Admin
