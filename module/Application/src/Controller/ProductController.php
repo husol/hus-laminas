@@ -71,6 +71,8 @@ class ProductController extends HusController
     // Increase count_view
     $this->dao->save(['count_view' => $myProduct->count_view + 1], intval($myProduct->id));
 
+    $myProduct->slugName = $myProduct->id . "_" . codau2khongdau($myProduct->name, true);
+
     return new ViewModel([
       'myProduct' => $myProduct,
       'relatedProducts' => $relatedProducts

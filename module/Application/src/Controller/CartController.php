@@ -212,6 +212,7 @@ class CartController extends HusController
     $transID = $this->params()->fromRoute('id');
     $status = $this->params()->fromRoute('status');
     $paymentType = $this->params()->fromQuery('type');
+    mlog($paymentType);
 
     $message = 'Transaction not found.';
 

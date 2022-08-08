@@ -3,7 +3,7 @@
   ->appendProperty('og:type', "Xsmartphone Store")
   ->appendProperty('og:image', "https://xsmartphone.husol.xyz{$this->myProduct->image}")
   ->appendProperty('og:image:alt', $this->myProduct->name)
-  ->appendProperty('og:url', "https://xsmartphone.husol.xyz/products/{$this->myProduct->id}")
+  ->appendProperty('og:url', "https://xsmartphone.husol.xyz/products/{$this->myProduct->slugName}")
   ->appendProperty('og:description', $this->myProduct->short_description)
 ?>
 
