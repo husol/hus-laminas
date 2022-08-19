@@ -67,10 +67,10 @@
       </ul>
 
       <?php
-      $menuCategory = $this->currentRoute()->matchController('categorycontroller');
-      $menuProduct = $this->currentRoute()->matchController('productcontroller');
-      $menuTransaction = $this->currentRoute()->matchController('transactioncontroller');
-      $menuContact = $this->currentRoute()->matchController('contactcontroller');
+      $menuCategory = $this->layout()->controller == "Admin\Controller\CategoryController";
+      $menuProduct = $this->layout()->controller == "Admin\Controller\ProductController";
+      $menuTransaction = $this->layout()->controller == "Admin\Controller\TransactionController";
+      $menuContact = $this->layout()->controller == "Admin\Controller\ContactController";
       $menuAdministration = $menuCategory || $menuProduct || $menuTransaction || $menuContact;
       ?>
       <ul class="nav nav-primary">
