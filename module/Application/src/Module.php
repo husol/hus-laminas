@@ -35,6 +35,12 @@ class Module
     $sessionManager = $serviceManager->get(SessionManager::class);
     $this->forgetInvalidSession($sessionManager);
 
+    $eventManager->attach(MvcEvent::EVENT_ROUTE, function($event){
+      $routeMatch = $event->getRouteMatch();
+      if ($routeMatch) {
+        $event->getApplication()->getMvcEvent()->getViewModel()->setVariables($routeMatch->getParams());
+      }
+    });
     $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError'], 100);
     $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 200);
   }

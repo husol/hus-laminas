@@ -22,7 +22,6 @@ return [
     'Laminas\Session',
     'Laminas\Router',
     'Laminas\Validator',
-    'CurrentRoute',
     'Laminas\Cache\Storage\Adapter\Redis',
     'Core',
     'Admin',

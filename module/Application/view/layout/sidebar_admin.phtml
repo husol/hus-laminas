@@ -38,9 +38,9 @@
       </div>
 
       <?php
-      $menuDashboard = $this->currentRoute()->matchController('homecontroller');
-      $menuUser = $this->currentRoute()->matchController('usercontroller');
-      $menuReport = $this->currentRoute()->matchController('reportcontroller');
+      $menuDashboard = $this->layout()->controller == "Admin\Controller\HomeController";
+      $menuUser = $this->layout()->controller == "Admin\Controller\UserController";
+      $menuReport = $this->layout()->controller == "Admin\Controller\ReportController";
       $menuGeneral = $menuDashboard || $menuUser || $menuReport;
       ?>
       <ul class="nav nav-primary">
@@ -67,8 +67,8 @@
       </ul>
 
       <?php
-      $menuCategory = $this->currentRoute()->matchController('categorycontroller');
-      $menuProduct = $this->currentRoute()->matchController('productcontroller');
+      $menuCategory = $this->layout()->controller == "Admin\Controller\CategoryController";
+      $menuProduct = $this->layout()->controller == "Admin\Controller\ProductController";
       $menuAdministration = $menuCategory || $menuProduct;
       ?>
       <ul class="nav nav-primary">
