@@ -7,11 +7,11 @@
       <button class="navbar-toggler text-primary border-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navigationCollapse" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="sr-only">Toggle navigation</span><i class="fas fa-align-justify"></i></button>
       <!-- Collapsed Navigation    -->
     <?php
-      $menuIndex = $this->currentRoute()->matchController('indexcontroller');
-      $menuProduct = $this->currentRoute()->matchController('productcontroller');
-      $menuAbout = $this->currentRoute()->matchController('aboutcontroller');
-      $menuContact = $this->currentRoute()->matchController('contactcontroller');
-      $menuNews = $this->currentRoute()->matchController('newscontroller');
+      $menuIndex = $this->layout()->controller == "Application\Controller\IndexController";
+      $menuProduct = $this->layout()->controller == "Application\Controller\ProductController";
+      $menuAbout = $this->layout()->controller == "Application\Controller\AboutController";
+      $menuContact = $this->layout()->controller == "Application\Controller\ContactController";
+      $menuNews = $this->layout()->controller == "Application\Controller\NewsController";
     ?>
       <div class="collapse navbar-collapse" id="navigationCollapse">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
