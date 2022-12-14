@@ -16,7 +16,7 @@ class HusFile
     $this->file = $file;
   }
 
-  public function upload($dirName, $id = 0)
+  public function upload($dirName, $id = 0): array
   {
     try {
       $uploadsDir = ROOT_DIR.DS.'public'.DS.'uploads';
@@ -34,7 +34,7 @@ class HusFile
     }
   }
 
-  public function uploadToS3($type = 'images', $pathDir, $name, $prefix = '', $suffix = '')
+  public function uploadToS3($pathDir, $name, $type = 'images', $prefix = '', $suffix = ''): array
   {
     $configHus = \Laminas\Config\Factory::fromFile(ROOT_DIR . '/module/Application/config/config.php');
     //Upload file

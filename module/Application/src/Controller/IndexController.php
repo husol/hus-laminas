@@ -58,7 +58,7 @@ class IndexController extends HusController
       $imageInfo = getimagesize($image['tmp_name']);
 
       $file = new HusFile($image);
-      $result = $file->uploadToS3('images', $pathDir, '', $objID);
+      $result = $file->uploadToS3($pathDir, '', 'images', $objID);
 
       if ($result['error']) {
         HusAjax::setMessage("Error Upload File: " . $result['info']);
