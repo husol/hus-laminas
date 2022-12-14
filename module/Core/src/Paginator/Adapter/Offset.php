@@ -12,10 +12,10 @@ class Offset implements AdapterInterface
   {
     $this->_count = $count;
     $this->_iterator = $iterator;
-    
+
   }
 
-  public function count()
+  public function count(): int
   {
     return $this->_count;
   }
