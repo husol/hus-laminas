@@ -504,7 +504,7 @@ function callAPI($host, $uri, $params)
     }
 
     $response = $client->request($method, $uri, $options);
-  } catch (\GuzzleHttp\Exception\ClientException $e) {
+  } catch (\GuzzleHttp\Exception\BadResponseException $e) {
     $response = $e->getResponse();
   }
 
